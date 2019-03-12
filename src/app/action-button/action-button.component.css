@@ -1,0 +1,37 @@
+:host {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100%;
+}
+.cl-br-action-btn{
+  height: 100%;
+  width: 100px;
+  padding: 10px 10px;
+}
+.cl-br-action-btn-save{
+  height: 80px;
+  width: 80px;
+  position: absolute;
+}
+.cl-br-action-btn-play {
+  background: #007c27;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  width: 80px;
+  margin: -40px 0 0 -40px;
+  text-align: center;
+  line-height: 100px;
+  padding-left: 10px;
+  color: white;
+}
+
+.cl-br-action-btn-play:hover {
+  -webkit-transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+  transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+}
+
