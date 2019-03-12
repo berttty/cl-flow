@@ -1,0 +1,217 @@
+.cl-br-menu-wout-margin{
+  margin: 0;
+  padding: 0;
+}
+.cl-br-menu-main {
+  top: 0;
+  margin: auto;
+  position:fixed;
+  left: 0;
+  z-index: 10;
+}
+
+.cl-br-menu-header {
+  background: #fff;
+  padding: 10px ;
+  box-shadow: 0px 2px 5px #6d6d6d;
+  width: 40px;
+  z-index: 20;
+  text-align: center;
+  -webkit-transition: width 1s; /* Safari */
+  transition: width 1s;
+  position: absolute;
+}
+.cl-br-menu-header.width {
+  width: 200px;
+  text-align: center;
+}
+
+.cl-br-menu-icon{
+  display:inline-block;
+  cursor: pointer;
+}
+.cl-br-menu-body {
+  padding-top: 1px;
+  z-index: 15;
+  margin-top: 50px;
+}
+#cl-br-menu {
+  width: 60px;
+  background: #fff;
+  padding: 0;
+  box-shadow: 0px 5px 5px #6d6d6d;
+  overflow: hidden;
+  z-index: 15;
+  -webkit-transition: width 1s; /* Safari */
+  transition: width 1s;
+}
+#cl-br-menu ul {
+  list-style: none;
+  width: 100%;
+}
+#cl-br-menu ul li {
+  border-bottom: 1px solid #ccc;
+  padding: 0;
+  position: relative;
+}
+#cl-br-menu ul li a {
+  font-size: 14px;
+  color: #4a4a4a;
+  text-decoration: none;
+  text-transform:uppercase;
+  white-space: nowrap;
+  display: inline-block;
+  margin: 10px 20px;
+}
+#cl-br-menu ul li a span {
+  display: inline-block;
+  vertical-align: middle;
+  color: #000000;
+  width: 38px;
+}
+
+#cl-br-menu ul li:hover {
+  background: #fff;
+  box-shadow: inset 0px 0px 77px #dedede;
+}
+#cl-br-menu ul li a span.notif {
+  position: absolute;
+  top: 8px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  right: 10px;
+  background: #343436;
+  line-height: 31px;
+  border-radius: 100%;
+  color: #fff;
+}
+.red {
+  background: #e74c3c !important;         box-shadow: 0px 0px 10px #e74c3c;
+}
+.yellow {
+  background: #f1c40f !important;         box-shadow: 0px 0px 10px #f1c40f;
+}
+.green {
+  background: #27ae60 !important;
+  box-shadow: 0px 0px 10px #27ae60;
+}
+#cl-br-menu ul li a span.notif.green {
+  width: 10px;
+  height: 10px;
+  color: transparent;
+  right: 5px;
+  transition: all 0.2s ease;
+}
+#cl-br-menu ul li a span.notif.yellow  {
+  width: 10px;
+  height: 10px;
+  color: transparent;
+  right: 5px;
+  transition: all 0.2s ease;
+}
+#cl-br-menu ul li a span.notif.red  {
+  width: 10px;
+  height: 10px;
+  color: transparent;
+  right: 5px;
+  transition: all 0.2s ease;
+}
+#cl-br-menu ul li:hover a span.notif.red {
+  width: 30px;
+  height: 30px;
+  right: 15px;
+  color: #fff;
+  box-shadow: 0px 0px 60px #e74c3c;
+  top: 10px;
+}
+#cl-br-menu ul li:hover a span.notif.yellow{
+  width: 30px;
+  height: 30px;
+  right: 15px;
+  color: #fff;
+  box-shadow: 0px 0px 60px #f1c40f;
+  top: 10px;
+}
+#cl-br-menu ul li:hover a span.notif.green{
+  width: 30px;
+  height: 30px;
+  right: 15px;
+  color: #fff;
+  box-shadow: 0px 0px 60px #27ae60;
+  top: 10px;
+}
+#cl-br-menu.cl-br-keep.width {
+  width: 220px;
+}
+#cl-br-menu.cl-br-keep.width ul li a span.notif {
+  width: 30px;
+  height: 30px;
+  right: 10px;
+  color: #fff;
+  box-shadow: 0px 0px 10px transparent;
+  top: 8px;
+}
+#cl-br-menu ul ul{
+  display: none;
+}
+
+#cl-br-menu ul a:not(:last-child):after{
+  content: "\25be";
+}
+
+
+#cl-br-menu ul ul.cl-br-expand{
+  /* visibility: visible;
+   max-height: 100%;
+   transition:  max-height  1s ease-in-out;*/
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding: 0;
+}
+
+/*  */
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+.blink{
+  text-decoration: blink;
+  -webkit-animation-name: blinker;
+  -webkit-animation-duration: 0.6s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:ease-in-out;
+  -webkit-animation-direction: alternate;
+}
+p.blink.mah {
+  text-align: center;
+  line-height: 25;
+  position:relative;
+}
+p.blink.mah span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 102, 153, 0);
+  top: 248px;
+  left: 360px;
+}
+.cl-br-expand.ng-enter,
+.cl-br-expand.ng-leave {
+  transition: all 1s ease-in-out;
+}
+.cl-br-expand.ng-enter {
+  opacity: 0;
+  max-height: 0;
+}
+.cl-br-expand.ng-enter.ng-enter-active,
+.cl-br-expand.ng-leave {
+  opacity: 1;
+  max-height: 999px;
+}
+.cl-br-expand.ng-leave.ng-leave-active {
+  max-height: 0;
+  opacity: 1;
+}
+
+
