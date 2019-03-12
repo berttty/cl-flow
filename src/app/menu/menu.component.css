@@ -11,7 +11,8 @@
 }
 
 .cl-br-menu-header {
-  background: #fff;
+  background: #ff4081;
+  color: white;
   padding: 10px ;
   box-shadow: 0px 2px 5px #6d6d6d;
   width: 60px;
@@ -37,7 +38,7 @@
 }
 #cl-br-menu {
   width: 60px;
-  background: #fff;
+  background: #ffedf3;
   padding: 0;
   box-shadow: 0px 5px 5px #6d6d6d;
   overflow: hidden;
@@ -56,7 +57,7 @@
 }
 #cl-br-menu ul li a {
   font-size: 14px;
-  color: #4a4a4a;
+  color: #36547b;
   text-decoration: none;
   text-transform:uppercase;
   white-space: nowrap;
@@ -66,7 +67,7 @@
 #cl-br-menu ul li a span {
   display: inline-block;
   vertical-align: middle;
-  color: #000000;
+  color: #ff4081;
   width: 38px;
 }
 
@@ -158,6 +159,7 @@
 
 #cl-br-menu ul a:not(:last-child):after{
   content: "\25be";
+  color: #36547b;
 }
 
 
@@ -165,7 +167,7 @@
   /* visibility: visible;
    max-height: 100%;
    transition:  max-height  1s ease-in-out;*/
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 64, 129, 0.2);
   margin: 0;
   padding: 0;
 }

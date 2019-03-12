@@ -75,9 +75,15 @@
         <span class="hamburger hamburger-3"></span>
       </label>
 
-      <a href="#" class="cl-br-jobs-area-menu-button-item"> <i class="fa fa-bar-chart"></i> </a>
-      <a href="#" class="cl-br-jobs-area-menu-button-item"> <i class="fa fa-plus"></i> </a>
-      <a href="#" class="cl-br-jobs-area-menu-button-item"> <i class="fa fa-heart"></i> </a>
+      <a href="#" class="cl-br-jobs-area-menu-button-item">
+        <fa-icon [icon]="['fas', 'running']" size="2x"></fa-icon>
+      </a>
+      <a href="#" class="cl-br-jobs-area-menu-button-item">
+        <fa-icon [icon]="['fas', 'tasks']" size="2x"></fa-icon>
+      </a>
+      <a href="#" class="cl-br-jobs-area-menu-button-item">
+        <fa-icon [icon]="['fas', 'check-circle']" size="2x"></fa-icon>
+      </a>
       <!-- filters -->
       <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
         <defs>
@@ -102,7 +108,59 @@
 
   </div>
   <div class="col s5 cl-br-jobs-area-history">
-
+    <div class='cl-br-cards cl-br-cards-right' [ngClass]="showCards ? 'cl-br-card-show' : ''">
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>1</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>2</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>3</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>4</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>5</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>6</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>7</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>8</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>9</div>
+        </div>
+      </div>
+      <div class='cl-br-card'>
+        <div class='cl-br-card-face'>
+          <div class='cl-br-card-label'>10</div>
+        </div>
+      </div>
+    </div>
+    <div class="cl-br-jobs-area-running-shadow"></div>
   </div>
 </div>
 
