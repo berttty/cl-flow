@@ -52,8 +52,7 @@ export class MenuComponent implements OnInit {
   }
 
   menuHeaderAction() {
-    this.isOpen = ! this.isOpen;
-    if ( ! this.isOpen ) {
+    if ( this.isOpen ) {
       Object
         .keys(this.navigationSubState)
         .forEach( (value: string) => {
@@ -61,7 +60,7 @@ export class MenuComponent implements OnInit {
         }
       );
     }
-    this.isOpen = this.isOpen;
+    this.isOpen = ! this.isOpen;
   }
 
   toggleNavigationSub(menuName: string) {
@@ -71,7 +70,7 @@ export class MenuComponent implements OnInit {
     this.navigationSubState[menuName] = (this.navigationSubState[menuName] === 'close' ? 'open' : 'close');
   }
 
-  closeSubMenu(menuName: string){
+  closeSubMenu(menuName: string) {
     this.navigationSubState[menuName] =  'close';
   }
 

@@ -12,13 +12,63 @@
 
 <div class="row cl-br-jobs-area">
   <div class="col s5 offset-s-br cl-br-jobs-area-running">
-    <div class="cl-br-jobs-cards">
-    </div>
+      <div class='cl-br-cards cl-br-cards-left' [ngClass]="showCards ? 'cl-br-card-show' : ''">
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>1</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>2</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>3</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>4</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>5</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>6</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>7</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>8</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>9</div>
+          </div>
+        </div>
+        <div class='cl-br-card'>
+          <div class='cl-br-card-face'>
+            <div class='cl-br-card-label'>10</div>
+          </div>
+        </div>
+      </div>
+      <div class="cl-br-jobs-area-running-shadow"></div>
   </div>
   <div class="col s1 cl-br-jobs-area-menu">
-
     <div class="cl-br-jobs-area-menu-button" style="margin-top: -20px ;">
-      <input type="checkbox" href="#" class="cl-br-jobs-area-menu-button-open" name="menu-open" id="menu-open" />
+      <input type="checkbox" href="#" class="cl-br-jobs-area-menu-button-open" name="menu-open" id="menu-open" (change)="openOption()" />
       <label class="cl-br-jobs-area-menu-button-open-button" for="menu-open">
         <span class="hamburger hamburger-1"></span>
         <span class="hamburger hamburger-2"></span>
