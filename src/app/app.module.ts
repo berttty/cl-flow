@@ -9,6 +9,9 @@ import { EditorComponent } from './editor/editor.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { NodeComponent } from './node/node.component';
 import { ActionButtonComponent } from './action-button/action-button.component';
+import { JobsPinComponent } from './jobs-pin/jobs-pin.component';
+import { JobsModalComponent } from './jobs-modal/jobs-modal.component';
+import { DrawZoneComponent } from './draw-zone/draw-zone.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { ActionButtonComponent } from './action-button/action-button.component';
     EditorComponent,
     JobsComponent,
     NodeComponent,
-    ActionButtonComponent
+    ActionButtonComponent,
+    JobsPinComponent,
+    JobsModalComponent,
+    DrawZoneComponent
   ],
   imports: [
     BrowserModule,
