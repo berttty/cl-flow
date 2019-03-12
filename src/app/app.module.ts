@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { EditorComponent } from './editor/editor.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { NodeComponent } from './node/node.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     EditorComponent,
-    JobsComponent
+    JobsComponent,
+    NodeComponent
   ],
   imports: [
     BrowserModule,
