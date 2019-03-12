@@ -14,7 +14,7 @@
   background: #fff;
   padding: 10px ;
   box-shadow: 0px 2px 5px #6d6d6d;
-  width: 40px;
+  width: 60px;
   z-index: 20;
   text-align: center;
   -webkit-transition: width 1s; /* Safari */
@@ -22,7 +22,7 @@
   position: absolute;
 }
 .cl-br-menu-header.width {
-  width: 200px;
+  width: 220px;
   text-align: center;
 }
 
