@@ -1,13 +1,26 @@
+.cl-br-border-left{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  min-width: 60px;
+  margin: 0;
+  padding: 0;
+}
 .cl-br-menu-wout-margin{
   margin: 0;
   padding: 0;
 }
 .cl-br-menu-main {
+  position: relative;
   top: 0;
-  margin: auto;
-  position:fixed;
   left: 0;
   z-index: 10;
+}
+.cl-br-border-left-second-part{
+  top: 0;
+  position: relative;
+  padding-top: 10px;
 }
 
 .cl-br-menu-header {
@@ -20,7 +33,7 @@
   text-align: center;
   -webkit-transition: width 1s; /* Safari */
   transition: width 1s;
-  position: absolute;
+  position: relative;
 }
 .cl-br-menu-header.width {
   width: 220px;
@@ -32,11 +45,11 @@
   cursor: pointer;
 }
 .cl-br-menu-body {
-  padding-top: 1px;
   z-index: 15;
-  margin-top: 50px;
+
 }
 #cl-br-menu {
+  position: relative;
   width: 60px;
   background: #ffedf3;
   padding: 0;

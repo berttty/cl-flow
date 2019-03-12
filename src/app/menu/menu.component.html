@@ -1,98 +1,105 @@
-<div class="cl-br-menu-main">
-  <div class="cl-br-menu-header" (click)="menuHeaderAction()" [ngClass]="isOpen ? 'width' : ''">
-    <span class="cl-br-menu-icon">
-      <fa-icon [icon]="['fas', 'bars']" size="2x"></fa-icon>
-    </span>
-  </div>
-  <div class="cl-br-menu-body" >
-    <div id="cl-br-menu" class="cl-br-keep" [ngClass]="isOpen ? 'width' : ''" >
-
-      <ul class="cl-br-menu-wout-margin">
-        <li>
-          <a href="#" (click)="toggleNavigationSub('sub_1')">
-            <span>
-              <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-            </span>
-            Data Source
-          </a>
-          <ul [@toggleHeight]="navigationSubState.sub_1">
-            <li>
-              <a href="#" (click)="toggleNavigationSub('sub_1_1')" >
-                <span>
-                  <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-                </span>
-                Data Source 1
-              </a>
-              <ul [@toggleHeight]="navigationSubState.sub_1_1">
-                <li>
-                  <a href="#">
-                    <span>
-                      <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-                    </span>
-                    Data Source 1.1
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span>
-                      <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-                    </span>
-                    Data Source 1.2
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">
-                <span>
-                  <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-                </span>
-                Data Source 2
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">
-            <span>
-              <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
-            </span>
-            Data Preparation
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span>
-              <fa-icon [icon]="['fas', 'brain']" size="2x"></fa-icon>
-            </span>
-            IA Analytics
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span>
-              <fa-icon [icon]="['fas', 'puzzle-piece']" size="2x"></fa-icon>
-            </span>
-            Data Analytics
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span>
-              <fa-icon [icon]="['fas', 'bullseye']" size="2x"></fa-icon>
-            </span>
-            Data Storage
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <span>
-              <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon>
-            </span>
-            Custom Operations
-          </a>
-        </li>
-      </ul>
+<div class="cl-br-border-left">
+  <div class="cl-br-menu-main">
+    <div class="cl-br-menu-header" (click)="menuHeaderAction()" [ngClass]="isOpen ? 'width' : ''">
+      <span class="cl-br-menu-icon">
+        <fa-icon [icon]="['fas', 'bars']" size="2x"></fa-icon>
+      </span>
     </div>
+    <div class="cl-br-menu-body" >
+      <div id="cl-br-menu" class="cl-br-keep" [ngClass]="isOpen ? 'width' : ''" >
+
+        <ul class="cl-br-menu-wout-margin">
+          <li>
+            <a href="#" (click)="toggleNavigationSub('sub_1')">
+          <span>
+            <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+          </span>
+              Data Source
+            </a>
+            <ul [@toggleHeight]="navigationSubState.sub_1">
+              <li>
+                <a href="#" (click)="toggleNavigationSub('sub_1_1')" >
+              <span>
+                <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+              </span>
+                  Data Source 1
+                </a>
+                <ul [@toggleHeight]="navigationSubState.sub_1_1">
+                  <li>
+                    <a href="#">
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                      Data Source 1.1
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                      Data Source 1.2
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">
+              <span>
+                <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+              </span>
+                  Data Source 2
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">
+          <span>
+            <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
+          </span>
+              Data Preparation
+            </a>
+          </li>
+          <li>
+            <a href="#">
+          <span>
+            <fa-icon [icon]="['fas', 'brain']" size="2x"></fa-icon>
+          </span>
+              IA Analytics
+            </a>
+          </li>
+          <li>
+            <a href="#">
+          <span>
+            <fa-icon [icon]="['fas', 'puzzle-piece']" size="2x"></fa-icon>
+          </span>
+              Data Analytics
+            </a>
+          </li>
+          <li>
+            <a href="#">
+          <span>
+            <fa-icon [icon]="['fas', 'bullseye']" size="2x"></fa-icon>
+          </span>
+              Data Storage
+            </a>
+          </li>
+          <li>
+            <a href="#">
+          <span>
+            <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon>
+          </span>
+              Custom Operations
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="cl-br-border-left-second-part">
+    <!-- -->
+    <app-jobs-pin></app-jobs-pin>
+    <!-- -->
   </div>
 </div>
