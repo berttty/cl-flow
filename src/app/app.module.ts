@@ -8,6 +8,7 @@ import { MenuComponent } from './menu/menu.component';
 import { EditorComponent } from './editor/editor.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { NodeComponent } from './node/node.component';
+import { ActionButtonComponent } from './action-button/action-button.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { NodeComponent } from './node/node.component';
     MenuComponent,
     EditorComponent,
     JobsComponent,
-    NodeComponent
+    NodeComponent,
+    ActionButtonComponent
   ],
   imports: [
     BrowserModule,
