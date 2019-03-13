@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -12,6 +13,7 @@ import { ActionButtonComponent } from './action-button/action-button.component';
 import { JobsPinComponent } from './jobs-pin/jobs-pin.component';
 import { JobsModalComponent } from './jobs-modal/jobs-modal.component';
 import { DrawZoneComponent } from './draw-zone/draw-zone.component';
+import { Node } from './node.init/node.init.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +25,14 @@ import { DrawZoneComponent } from './draw-zone/draw-zone.component';
     ActionButtonComponent,
     JobsPinComponent,
     JobsModalComponent,
-    DrawZoneComponent
+    DrawZoneComponent,
+    Node.InitComponent
   ],
   imports: [
     BrowserModule,
     FontAwesomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
