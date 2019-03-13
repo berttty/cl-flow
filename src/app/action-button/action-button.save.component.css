@@ -1,6 +1,6 @@
 .cl-br-action-button-save {
-  -webkit-filter: url("#shadowed-goo");
-  filter: url("#shadowed-goo");
+ /* -webkit-filter: url("#shadowed-goo");
+  filter: url("#shadowed-goo");*/
 }
 
 .cl-br-action-button-save-item, .cl-br-action-button-save-open-button {

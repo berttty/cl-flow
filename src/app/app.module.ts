@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -32,7 +32,11 @@ import { NodeInitComponent } from './node-init/node-init.component';
     BrowserModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    DragDropModule
+    AngularDraggableModule
+  ],
+  entryComponents: [
+    NodeComponent,
+    NodeInitComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

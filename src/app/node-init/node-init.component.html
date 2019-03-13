@@ -1,3 +1,24 @@
-<p>
-  node-init works!
-</p>
+<div class="cl-br-node-init" ngDraggable  (endOffset)="onStop($event)" [position]="position">
+  <input type="checkbox" href="#" class="cl-br-node-init-open" name="cl-br-node-init-open" id="cl-br-node-init-open-{{index}}"/>
+  <label class="cl-br-node-init-open-button" for="cl-br-node-init-open-{{index}}">
+    <span class="cl-br-node-init-hamburger cl-br-node-init-hamburger-1"></span>
+    <div class="cl-br-node-init-hamburger-2">
+      <fa-layers [fixedWidth]="true">
+        <fa-icon [icon]="['fas', 'coins']" size="3x" transform="left-3 top-2"></fa-icon>
+        <fa-icon [icon]="['fas', 'question']" size="4x" transform="left-2" style="color: #cccc00;"></fa-icon>
+      </fa-layers>
+    </div>
+    <span class="cl-br-node-init-hamburger cl-br-node-init-hamburger-3"></span>
+  </label>
+
+  <a href="#" class="cl-br-node-init-item" (click)="setSource(index, 'HDFS')">
+    HDFS
+  </a>
+  <a href="#" class="cl-br-node-init-item" (click)="setSource(index, 'LFS')">
+    LFS
+  </a>
+  <a href="#" class="cl-br-node-init-item" (click)="setSource(index, 'PostgreSQL')">
+    PostgreSQL
+  </a>
+
+</div>
