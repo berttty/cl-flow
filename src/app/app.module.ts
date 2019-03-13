@@ -13,7 +13,7 @@ import { ActionButtonComponent } from './action-button/action-button.component';
 import { JobsPinComponent } from './jobs-pin/jobs-pin.component';
 import { JobsModalComponent } from './jobs-modal/jobs-modal.component';
 import { DrawZoneComponent } from './draw-zone/draw-zone.component';
-import { Node } from './node.init/node.init.component';
+import { NodeInitComponent } from './node-init/node-init.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { Node } from './node.init/node.init.component';
     JobsPinComponent,
     JobsModalComponent,
     DrawZoneComponent,
-    Node.InitComponent
+    NodeInitComponent,
   ],
   imports: [
     BrowserModule,
