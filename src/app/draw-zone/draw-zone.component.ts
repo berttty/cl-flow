@@ -48,7 +48,6 @@ export class DrawZoneComponent implements OnInit {
       currentComponent.icon = type;
     }
     if (posY !== undefined && posX !== undefined) {
-      console.log('la magia del cine' + posX + ' ' + posY );
       currentComponent.moveTo(posX, posY);
     }
 
@@ -82,10 +81,6 @@ export class DrawZoneComponent implements OnInit {
     const componentRef = this.nodeInitListReference.filter(x => x.instance.index === index)[0];
     const component: NodeInitComponent = componentRef.instance as NodeInitComponent;
     const vcrIndex: number = this.VCR.indexOf(componentRef);
-    console.log('hehehe');
-    console.log(component.index);
-    console.log(component.position.x);
-    console.log(component.position.y);
     this.createNode(component.getType(), component.position.x, component.position.y);
 
 
