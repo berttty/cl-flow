@@ -17,6 +17,17 @@ import { JobsModalComponent } from './jobs-modal/jobs-modal.component';
 import { DrawZoneComponent } from './draw-zone/draw-zone.component';
 import { NodeInitComponent } from './node-init/node-init.component';
 import { LineComponent } from './line/line.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { AdunitService } from './adunit.service';
+import { ReactiveFormsModule } from '@angular/forms';
+
+const routes: Routes = [
+  {
+    path: 'editor',
+    component: EditorComponent
+  }
+];
 
 @NgModule({
   declarations: [
@@ -43,13 +54,16 @@ import { LineComponent } from './line/line.component';
     SvgPolylineModule,
     SvgTextModule,
     SvgPathModule,
-    SvgEllipseModule
+    SvgEllipseModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     NodeComponent,
     NodeInitComponent
   ],
-  providers: [],
+  providers: [ AdunitService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

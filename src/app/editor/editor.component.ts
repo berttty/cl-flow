@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { AdunitService } from '../adunit.service';
 
 @Component({
   selector: 'app-editor',
@@ -7,7 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorComponent implements OnInit {
 
-  constructor() { }
+  angForm: FormGroup;
+
+  constructor(private adunitservice: AdunitService, private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.angForm = this.fb.group({
+      unit_name: ['', Validators.required ],
+      unit_price: ['', Validators.required ]
+    });
+  }
+
+  addAdUnit(unit_name, unit_price) {
+    this.adunitservice.addAdUnit(unit_name, unit_price);
+  }
 
   ngOnInit() {
   }
