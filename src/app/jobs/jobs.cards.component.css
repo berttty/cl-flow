@@ -33,7 +33,7 @@
   position: absolute;
   right: -60px;
   top: 0px;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .cl-br-card-face {
@@ -68,7 +68,7 @@
   letter-spacing: -0.025em;
   padding: 15px 0 0 15px;
 }
-
+/*
 .cl-br-card:nth-child(1) .cl-br-card-face {
   background: linear-gradient(-135deg, #ff9999, #da0b0b);
   box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.15), inset 0 0 0 2px rgba(255, 153, 153, 0.75);
@@ -331,7 +331,7 @@
     transform: scale(1.15);
   }
 }
-
+*/
 @keyframes fade {
   0% {
     opacity: 0.9;

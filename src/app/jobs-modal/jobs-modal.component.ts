@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {DetailjobService} from '../services/detailjob.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-jobs-modal',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobsModalComponent implements OnInit {
 
-  constructor() { }
+  subscription: Subscription;
+  card = '';
+
+  constructor(private serveDetail: DetailjobService) {
+    console.log('Detail Job Action');
+    this.subscription = serveDetail.detailing$.subscribe(
+      id => {
+        console.log('generating detail-job for card: ' + id);
+        this.card = id;
+      }
+    );
+  }
 
   ngOnInit() {
   }
 
+  servingDetail() {
+    console.log('Detail Function: ' + this.card);
+    this.serveDetail.detailedStatusMethod(this.card);
+  }
 }

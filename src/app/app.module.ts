@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularDraggableModule } from 'angular2-draggable';
-import { SvgCircleModule, SvgLineModule, SvgPolygonModule, SvgPolylineModule, SvgTextModule, SvgPathModule, SvgEllipseModule } from 'angular-svg';
+import { SvgCircleModule, SvgLineModule, SvgPolygonModule,
+  SvgPolylineModule, SvgTextModule, SvgPathModule, SvgEllipseModule } from 'angular-svg';
 
 
 import { AppComponent } from './app.component';
@@ -21,6 +22,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AdunitService } from './adunit.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PinningjobService} from './services/pinningjob.service';
+import { DetailjobService} from './services/detailjob.service';
 
 const routes: Routes = [
   {
@@ -63,7 +66,11 @@ const routes: Routes = [
     NodeComponent,
     NodeInitComponent
   ],
-  providers: [ AdunitService ],
+  providers: [
+    AdunitService,
+    PinningjobService,
+    DetailjobService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

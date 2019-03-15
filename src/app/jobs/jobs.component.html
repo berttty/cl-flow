@@ -9,13 +9,16 @@
     \dasdas
   </div>
 </div>-->
+<a (click)="PinningCard('1')" href="#">pin</a>
+<a (click)="DetailingCard('1')" href="#">detail</a>
 
 <div class="row cl-br-jobs-area">
   <div class="col s5 offset-s-br cl-br-jobs-area-running">
-      <div class='cl-br-cards cl-br-cards-left' [ngClass]="showCards ? 'cl-br-card-show' : ''">
+      <div class='cl-br-cards cl-br-cards-left' [ngClass]="showCardsLeft ? 'cl-br-card-show' : ''">
         <div class='cl-br-card'>
           <div class='cl-br-card-face'>
             <div class='cl-br-card-label'>1</div>
+
           </div>
         </div>
         <div class='cl-br-card'>
@@ -31,6 +34,7 @@
         <div class='cl-br-card'>
           <div class='cl-br-card-face'>
             <div class='cl-br-card-label'>4</div>
+            <a (click)="PinningCard('4')" href="#" style="position: absolute; top: -100px;">CLICK</a>
           </div>
         </div>
         <div class='cl-br-card'>
@@ -68,20 +72,20 @@
   </div>
   <div class="col s1 cl-br-jobs-area-menu">
     <div class="cl-br-jobs-area-menu-button" style="margin-top: -20px ;">
-      <input type="checkbox" href="#" class="cl-br-jobs-area-menu-button-open" name="menu-open" id="menu-open" (change)="openOption()" />
-      <label class="cl-br-jobs-area-menu-button-open-button" for="menu-open">
+      <input type="checkbox" href="#" class="cl-br-jobs-area-menu-button-open" name="menu-open" id="menu-open" />
+      <label class="cl-br-jobs-area-menu-button-open-button" for="menu-open" (click)="checkClose()">
         <span class="hamburger hamburger-1"></span>
         <span class="hamburger hamburger-2"></span>
         <span class="hamburger hamburger-3"></span>
       </label>
 
-      <a href="#" class="cl-br-jobs-area-menu-button-item">
+      <a href="#" class="cl-br-jobs-area-menu-button-item" (click)="openOptionLeft()">
         <fa-icon [icon]="['fas', 'running']" size="2x"></fa-icon>
       </a>
       <a href="#" class="cl-br-jobs-area-menu-button-item">
         <fa-icon [icon]="['fas', 'tasks']" size="2x"></fa-icon>
       </a>
-      <a href="#" class="cl-br-jobs-area-menu-button-item">
+      <a href="#" class="cl-br-jobs-area-menu-button-item" (click)="openOptionRight()" >
         <fa-icon [icon]="['fas', 'check-circle']" size="2x"></fa-icon>
       </a>
       <!-- filters --
@@ -108,7 +112,7 @@
 
   </div>
   <div class="col s5 cl-br-jobs-area-history">
-    <div class='cl-br-cards cl-br-cards-right' [ngClass]="showCards ? 'cl-br-card-show' : ''">
+    <div class='cl-br-cards cl-br-cards-right' [ngClass]="showCardsRight ? 'cl-br-card-show' : ''">
       <div class='cl-br-card'>
         <div class='cl-br-card-face'>
           <div class='cl-br-card-label'>1</div>
