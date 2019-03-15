@@ -47,7 +47,9 @@ import { LineComponent } from './line/line.component';
   ],
   entryComponents: [
     NodeComponent,
-    NodeInitComponent
+    NodeInitComponent,
+    LineComponent,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

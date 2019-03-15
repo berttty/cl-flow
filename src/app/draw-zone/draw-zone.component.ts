@@ -1,6 +1,12 @@
 import { Component, OnInit, ComponentRef, ComponentFactoryResolver, ViewContainerRef, ViewChild, } from '@angular/core';
 import { NodeComponent } from '../node/node.component';
 import { NodeInitComponent } from '../node-init/node-init.component';
+import {LineComponent} from '../line/line.component';
+import {Operator} from '../rheem-class/Operator';
+import {FilterOperator} from '../rheem-class/unary-operator/FilterOperator';
+import {TextFileSink} from '../rheem-class/sink-operator/TextFileSink';
+import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
+import {operators} from 'rxjs/internal/Rx';
 
 @Component({
   selector: 'app-draw-zone',
@@ -10,11 +16,18 @@ import { NodeInitComponent } from '../node-init/node-init.component';
 export class DrawZoneComponent implements OnInit {
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef }) VCR: ViewContainerRef;
+  @ViewChild('viewLineContainerRef', { read: ViewContainerRef }) VCRLines: ViewContainerRef;
 
   indexNode = 0;
   indexNodeInit = 0;
+  indexLine = 0;
   nodeListReference = [];
   nodeInitListReference = [];
+  lineListReference = [];
+
+  // TODO eliminar es para test
+  plan = 'Aqui va el plan';
+  // TODO eliminar es para test
 
   constructor( private factoryResolver: ComponentFactoryResolver) {
   }
@@ -32,12 +45,24 @@ export class DrawZoneComponent implements OnInit {
 
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
-    currentComponent.moveTo(100, 100);
+    currentComponent.moveTo(200, 300);
     // add reference for newly created component
     this.nodeInitListReference.push(componentRef);
   }
 
-  createNode(type?: string, posX?: number, posY?: number) {
+  createLine(posX1: number, posY1: number, posX2: number, posY2: number) {
+    // TODO add the element that are in the border for delete the lines and draw the new line;
+    const componentFactory = this.factoryResolver.resolveComponentFactory(LineComponent);
+    const componentRef: ComponentRef<LineComponent> = this.VCRLines.createComponent(componentFactory);
+    const currentComponent = componentRef.instance;
+
+    // providing parent Component reference to get access to parent class methods
+    currentComponent.drawCurvedLine(posX1, posY1, posX2, posY2, 0.8);
+    // add reference for newly created component
+    this.lineListReference.push(componentRef);
+  }
+
+  createNode(type?: string, posX?: number, posY?: number, previous?: number) {
     const componentFactory = this.factoryResolver.resolveComponentFactory(NodeComponent);
     const componentRef: ComponentRef<NodeComponent> = this.VCR.createComponent(componentFactory);
     const currentComponent = componentRef.instance;
@@ -47,9 +72,23 @@ export class DrawZoneComponent implements OnInit {
     if (type !== undefined) {
       currentComponent.icon = type;
     }
+    if (previous !== undefined) {
+      const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
+      const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
+      const previousPosition = nodePrevious.getPosition();
+      if (posY === undefined) {
+        posY = previousPosition.y;
+      }
+      if (posX === undefined) {
+        posX = previousPosition.x;
+      }
+      posX = posX + 120;
+      this.createLine(previousPosition.x, previousPosition.y, posX, posY);
+    }
     if (posY !== undefined && posX !== undefined) {
       currentComponent.moveTo(posX, posY);
     }
+
 
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
@@ -88,4 +127,28 @@ export class DrawZoneComponent implements OnInit {
     this.VCR.remove(vcrIndex);
     this.nodeInitListReference = this.nodeInitListReference.filter(x => x.instance.index !== index);
   }
+
+  createNext(index: number) {
+    if (this.VCR.length < 1) {
+      return;
+    }
+    const componentRef = this.nodeListReference.filter(x => x.instance.index === index)[0];
+    const component: NodeComponent = componentRef.instance as NodeComponent;
+
+    this.createNode(component.getType(), component.position.x, component.position.y, index);
+  }
+
+  // TODO eliminar es para test
+  showPlan() {
+     const source: Operator = new TextFileSource('sources', 'file:///Users/notjarvis/IdeaProjects/rheem-rest/some-lines.txt');
+     const filter: Operator = new FilterOperator('filter', source.getClassOutput(), 'dataPoint.length() > 5');
+     const sink: Operator = new TextFileSink('sink', 'file:///Users/notjarvis/IdeaProjects/rheem-rest/output.txt', filter.getClassOutput());
+     source.createConnexion(0, filter, 0);
+     filter.createConnexion(0, sink, 0);
+     const list = [source, filter, sink];
+     this.plan = `{"operators" : [${list.join(' , ')}], "sink_operators" : [ "${sink.getName()}" ]}`;
+
+  }
+  // TODO eliminar es para test
+
 }
