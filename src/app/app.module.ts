@@ -64,7 +64,9 @@ const routes: Routes = [
   ],
   entryComponents: [
     NodeComponent,
-    NodeInitComponent
+    NodeInitComponent,
+    LineComponent,
+
   ],
   providers: [
     AdunitService,

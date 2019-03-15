@@ -10,67 +10,22 @@ export class LineComponent implements OnInit {
   routing = undefined;
   public colorstroke: Stroke;
   public pathString: string;
-  pathPoint = [
-    {
-      l: 'M',
-      x: 135.00,
-      y: 245.00,
-      s: ' '
-    },
-    {
-      l: '',
-      x: 135.00,
-      y: 110.00,
-      s: ' '
-    },
-    {
-      l: '',
-      x: 345.00,
-      y: 110.00,
-      s: ' '
-    },
-    {
-      l: '',
-      x: 345.00,
-      y: 245.00,
-      s: ' '
-    },
-    {
-      l: '',
-      x: 345.00,
-      y: 380.00,
-      s: ' '
-    },
-    {
-      l: '',
-      x: 135.00,
-      y: 380.00,
-      s: ' '
-    },
-    {
-      l: '',
-      x: 135.00,
-      y: 800.00,
-      s: ''
-    },
-  ];
+
   constructor() {
 
   }
 
   ngOnInit() {
-    this.pathString = 'M150 0 L75 300 L225 500 ';
-     this.pathString = this.constructPath(this.pathPoint);
   }
 
 
-
-  constructPath(pathPoints) {
-    let pathD = '';
-    pathPoints.forEach((coordinate) => {
-      pathD = pathD + coordinate.l + coordinate.x + ',' + coordinate.y + coordinate.s;
-    });
-    return pathD;
+  drawCurvedLine(x1: number, y1: number, x2: number, y2: number, tension: number) {
+    console.log('dibujando linea en ' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2);
+    const delta = (x2 - x1) * tension;
+    const hx1 = x1 + delta;
+    const hy1 = y1;
+    const hx2 = x2 - delta;
+    const hy2 = y2;
+    this.pathString = 'M ' + x1 + ' ' + y1 + ' C ' + hx1 + ' ' + hy1 + ' ' + hx2 + ' ' + hy2 + ' ' + x2 + ' ' + y2;
   }
-
 }

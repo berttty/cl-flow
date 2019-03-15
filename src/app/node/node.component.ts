@@ -13,6 +13,7 @@ library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChi
 
 export interface NodeInterface {
   removeNode(index: number);
+  createNext(index: number);
 }
 
 @Component({
@@ -32,10 +33,11 @@ export class NodeComponent implements OnInit {
   public index: number;
   public selfRef: NodeComponent;
   public icon: string;
+  public selection: string;
   // interface for Parent-Child interaction
   public compInteraction: NodeInterface;
 
-  position;
+  public position: {x: number, y: number};
 
   constructor() { }
 
@@ -46,13 +48,23 @@ export class NodeComponent implements OnInit {
     this.compInteraction.removeNode(index);
   }
 
+  createNext(index: number, selection: string) {
+    this.selection = selection;
+    this.compInteraction.createNext(index);
+  }
+
   onStop(event) {
     moveTo(event.xPosition, event.yPosition);
   }
 
   moveTo(posX: number, posY: number) {
-    console.log('here');
     this.position = { x: posX, y: posY };
-    console.log(this.position);
+  }
+
+  getPosition() {
+    return this.position;
+  }
+  getType() {
+    return this.selection;
   }
 }
