@@ -8,8 +8,10 @@ import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 import { faBullseye } from '@fortawesome/free-solid-svg-icons';
 import { faChild } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {LineComponent} from '../line/line.component';
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt);
+type MyArrayType = Array<{id: string}>;
 
 export interface NodeInterface {
   removeNode(index: number);
@@ -38,10 +40,24 @@ export class NodeComponent implements OnInit {
   public compInteraction: NodeInterface;
 
   public position: {x: number, y: number};
+  public previous: number;
 
-  constructor() { }
+  public close: boolean;
+  public dobleclose1: boolean;
+  public dobleclose2: boolean;
+  public dobleclose3: boolean;
+  public dobleclose4: boolean;
+  public dobleclose5: boolean;
+
+
+
+  public lines: MyArrayType = [];
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.close = false;
   }
 
   removeMe(index) {
@@ -51,20 +67,59 @@ export class NodeComponent implements OnInit {
   createNext(index: number, selection: string) {
     this.selection = selection;
     this.compInteraction.createNext(index);
+
+    // WE MUST DISSAPEAR THE OPTIONS FOR SELECT CREATION
+    // The options are only css
+
+    this.checkMe();
+
   }
 
   onStop(event) {
-    moveTo(event.xPosition, event.yPosition);
+    console.log('the position is: ' + this.position.x + '  ' + this.position.y);
+    console.log('the position will be is: ' + event.x + '  ' + event.y);
+    this.moveTo(event.x, event.y);
+    console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
   }
 
   moveTo(posX: number, posY: number) {
+    console.log('over the node + ' + this.index);
     this.position = { x: posX, y: posY };
   }
 
   getPosition() {
+    console.log('my index + ' + this.index);
+    console.log('my position + ' + this.position);
     return this.position;
   }
   getType() {
     return this.selection;
+  }
+
+  checkMe() {
+    console.log('toggle: ' + this.close)
+    this.close = !this.close;
+
+    if (this.close ===  false) {
+      this.dobleclose1 = false;
+      this.dobleclose2 = false;
+      this.dobleclose3 = false;
+      this.dobleclose4 = false;
+      this.dobleclose5 = false;
+    }
+  }
+
+  checkMeDetail(op) {
+    if (op === 1) {
+      this.dobleclose1 = !this.dobleclose1;
+    } else if (op === 2) {
+      this.dobleclose2 = !this.dobleclose2;
+    } else if (op === 3) {
+      this.dobleclose3 = !this.dobleclose3;
+    } else if (op === 4) {
+      this.dobleclose4 = !this.dobleclose4;
+    } else if (op === 5) {
+      this.dobleclose5 = !this.dobleclose5;
+    }
   }
 }

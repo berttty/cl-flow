@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
-import { CdkDragMove } from '@angular/cdk/drag-drop';
 
 library.add(faQuestion, faCoins);
 
@@ -36,8 +35,9 @@ export class NodeInitComponent implements OnInit {
   }
 
   onStop(event) {
-    console.log('the position is: ' + event.x + '  ' + event.y);
+    console.log('the position is: ' + this.position.x + '  ' + this.position.y);
     this.moveTo(event.x, event.y);
+    console.log('the position after is: ' + event.x + '  ' + event.y);
   }
 
   moveTo(posX: number, posY: number) {

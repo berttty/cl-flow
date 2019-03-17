@@ -24,6 +24,7 @@ import { AdunitService } from './adunit.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PinningjobService} from './services/pinningjob.service';
 import { DetailjobService} from './services/detailjob.service';
+import * as linemate from 'linemate';
 
 const routes: Routes = [
   {

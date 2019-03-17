@@ -1,16 +1,16 @@
-<div class="cl-br-node-l1-s5" ngDraggable  (stopped)="onStop($event)" [position]="position">
-  <input type="checkbox" href="#" class="cl-br-node-l1-s5-open" name="cl-br-node-l1-s5-open" id="cl-br-node-l1-s5-open-{{index}}"/>
-  <label class="cl-br-node-l1-s5-open-button" for="cl-br-node-l1-s5-open-{{index}}">
+<div id="primero-{{index}}" class="cl-br-node-l1-s5 lineable" ngDraggable  (endOffset)="onStop($event)" [position]="position">
+  <input type="checkbox" href="#" class="cl-br-node-l1-s5-open" [checked]="close" name="cl-br-node-l1-s5-open" id="cl-br-node-l1-s5-open-{{index}}"/>
+  <label class="cl-br-node-l1-s5-open-button" (click)=checkMe() >
     <span class="cl-br-node-hamburger-l1-s5 cl-br-node-hamburger-l1-s5-1"></span>
     <div class="cl-br-node-init-hamburger-2">
         <fa-icon [icon]="['fas', icon]" size="3x" transform="down-5"></fa-icon>
     </div>
     <span class="cl-br-node-hamburger-l1-s5 cl-br-node-hamburger-l1-s5-3"></span>
   </label>
-  <a href="#" class="cl-br-node-l1-s5-item">
+  <a href="#" class="cl-br-node-l1-s5-item" >
       <div class="cl-br-node-l2-s5-e1">
-          <input type="checkbox" href="#" class="cl-br-node-l2-s5-e1-open" name="cl-br-node-l2-s5-e1-open" id="cl-br-node-l2-s5-e1-open-{{index}}"/>
-          <label class="cl-br-node-l2-s5-e1-open-button" for="cl-br-node-l2-s5-e1-open-{{index}}">
+          <input type="checkbox" href="#" class="cl-br-node-l2-s5-e1-open" [checked]="dobleclose1" name="cl-br-node-l2-s5-e1-open" id="cl-br-node-l2-s5-e1-open-{{index}}"/>
+          <label class="cl-br-node-l2-s5-e1-open-button" (click)=checkMeDetail(1)>
             <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
           </label>
           <a href="#" class="cl-br-node-l2-s5-e1-item" (click)="removeMe(index)"> <fa-icon [icon]="['fas', 'trash-alt']" size="2x"></fa-icon></a>
@@ -21,8 +21,8 @@
   </a>
   <a href="#" class="cl-br-node-l1-s5-item">
     <div class="cl-br-node-l2-s5-e2">
-      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e2-open" name="cl-br-node-l2-s5-e2-open" id="cl-br-node-l2-s5-e2-open-{{index}}"/>
-      <label class="cl-br-node-l2-s5-e2-open-button" for="cl-br-node-l2-s5-e2-open-{{index}}">
+      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e2-open" [checked]="dobleclose2" name="cl-br-node-l2-s5-e2-open" id="cl-br-node-l2-s5-e2-open-{{index}}"/>
+      <label class="cl-br-node-l2-s5-e2-open-button" (click)=checkMeDetail(2)>
         <fa-icon [icon]="['fas', 'brain']" size="2x"></fa-icon>
       </label>
       <a href="#" class="cl-br-node-l2-s5-e2-item" (click)="createNext(index, 'brain')"> <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon></a>
@@ -33,8 +33,8 @@
   </a>
   <a href="#" class="cl-br-node-l1-s5-item">
     <div class="cl-br-node-l2-s5-e3">
-      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e3-open" name="cl-br-node-l2-s5-e3-open" id="cl-br-node-l2-s5-e3-open-{{index}}"/>
-      <label class="cl-br-node-l2-s5-e3-open-button" for="cl-br-node-l2-s5-e3-open-{{index}}">
+      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e3-open" [checked]="dobleclose3" name="cl-br-node-l2-s5-e3-open" id="cl-br-node-l2-s5-e3-open-{{index}}"/>
+      <label class="cl-br-node-l2-s5-e3-open-button" (click)=checkMeDetail(3)>
         <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
       </label>
       <a href="#" class="cl-br-node-l2-s5-e3-item"> <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon></a>
@@ -45,8 +45,8 @@
   </a>
   <a href="#" class="cl-br-node-l1-s5-item">
     <div class="cl-br-node-l2-s5-e4">
-      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e4-open" name="cl-br-node-l2-s5-e4-open" id="cl-br-node-l2-s5-e4-open-{{index}}"/>
-      <label class="cl-br-node-l2-s5-e4-open-button" for="cl-br-node-l2-s5-e4-open-{{index}}">
+      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e4-open" [checked]="dobleclose4" name="cl-br-node-l2-s5-e4-open" id="cl-br-node-l2-s5-e4-open-{{index}}"/>
+      <label class="cl-br-node-l2-s5-e4-open-button" (click)=checkMeDetail(4)>
         <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
       </label>
       <a href="#" class="cl-br-node-l2-s5-e4-item"> <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon></a>
@@ -57,8 +57,8 @@
   </a>
   <a href="#" class="cl-br-node-l1-s5-item">
     <div class="cl-br-node-l2-s5-e5">
-      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e5-open" name="cl-br-node-l2-s5-e5-open" id="cl-br-node-l2-s5-e5-open-{{index}}"/>
-      <label class="cl-br-node-l2-s5-e5-open-button" for="cl-br-node-l2-s5-e5-open-{{index}}">
+      <input type="checkbox" href="#" class="cl-br-node-l2-s5-e5-open" [checked]="dobleclose5" name="cl-br-node-l2-s5-e5-open" id="cl-br-node-l2-s5-e5-open-{{index}}"/>
+      <label class="cl-br-node-l2-s5-e5-open-button" (click)=checkMeDetail(5)>
         <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
       </label>
       <a href="#" class="cl-br-node-l2-s5-e5-item"> <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon></a>
