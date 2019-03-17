@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
 
 
-library.add(faPlay);
+library.add(faPlay, faFolderOpen, faSave, faCogs);
 
 @Component({
   selector: 'app-action-button',

@@ -27,4 +27,8 @@ export class SourceOperator extends Operator {
       broadcasts
     );
   }
+
+  isSource(): boolean {
+    return true;
+  }
 }

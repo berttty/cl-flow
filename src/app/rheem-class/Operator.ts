@@ -61,4 +61,12 @@ export class Operator {
             `;
   }
 
+  isSink(): boolean {
+    return false;
+  }
+
+  isSource(): boolean {
+    return false;
+  }
 }
+
