@@ -27,4 +27,8 @@ export class SinkOperator extends Operator {
       broadcasts
     );
   }
+
+  isSink(): boolean {
+    return true;
+  }
 }

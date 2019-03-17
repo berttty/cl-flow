@@ -32,7 +32,7 @@ export class DrawZoneComponent implements OnInit {
 
   lineStructure;
 
-  constructor( private factoryResolver: ComponentFactoryResolver) {
+  constructor(private factoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {
@@ -81,7 +81,6 @@ export class DrawZoneComponent implements OnInit {
       currentComponent.icon = type;
     }
     if (previous !== undefined) {
-      currentComponent.previous = previous;
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
 

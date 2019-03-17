@@ -1,6 +1,6 @@
 .cl-br-action-button-save {
- /* -webkit-filter: url("#shadowed-goo");
-  filter: url("#shadowed-goo");*/
+  /* -webkit-filter: url("#shadowed-goo");
+   filter: url("#shadowed-goo");*/
 }
 
 .cl-br-action-button-save-item, .cl-br-action-button-save-open-button {
@@ -8,12 +8,13 @@
   border-radius: 100%;
   width: 80px;
   height: 80px;
-  margin-left: -40px;
+  margin: -40px 0 0 -40px;
+  text-align: center;
   position: absolute;
   top: 20px;
   color: white;
-  text-align: center;
-  line-height: 80px;
+  line-height: 90px;
+  padding-left: 10px;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   transition: -webkit-transform ease-out 200ms;
@@ -134,11 +135,11 @@
 }
 .cl-br-action-button-save-open:checked ~ .cl-br-action-button-save-item:nth-child(5) {
   transition-duration: 390ms;
-  -webkit-transform: translate3d(-330px, 0, 0);
-  transform: translate3d(-330px, 0, 0);
+  -webkit-transform: translate3d(0, 110px, 0);
+  transform: translate3d(0, 110px, 0);
 }
 .cl-br-action-button-save-open:checked ~ .cl-br-action-button-save-item:nth-child(6) {
   transition-duration: 490ms;
-  -webkit-transform: translate3d(-440px, 0, 0);
-  transform: translate3d(-440px, 0, 0);
+  -webkit-transform: translate3d(0, 220px, 0);
+  transform: translate3d(0, 220px, 0);
 }

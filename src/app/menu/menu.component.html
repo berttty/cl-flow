@@ -10,86 +10,233 @@
 
         <ul class="cl-br-menu-wout-margin">
           <li>
-            <a href="#" (click)="toggleNavigationSub('sub_1')">
-          <span>
-            <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-          </span>
-              Data Source
-            </a>
-            <ul [@toggleHeight]="navigationSubState.sub_1">
-              <li>
-                <a href="#" (click)="toggleNavigationSub('sub_1_1')" >
+            <a href="#" (click)="toggleNavigationSub('source', true)">
               <span>
                 <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
               </span>
-                  Data Source 1
-                </a>
-                <ul [@toggleHeight]="navigationSubState.sub_1_1">
-                  <li>
-                    <a href="#">
+              Data Source
+            </a>
+            <ul [@toggleHeight]="navigationSubState.source">
+              <li>
+                <a href="#" (click)="toggleNavigationSub('raw_data')" >
                   <span>
                     <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
                   </span>
-                      Data Source 1.1
+                  RawData
+                </a>
+                <ul [@toggleHeight]="navigationSubState.raw_data">
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      HDFS
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                  <span>
-                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
-                  </span>
-                      Data Source 1.2
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      Local File System (LFS)
                     </a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#">
+                <a href="#" (click)="toggleNavigationSub('relational')" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Relational
+                </a>
+                <ul [@toggleHeight]="navigationSubState.relational">
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      PostgreSQL
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" (click)="toggleNavigationSub('preparation', true)">
               <span>
-                <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
               </span>
-                  Data Source 2
+              Data Preparation
+            </a>
+            <ul [@toggleHeight]="navigationSubState.preparation">
+              <li>
+                <a href="#" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Missing Values Imputation
+                </a>
+              </li>
+              <li>
+                <a href="#" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Outliers Removal
                 </a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="#">
-          <span>
-            <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon>
-          </span>
-              Data Preparation
+            <a href="#"  (click)="toggleNavigationSub('ai', true)">
+              <span>
+                <fa-icon [icon]="['fas', 'brain']" size="2x"></fa-icon>
+              </span>
+              AI Analytics
             </a>
+            <ul [@toggleHeight]="navigationSubState.ai">
+              <li>
+                <a href="#" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Clustering
+                </a>
+              </li>
+              <li>
+                <a href="#" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Classification
+                </a>
+              </li>
+            </ul>
           </li>
           <li>
-            <a href="#">
-          <span>
-            <fa-icon [icon]="['fas', 'brain']" size="2x"></fa-icon>
-          </span>
-              IA Analytics
-            </a>
-          </li>
-          <li>
-            <a href="#">
-          <span>
-            <fa-icon [icon]="['fas', 'puzzle-piece']" size="2x"></fa-icon>
-          </span>
+            <a href="#"  (click)="toggleNavigationSub('data_analitics', true)">
+              <span>
+                <fa-icon [icon]="['fas', 'puzzle-piece']" size="2x"></fa-icon>
+              </span>
               Data Analytics
             </a>
+            <ul [@toggleHeight]="navigationSubState.data_analitics">
+              <li>
+                <a href="#" (click)="toggleNavigationSub('binaryOperator')">
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Binary Operator
+                </a>
+                <ul [@toggleHeight]="navigationSubState.binaryOperator">
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      Join Operator
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      Union Operator
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#" (click)="toggleNavigationSub('unaryOperator')">
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Unary Operator
+                </a>
+                <ul [@toggleHeight]="navigationSubState.unaryOperator">
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      Filter Operator
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      Map Operator
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
           <li>
-            <a href="#">
-          <span>
-            <fa-icon [icon]="['fas', 'bullseye']" size="2x"></fa-icon>
-          </span>
+            <a href="#"  (click)="toggleNavigationSub('storage', true)">
+              <span>
+                <fa-icon [icon]="['fas', 'bullseye']" size="2x"></fa-icon>
+              </span>
               Data Storage
             </a>
+            <ul [@toggleHeight]="navigationSubState.storage">
+              <li>
+                <a href="#" (click)="toggleNavigationSub('raw_data_storage')" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  RawData
+                </a>
+                <ul [@toggleHeight]="navigationSubState.raw_data_storage">
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      HDFS
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      Local File System (LFS)
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#" (click)="toggleNavigationSub('relational_storage')" >
+                  <span>
+                    <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                  </span>
+                  Relational
+                </a>
+                <ul [@toggleHeight]="navigationSubState.relational_storage">
+                  <li>
+                    <a href="#">
+                      <span>
+                        <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+                      </span>
+                      PostgreSQL
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
           <li>
             <a href="#">
-          <span>
-            <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon>
-          </span>
+              <span>
+                <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon>
+              </span>
               Custom Operations
             </a>
           </li>
@@ -99,7 +246,7 @@
   </div>
   <div class="cl-br-border-left-second-part">
     <!-- -->
-    <app-jobs-pin></app-jobs-pin>
+    <app-pin-area></app-pin-area>
     <!-- -->
   </div>
 </div>

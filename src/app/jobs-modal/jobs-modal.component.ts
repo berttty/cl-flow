@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DetailjobService} from '../services/detailjob.service';
 import { Subscription } from 'rxjs';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-jobs-modal',
