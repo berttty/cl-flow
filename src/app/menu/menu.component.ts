@@ -42,9 +42,17 @@ library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChi
 export class MenuComponent implements OnInit {
   isOpen = false;
   navigationSubState: { [menu: string]: string} = {
-    sub_1: 'close',
-    sub_2: 'close',
-    sub_1_1: 'close'
+    source: 'close',
+    relational: 'close',
+    raw_data: 'close',
+    preparation: 'close',
+    ai: 'close',
+    data_analitics: 'close',
+    binaryOperator: 'close',
+    unaryOperator: 'close',
+    storage: 'close',
+    raw_data_storage: 'close',
+    relational_storage: 'close',
   };
   constructor() { }
 
@@ -53,21 +61,34 @@ export class MenuComponent implements OnInit {
 
   menuHeaderAction() {
     if ( this.isOpen ) {
-      Object
-        .keys(this.navigationSubState)
-        .forEach( (value: string) => {
-          this.closeSubMenu(value);
-        }
-      );
+      this.closeMenu();
     }
     this.isOpen = ! this.isOpen;
   }
 
-  toggleNavigationSub(menuName: string) {
+  toggleNavigationSub(menuName: string, isPrincipal?: boolean) {
     if (!this.isOpen) {
       this.menuHeaderAction();
     }
+    if ( isPrincipal !== undefined && isPrincipal === true) {
+     this.closeMenu((key: string) => {
+       return key !== menuName;
+     });
+    }
     this.navigationSubState[menuName] = (this.navigationSubState[menuName] === 'close' ? 'open' : 'close');
+  }
+
+  closeMenu(filter?: (f: string) => boolean) {
+    let start = Object
+      .keys(this.navigationSubState);
+
+    if (filter !== undefined) {
+      start = start.filter( filter );
+    }
+
+    start.forEach( (value: string) => {
+      this.closeSubMenu(value);
+    });
   }
 
   closeSubMenu(menuName: string) {
