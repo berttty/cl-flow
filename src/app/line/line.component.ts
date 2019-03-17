@@ -14,6 +14,7 @@ export class LineComponent implements AfterViewInit {
   /** Canvas 2d context */
   private context: CanvasRenderingContext2D;
   private el: HTMLCanvasElement;
+  public index: number;
 
   constructor() {
 

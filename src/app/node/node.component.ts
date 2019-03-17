@@ -11,7 +11,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {LineComponent} from '../line/line.component';
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt);
-type MyArrayType = Array<{id: string}>;
+type MyArrayType = Array<{id: number}>;
 
 export interface NodeInterface {
   removeNode(index: number);

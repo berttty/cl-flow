@@ -21,7 +21,7 @@ export class DrawZoneComponent implements OnInit {
 
   indexNode = 0;
   indexNodeInit = 0;
-  indexLine = 0;
+  indexLineInit = 0;
   nodeListReference = [];
   nodeInitListReference = [];
   lineListReference = [];
@@ -116,6 +116,9 @@ export class DrawZoneComponent implements OnInit {
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
       const previousPosition = nodePrevious.getPosition();
       this.drawLines(previousPosition.x, previousPosition.y, posX, posY);
+
+      // nodePrevious.lines.push(this.indexLineInit);
+
     }
 
   }
@@ -178,7 +181,7 @@ export class DrawZoneComponent implements OnInit {
       const componentFactory = this.factoryResolver.resolveComponentFactory(LineComponent);
       const componentRef: ComponentRef<LineComponent> = this.VCRLines.createComponent(componentFactory);
       const currentComponent = componentRef.instance;
-
+      currentComponent.index = ++this.indexLineInit;
 
       // DESDE AQUI SE PUEDE BORRAR
 
