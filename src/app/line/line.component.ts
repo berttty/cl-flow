@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Stroke } from 'angular-svg';
+import {NodeComponent} from '../node/node.component';
 
 @Component({
   selector: 'app-line',
@@ -15,9 +16,10 @@ export class LineComponent implements AfterViewInit {
   private context: CanvasRenderingContext2D;
   private el: HTMLCanvasElement;
   public index: number;
+  public nodeListReference: NodeComponent[];
 
   constructor() {
-
+    this.nodeListReference = [];
   }
 
   ngAfterViewInit() {

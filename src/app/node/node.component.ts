@@ -11,7 +11,6 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {LineComponent} from '../line/line.component';
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt);
-type MyArrayType = Array<{id: number}>;
 
 export interface NodeInterface {
   removeNode(index: number);
@@ -51,13 +50,17 @@ export class NodeComponent implements OnInit {
 
 
 
-  public lines: MyArrayType = [];
+  public lines: number [];
+  public lineListReference = [];
 
   constructor() {
+    this.lines = [];
+    this.lineListReference = [];
   }
 
   ngOnInit() {
     this.close = false;
+
   }
 
   removeMe(index) {
