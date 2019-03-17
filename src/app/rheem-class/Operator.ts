@@ -2,6 +2,7 @@ import { Parameter } from './Parameter';
 import {Conexion} from './Conexion';
 import {OperatorType} from './OperatorType';
 import {Platform} from './Platform';
+import {OptionNext} from './OptionNext';
 
 export class Operator {
   protected name: string;
@@ -28,6 +29,7 @@ export class Operator {
     this.name = name;
     this.className = className;
     this.parameters = parameters;
+    // TODO validate the types are compatible and the option of acept to differents
     this.classInput = classInput;
     this.classOutput = classOutput;
     this.connexions = (connexions === undefined ? [] : connexions);
@@ -67,6 +69,10 @@ export class Operator {
 
   isSource(): boolean {
     return false;
+  }
+
+  nextOption(): OptionNext {
+    return new OptionNext(false);
   }
 }
 

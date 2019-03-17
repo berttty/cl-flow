@@ -1,1 +1,3 @@
-export class OperatorFactory {}
+export class OperatorFactory {
+
+}

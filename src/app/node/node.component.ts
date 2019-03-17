@@ -8,9 +8,15 @@ import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 import { faBullseye } from '@fortawesome/free-solid-svg-icons';
 import { faChild } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import {LineComponent} from '../line/line.component';
+import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt);
+import {Operator} from '../rheem-class/Operator';
+import {OptionNext} from '../rheem-class/OptionNext';
+import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
+
+library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
+
 
 export interface NodeInterface {
   removeNode(index: number);
@@ -35,6 +41,10 @@ export class NodeComponent implements OnInit {
   public selfRef: NodeComponent;
   public icon: string;
   public selection: string;
+  private operator: Operator;
+  public nextOpt: OptionNext;
+  public dobleClose: boolean[];
+  private indexOption: number;
   // interface for Parent-Child interaction
   public compInteraction: NodeInterface;
 
@@ -56,11 +66,13 @@ export class NodeComponent implements OnInit {
   constructor() {
     this.lines = [];
     this.lineListReference = [];
+    this.indexOption = 0;
+    this.operator = new TextFileSource('');
   }
 
   ngOnInit() {
     this.close = false;
-
+    this.operator = new TextFileSource('');
   }
 
   removeMe(index) {
@@ -100,29 +112,34 @@ export class NodeComponent implements OnInit {
   }
 
   checkMe() {
-    console.log('toggle: ' + this.close)
+    console.log('toggle: ' + this.close);
     this.close = !this.close;
 
     if (this.close ===  false) {
-      this.dobleclose1 = false;
-      this.dobleclose2 = false;
-      this.dobleclose3 = false;
-      this.dobleclose4 = false;
-      this.dobleclose5 = false;
+      this.dobleClose[1] = false;
+      this.dobleClose[2] = false;
+      this.dobleClose[3] = false;
+      this.dobleClose[4] = false;
+      this.dobleClose[5] = false;
     }
   }
 
-  checkMeDetail(op) {
-    if (op === 1) {
-      this.dobleclose1 = !this.dobleclose1;
-    } else if (op === 2) {
-      this.dobleclose2 = !this.dobleclose2;
-    } else if (op === 3) {
-      this.dobleclose3 = !this.dobleclose3;
-    } else if (op === 4) {
-      this.dobleclose4 = !this.dobleclose4;
-    } else if (op === 5) {
-      this.dobleclose5 = !this.dobleclose5;
-    }
+  checkMeDetail(index) {
+    this.dobleClose[index] = ! this.dobleClose[index];
+  }
+
+  setOperator(operator: Operator): void {
+    this.operator = operator;
+    this.nextOpt = this.operator.nextOption();
+    this.dobleClose = [];
+    this.dobleClose.push(false);
+    this.dobleClose.push(false);
+    this.dobleClose.push(false);
+    this.dobleClose.push(false);
+    this.dobleClose.push(false);
+  }
+
+  updateDobleClose(index: number) {
+    return this.dobleClose[index];
   }
 }

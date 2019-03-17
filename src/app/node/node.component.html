@@ -7,18 +7,22 @@
     </div>
     <span class="cl-br-node-hamburger-l1-s5 cl-br-node-hamburger-l1-s5-3"></span>
   </label>
-  <a href="#" class="cl-br-node-l1-s5-item" >
-      <div class="cl-br-node-l2-s5-e1">
-          <input type="checkbox" href="#" class="cl-br-node-l2-s5-e1-open" [checked]="dobleclose1" name="cl-br-node-l2-s5-e1-open" id="cl-br-node-l2-s5-e1-open-{{index}}"/>
-          <label class="cl-br-node-l2-s5-e1-open-button" (click)=checkMeDetail(1)>
-            <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
+  <a *ngFor="let opt of nextOpt.getOptions()" href="#" class="cl-br-node-l1-s5-item" matTooltip="{{opt.getName()}}">
+      <div class="cl-br-node-l2-s5-e{{opt.getIndex()}}">
+          <input type="checkbox" href="#" class="cl-br-node-l2-s5-e{{opt.getIndex()}}-open" [checked]="updateDobleClose(opt.getIndex())" name="cl-br-node-l2-s5-e{{opt.getIndex()}}-open" id="cl-br-node-l2-s5-e{{opt.getIndex()}}-open-{{index}}"/>
+          <label class="cl-br-node-l2-s5-e{{opt.getIndex()}}-open-button" (click)=checkMeDetail(opt.getIndex()) >
+            <fa-icon [icon]="['fas', opt.getIcon() ]" size="2x"></fa-icon>
           </label>
-          <a href="#" class="cl-br-node-l2-s5-e1-item" (click)="removeMe(index)"> <fa-icon [icon]="['fas', 'trash-alt']" size="2x"></fa-icon></a>
+          <a *ngFor="let subOpt of opt.getSubOptions()" href="#" class="cl-br-node-l2-s5-e{{opt.getIndex()}}-item" matTooltip="{{subOpt.getName()}}">
+            <fa-icon [icon]="['fas',  subOpt.getIcon() ]" size="2x"></fa-icon>
+          </a>
+         <!-- <a href="#" class="cl-br-node-l2-s5-e1-item" (click)="removeMe(index)"> <fa-icon [icon]="['fas', 'trash-alt']" size="2x"></fa-icon></a>
           <a href="#" class="cl-br-node-l2-s5-e1-item"> <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon> </a>
           <a href="#" class="cl-br-node-l2-s5-e1-item"> <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon> </a>
-          <a href="#" class="cl-br-node-l2-s5-e1-item"> <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon> </a>
+          <a href="#" class="cl-br-node-l2-s5-e1-item"> <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon> </a> -->
       </div>
   </a>
+  <!--
   <a href="#" class="cl-br-node-l1-s5-item">
     <div class="cl-br-node-l2-s5-e2">
       <input type="checkbox" href="#" class="cl-br-node-l2-s5-e2-open" [checked]="dobleclose2" name="cl-br-node-l2-s5-e2-open" id="cl-br-node-l2-s5-e2-open-{{index}}"/>
@@ -66,5 +70,5 @@
       <a href="#" class="cl-br-node-l2-s5-e5-item"> <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon> </a>
       <a href="#" class="cl-br-node-l2-s5-e5-item"> <fa-icon [icon]="['fas', 'hammer']" size="2x"></fa-icon> </a>
     </div>
-  </a>
+  </a>-->
 </div>

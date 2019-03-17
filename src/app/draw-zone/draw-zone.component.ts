@@ -69,7 +69,7 @@ export class DrawZoneComponent implements OnInit {
     const componentFactory = this.factoryResolver.resolveComponentFactory(NodeComponent);
     const componentRef: ComponentRef<NodeComponent> = this.VCR.createComponent(componentFactory);
     const currentComponent = componentRef.instance;
-
+    currentComponent.setOperator(new TextFileSource(''));
     currentComponent.selfRef = currentComponent;
     currentComponent.index = ++this.indexNode;
     // providing parent Component reference to get access to parent class methods
