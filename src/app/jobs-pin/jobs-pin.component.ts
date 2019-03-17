@@ -6,31 +6,28 @@ import { Subscription } from 'rxjs';
 
 library.add(faTimes);
 
+export interface PinJobInterface {
+  removePin(index: number);
+}
+
 @Component({
   selector: 'app-jobs-pin',
   templateUrl: './jobs-pin.component.html',
   styleUrls: ['./jobs-pin.component.css'],
 })
 export class JobsPinComponent implements OnInit {
+  public index: number;
+  public jobsID: string;
+  public selfRef: JobsPinComponent;
+  public pinAreaInteraction: PinJobInterface;
 
-  subscription: Subscription;
-  card = '';
-
-  constructor(private service: PinningjobService) {
-    console.log('Pin Job Action');
-    this.subscription = service.pinning$.subscribe(
-      id => {
-        console.log('generating pin-job for card: ' + id);
-        this.card = id;
-      }
-    );
-  }
+  constructor() {}
 
   ngOnInit() {
   }
 
-  pinningJob() {
-    console.log('Pin Function: ' + this.card);
-    this.service.pinnedStatusMethod(this.card);
+  removeMe(index: number) {
+    this.pinAreaInteraction.removePin(index);
   }
+
 }

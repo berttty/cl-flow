@@ -24,6 +24,7 @@ import { AdunitService } from './adunit.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PinningjobService} from './services/pinningjob.service';
 import { DetailjobService} from './services/detailjob.service';
+import { PinAreaComponent } from './pin-area/pin-area.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
     DrawZoneComponent,
     NodeInitComponent,
     LineComponent,
+    PinAreaComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,7 @@ const routes: Routes = [
     NodeComponent,
     NodeInitComponent,
     LineComponent,
-
+    JobsPinComponent
   ],
   providers: [
     AdunitService,

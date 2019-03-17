@@ -40,18 +40,21 @@ export class JobsComponent implements OnInit {
   ngOnInit() {
   }
 
-  PinningCard(id: string) {
+  pinningCard(id: string) {
     console.log('pineando carta: ' + id);
     this.service.pinningJobMethod(id);
 
   }
 
-  DetailingCard(id: string) {
+  detailingCard(id: string) {
     console.log('detallando carta: ' + id);
     this.serveDetail.detailingJobMethod(id);
 
   }
 
+  stopJob(id: string) {
+    console.log('stop the job');
+  }
 
   openOptionLeft() {
     console.log('change the status Left');
