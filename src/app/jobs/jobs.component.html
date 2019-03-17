@@ -1,17 +1,3 @@
-<!--<div class="cl-br-jobs-area">
-  <div class="cl-br-jobs-area-running">
-    dasdas
-  </div>
-  <div class="cl-br-jobs-area-menu">
-    gafrsd
-  </div>
-  <div class="cl-br-jobs-area-history">
-    \dasdas
-  </div>
-</div>-->
-<a (click)="pinningCard('1')" href="#">pin</a>
-<a (click)="detailingCard('1')" href="#">detail</a>
-
 <div class="row cl-br-jobs-area">
   <div class="col s5 cl-br-jobs-area-running"  >
     <div class="cl-br-jobs-area-content" [ngClass]="showCardsLeft ? 'cl-br-card-show' : ''">
@@ -46,7 +32,7 @@
       <a href="#" class="cl-br-jobs-area-menu-button-item" (click)="openOptionLeft()">
         <fa-icon [icon]="['fas', 'running']" size="2x"></fa-icon>
       </a>
-      <a href="#" class="cl-br-jobs-area-menu-button-item">
+      <a href="#" class="cl-br-jobs-area-menu-button-item" (click)="openDialog()">
         <fa-icon [icon]="['fas', 'tasks']" size="2x"></fa-icon>
       </a>
       <a href="#" class="cl-br-jobs-area-menu-button-item" (click)="openOptionRight()" >

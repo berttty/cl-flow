@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PinningjobService} from './services/pinningjob.service';
 import { DetailjobService} from './services/detailjob.service';
 import { PinAreaComponent } from './pin-area/pin-area.component';
+import {MatDialogModule} from '@angular/material';
 
 const routes: Routes = [
   {
@@ -62,13 +63,15 @@ const routes: Routes = [
     SvgEllipseModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   entryComponents: [
     NodeComponent,
     NodeInitComponent,
     LineComponent,
-    JobsPinComponent
+    JobsPinComponent,
+    JobsModalComponent
   ],
   providers: [
     AdunitService,

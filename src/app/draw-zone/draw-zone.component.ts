@@ -6,7 +6,6 @@ import {Operator} from '../rheem-class/Operator';
 import {FilterOperator} from '../rheem-class/unary-operator/FilterOperator';
 import {TextFileSink} from '../rheem-class/sink-operator/TextFileSink';
 import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
-import {operators} from 'rxjs/internal/Rx';
 
 @Component({
   selector: 'app-draw-zone',
@@ -29,7 +28,7 @@ export class DrawZoneComponent implements OnInit {
   plan = 'Aqui va el plan';
   // TODO eliminar es para test
 
-  constructor( private factoryResolver: ComponentFactoryResolver) {
+  constructor(private factoryResolver: ComponentFactoryResolver) {
   }
 
   ngOnInit() {

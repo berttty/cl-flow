@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faRunning } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +7,7 @@ import { faTasks } from '@fortawesome/free-solid-svg-icons';
 library.add(faCheckCircle, faTasks, faRunning);
 import {PinningjobService} from '../services/pinningjob.service';
 import { DetailjobService} from '../services/detailjob.service';
+import {JobsModalComponent} from '../jobs-modal/jobs-modal.component';
 
 @Component({
   selector: 'app-jobs',
@@ -21,7 +23,7 @@ export class JobsComponent implements OnInit {
   showCardsRight = false;
   isOpen = false;
 
-  constructor(private service: PinningjobService, private serveDetail: DetailjobService) {
+  constructor(private service: PinningjobService, private serveDetail: DetailjobService, public dialog: MatDialog) {
     service.status$.subscribe(
       // Id of the picked card
       id => {
@@ -36,6 +38,15 @@ export class JobsComponent implements OnInit {
       }
     );
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(JobsModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 
   ngOnInit() {
   }
