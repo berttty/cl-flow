@@ -445,4 +445,17 @@ export class DrawZoneComponent implements OnInit {
     }
     return { x: maxPosX, y: maxPosY + 200 };
   }
+
+  closeAllNodes() {
+
+    let i: number;
+    for (i = 0; i < this.nodeListReference.length; i++) {
+
+      const compRefX: ComponentRef<NodeComponent> = this.nodeListReference[i];
+      const compX: NodeComponent = compRefX.instance as NodeComponent;
+
+      compX.close = true;
+      compX.checkMe();
+    }
+  }
 }

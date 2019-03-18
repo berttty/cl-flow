@@ -28,6 +28,7 @@ export interface NodeInterface {
   createNext(index: number);
   removeEdges(index: number);
   repareEdges(index: number, x, y, oldX, oldY);
+  closeAllNodes();
 }
 
 @Component({
@@ -102,9 +103,12 @@ export class NodeComponent implements OnInit {
       this.compInteraction.removeEdges(this.index);
       this.movement = true;
 
+      this.compInteraction.closeAllNodes();
+
+
       // TEST
-      this.close = true;
-      this.checkMe();
+      /*this.close = true;
+      this.checkMe();*/
     }
   }
 
