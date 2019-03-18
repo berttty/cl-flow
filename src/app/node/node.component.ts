@@ -15,6 +15,8 @@ library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChi
 export interface NodeInterface {
   removeNode(index: number);
   createNext(index: number);
+  removeEdges(index: number);
+  repareEdges(index: number, x, y);
 }
 
 @Component({
@@ -42,6 +44,7 @@ export class NodeComponent implements OnInit {
   public previous: number;
 
   public close: boolean;
+  public movement: boolean;
   public dobleclose1: boolean;
   public dobleclose2: boolean;
   public dobleclose3: boolean;
@@ -60,6 +63,7 @@ export class NodeComponent implements OnInit {
 
   ngOnInit() {
     this.close = false;
+    this.movement = false;
 
   }
 
@@ -78,21 +82,32 @@ export class NodeComponent implements OnInit {
 
   }
 
+  onMoving(event) {
+
+    console.log('movimiento detectado');
+    if (this.movement === false) {
+    // lista con otros nodos;
+      this.compInteraction.removeEdges(this.index);
+      this.movement = true;
+    }
+  }
+
   onStop(event) {
-    console.log('the position is: ' + this.position.x + '  ' + this.position.y);
-    console.log('the position will be is: ' + event.x + '  ' + event.y);
+    // console.log('the position is: ' + this.position.x + '  ' + this.position.y);
+    // console.log('the position will be is: ' + event.x + '  ' + event.y);
     this.moveTo(event.x, event.y);
-    console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
+    // console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
+    this.compInteraction.repareEdges(this.index, event.x, event.y);
   }
 
   moveTo(posX: number, posY: number) {
-    console.log('over the node + ' + this.index);
+    // console.log('over the node + ' + this.index);
     this.position = { x: posX, y: posY };
   }
 
   getPosition() {
-    console.log('my index + ' + this.index);
-    console.log('my position + ' + this.position);
+    // console.log('my index + ' + this.index);
+    // console.log('my position + ' + this.position);
     return this.position;
   }
   getType() {
@@ -100,7 +115,7 @@ export class NodeComponent implements OnInit {
   }
 
   checkMe() {
-    console.log('toggle: ' + this.close)
+    // console.log('toggle: ' + this.close)
     this.close = !this.close;
 
     if (this.close ===  false) {
