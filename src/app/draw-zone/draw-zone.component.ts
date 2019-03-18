@@ -8,6 +8,7 @@ import {TextFileSink} from '../rheem-class/sink-operator/TextFileSink';
 import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
 import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
 import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
+import {RheemPlan} from '../rheem-class/RheemPlan';
 
 @Component({
   selector: 'app-draw-zone',
@@ -27,12 +28,14 @@ export class DrawZoneComponent implements OnInit {
   lineListReference = [];
 
   // TODO eliminar es para test
-  plan = 'Aqui va el plan';
+  private rheemPlan: RheemPlan;
+  plan = '';
   // TODO eliminar es para test
 
   lineStructure;
 
   constructor(private factoryResolver: ComponentFactoryResolver) {
+    this.rheemPlan = new RheemPlan();
   }
 
   ngOnInit() {
@@ -53,12 +56,16 @@ export class DrawZoneComponent implements OnInit {
     this.nodeInitListReference.push(componentRef);
   }
 
-  createNode(type?: string, posX?: number, posY?: number, previous?: number) {
-    let operator: Operator;
+  createNode(type?: string, posX?: number, posY?: number, previous?: number, operator?: Operator, configuration?: any) {
     if (previous !== undefined) {
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
-      operator = OperatorFactory.buildOperator(nodePrevious.confNextOperator);
+      if (operator === undefined) {
+        operator = OperatorFactory.buildOperator(nodePrevious.confNextOperator);
+      }
+      if (configuration === undefined) {
+        configuration = nodePrevious.confNextOperator;
+      }
 
       const previousPosition = nodePrevious.getPosition();
       if (posY === undefined) {
@@ -77,7 +84,11 @@ export class DrawZoneComponent implements OnInit {
     const currentComponent = componentRef.instance;
     currentComponent.selfRef = currentComponent;
     currentComponent.index = ++this.indexNode;
-    currentComponent.setOperator( (operator === undefined ? new EmptyOperator() : operator) );
+    operator =  (operator === undefined ? new EmptyOperator() : operator);
+    currentComponent.setOperator( operator );
+    currentComponent.selfConfOperator = configuration;
+    this.rheemPlan.addOperator(operator);
+    this.plan = this.rheemPlan.toString();
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
 
@@ -144,14 +155,14 @@ export class DrawZoneComponent implements OnInit {
   }
 
 
-  removeNodeInit(index: number) {
+  removeNodeInit(index: number, operator?: Operator, configuration?: any) {
     if (this.VCR.length < 1) {
       return;
     }
     const componentRef = this.nodeInitListReference.filter(x => x.instance.index === index)[0];
     const component: NodeInitComponent = componentRef.instance as NodeInitComponent;
     const vcrIndex: number = this.VCR.indexOf(componentRef);
-    this.createNode(component.getType(), component.position.x, component.position.y);
+    this.createNode(component.getType(), component.position.x, component.position.y, undefined, operator, configuration);
 
 
     // removing component from container

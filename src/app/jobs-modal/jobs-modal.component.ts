@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DetailjobService} from '../services/detailjob.service';
 import { Subscription } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -13,7 +13,7 @@ export class JobsModalComponent implements OnInit {
   subscription: Subscription;
   card = '';
 
-  constructor(private serveDetail: DetailjobService) {
+  constructor(private serveDetail: DetailjobService, @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('Detail Job Action');
     this.subscription = serveDetail.detailing$.subscribe(
       id => {

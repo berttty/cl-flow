@@ -75,7 +75,8 @@ const routes: Routes = [
     NodeInitComponent,
     LineComponent,
     JobsPinComponent,
-    JobsModalComponent
+    JobsModalComponent,
+    NodeModalComponent
   ],
   providers: [
     AdunitService,

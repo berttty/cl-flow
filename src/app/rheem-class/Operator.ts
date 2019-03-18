@@ -55,7 +55,7 @@ export class Operator {
 
   public toString(): string {
     return `{
-              "name" : "${this.name}",
+              "name" : "${this.name}",'
               "java_class" : "${this.className}",
               "parameters" : { ${this.parameters.join(' , ')} },
               "connects_to" : { ${this.connexions.join(' , ')} }

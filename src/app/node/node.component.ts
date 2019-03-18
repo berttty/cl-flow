@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
   faBars,
@@ -15,6 +16,7 @@ import {
 
 import {Operator} from '../rheem-class/Operator';
 import {ActionEnum, OptionNext} from '../rheem-class/OptionNext';
+import {NodeModalComponent} from '../node-modal/node-modal.component';
 
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
@@ -48,6 +50,7 @@ export class NodeComponent implements OnInit {
   public dobleClose: boolean[];
   private indexOption: number;
   public confNextOperator: any;
+  public selfConfOperator: any;
   // interface for Parent-Child interaction
   public compInteraction: NodeInterface;
 
@@ -59,7 +62,7 @@ export class NodeComponent implements OnInit {
   public lines: number [];
   public lineListReference = [];
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.lines = [];
     this.lineListReference = [];
     this.indexOption = 0;
@@ -133,6 +136,7 @@ export class NodeComponent implements OnInit {
     switch (action) {
       case ActionEnum.SETTINGS:
         console.log('open the console please');
+        this.openDialog();
         break;
       case ActionEnum.DELETE:
         this.removeMe(this.index);
@@ -148,6 +152,11 @@ export class NodeComponent implements OnInit {
         console.log('Somethings is wrong');
         break;
     }
+  }
+
+  openDialog(): void {
+    console.log(this.selfConfOperator);
+    this.dialog.open(NodeModalComponent, {data: this.selfConfOperator});
   }
 
   private validateObject(obj: any, ...option: string[]): boolean {

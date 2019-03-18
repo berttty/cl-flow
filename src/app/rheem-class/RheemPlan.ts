@@ -10,6 +10,8 @@ export class RheemPlan {
   constructor() {
     this.conexions = [];
     this.listOperator = [];
+    this.sources = [];
+    this.sinks = [];
   }
 
   addOperator(op: Operator) {
@@ -34,5 +36,9 @@ export class RheemPlan {
         return op.getName() === name;
       }
     )[0];
+  }
+
+  public toString(): string {
+    return this.listOperator.join(' , ');
   }
 }

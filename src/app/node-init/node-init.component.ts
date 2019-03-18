@@ -2,11 +2,13 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
+import {Operator} from '../rheem-class/Operator';
+import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
 
 library.add(faQuestion, faCoins);
 
 export interface NodeInitInterface {
-  removeNodeInit(index: number);
+  removeNodeInit(index: number, operator?: Operator, configuration?: any);
 }
 
 @Component({
@@ -27,11 +29,9 @@ export class NodeInitComponent implements OnInit {
   ngOnInit() {}
 
   setSource(index: number, platform: string) {
-    this.removeMe(index);
-  }
-
-  removeMe(index: number) {
-    this.compInteraction.removeNodeInit(index);
+    const conf: any = OperatorFactory.getConfigurationSource(platform);
+    const op: Operator = OperatorFactory.buildOperator(conf);
+    this.compInteraction.removeNodeInit(index, op, conf);
   }
 
   onStop(event) {
@@ -47,6 +47,7 @@ export class NodeInitComponent implements OnInit {
   getPosition() {
     return this.position;
   }
+
   getType() {
     return 'coins';
   }
