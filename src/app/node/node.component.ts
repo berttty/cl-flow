@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { faCoins } from '@fortawesome/free-solid-svg-icons';
-import { faHammer } from '@fortawesome/free-solid-svg-icons';
-import { faBrain } from '@fortawesome/free-solid-svg-icons';
-import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
-import { faBullseye } from '@fortawesome/free-solid-svg-icons';
-import { faChild } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { faCogs } from '@fortawesome/free-solid-svg-icons';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+  faBars,
+  faBrain,
+  faBullseye,
+  faChild,
+  faCog,
+  faCogs,
+  faCoins,
+  faHammer,
+  faPuzzlePiece,
+  faTrashAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 import {Operator} from '../rheem-class/Operator';
-import {OptionNext} from '../rheem-class/OptionNext';
-import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
+import {ActionEnum, OptionNext} from '../rheem-class/OptionNext';
+
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
 
@@ -45,6 +47,7 @@ export class NodeComponent implements OnInit {
   public nextOpt: OptionNext;
   public dobleClose: boolean[];
   private indexOption: number;
+  public confNextOperator: any;
   // interface for Parent-Child interaction
   public compInteraction: NodeInterface;
 
@@ -52,13 +55,6 @@ export class NodeComponent implements OnInit {
   public previous: number;
 
   public close: boolean;
-  public dobleclose1: boolean;
-  public dobleclose2: boolean;
-  public dobleclose3: boolean;
-  public dobleclose4: boolean;
-  public dobleclose5: boolean;
-
-
 
   public lines: number [];
   public lineListReference = [];
@@ -67,52 +63,42 @@ export class NodeComponent implements OnInit {
     this.lines = [];
     this.lineListReference = [];
     this.indexOption = 0;
-    this.operator = new TextFileSource('');
   }
 
   ngOnInit() {
     this.close = false;
-    this.operator = new TextFileSource('');
   }
 
   removeMe(index) {
     this.compInteraction.removeNode(index);
   }
 
-  createNext(index: number, selection: string) {
+  createNext(index: number, selection: string, confNextOperator?: any) {
     this.selection = selection;
+    this.confNextOperator = confNextOperator;
     this.compInteraction.createNext(index);
-
-    // WE MUST DISSAPEAR THE OPTIONS FOR SELECT CREATION
+    // WE MUST DISAPPEAR THE OPTIONS FOR SELECT CREATION
     // The options are only css
-
     this.checkMe();
-
+    this.confNextOperator = null;
   }
 
   onStop(event) {
-    console.log('the position is: ' + this.position.x + '  ' + this.position.y);
-    console.log('the position will be is: ' + event.x + '  ' + event.y);
     this.moveTo(event.x, event.y);
-    console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
   }
 
   moveTo(posX: number, posY: number) {
-    console.log('over the node + ' + this.index);
     this.position = { x: posX, y: posY };
   }
 
   getPosition() {
-    console.log('my index + ' + this.index);
-    console.log('my position + ' + this.position);
     return this.position;
   }
   getType() {
     return this.selection;
   }
 
-  checkMe() {
-    console.log('toggle: ' + this.close);
+  checkMe(): void {
     this.close = !this.close;
 
     if (this.close ===  false) {
@@ -124,7 +110,7 @@ export class NodeComponent implements OnInit {
     }
   }
 
-  checkMeDetail(index) {
+  checkMeDetail(index): void {
     this.dobleClose[index] = ! this.dobleClose[index];
   }
 
@@ -139,7 +125,37 @@ export class NodeComponent implements OnInit {
     this.dobleClose.push(false);
   }
 
-  updateDobleClose(index: number) {
+  updateDobleClose(index: number): boolean {
     return this.dobleClose[index];
+  }
+
+  doAction(action: ActionEnum, actionOption: any): void {
+    switch (action) {
+      case ActionEnum.SETTINGS:
+        console.log('open the console please');
+        break;
+      case ActionEnum.DELETE:
+        this.removeMe(this.index);
+        break;
+      case ActionEnum.CREATE_NEW:
+        if ( ! this.validateObject(actionOption, 'icon', 'MetaOperator', 'TypeOperator')) {
+          console.error('We need add option in create');
+          break;
+        }
+        this.createNext(this.index, actionOption.icon, actionOption);
+        break;
+      default:
+        console.log('Somethings is wrong');
+        break;
+    }
+  }
+
+  private validateObject(obj: any, ...option: string[]): boolean {
+    const test = Object.keys(obj);
+    return option
+              .filter((ele: string) => {
+                  return ! test.includes(ele);
+              })
+          .length === 0 ;
   }
 }

@@ -6,8 +6,8 @@ import {Operator} from '../rheem-class/Operator';
 import {FilterOperator} from '../rheem-class/unary-operator/FilterOperator';
 import {TextFileSink} from '../rheem-class/sink-operator/TextFileSink';
 import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
-import {operators} from 'rxjs/internal/Rx';
-import * as linemate from 'linemate';
+import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
+import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
 
 @Component({
   selector: 'app-draw-zone',
@@ -53,36 +53,12 @@ export class DrawZoneComponent implements OnInit {
     this.nodeInitListReference.push(componentRef);
   }
 
-  /*createLine(posX1: number, posY1: number, posX2: number, posY2: number) {
-
-    const componentFactory = this.factoryResolver.resolveComponentFactory(LineComponent);
-    const componentRef: ComponentRef<LineComponent> = this.VCRLines.createComponent(componentFactory);
-    const currentComponent = componentRef.instance;
-
-
-    currentComponent.drawCurvedLine(posX1, posY1, posX2, posY2, 0.8);
-
-    this.lineListReference.push(componentRef);
-  }*/
-
   createNode(type?: string, posX?: number, posY?: number, previous?: number) {
-    const componentFactory = this.factoryResolver.resolveComponentFactory(NodeComponent);
-    const componentRef: ComponentRef<NodeComponent> = this.VCR.createComponent(componentFactory);
-    const currentComponent = componentRef.instance;
-    currentComponent.setOperator(new TextFileSource(''));
-    currentComponent.selfRef = currentComponent;
-    currentComponent.index = ++this.indexNode;
-    // providing parent Component reference to get access to parent class methods
-    currentComponent.compInteraction = this;
-
-    // add reference for newly created component
-    this.nodeListReference.push(componentRef);
-    if (type !== undefined) {
-      currentComponent.icon = type;
-    }
+    let operator: Operator;
     if (previous !== undefined) {
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
+      operator = OperatorFactory.buildOperator(nodePrevious.confNextOperator);
 
       const previousPosition = nodePrevious.getPosition();
       if (posY === undefined) {
@@ -93,16 +69,24 @@ export class DrawZoneComponent implements OnInit {
       }
 
       posX = previousPosition.x + 200;
-      posY = previousPosition.y; // + 100;
-      // console.log('lo pondre en : ' + posX + ' ' + posY );
-      /*posX = posX + 120;
-      this.createLine(previousPosition.x, previousPosition.y, posX, posY);*/
-
-      // document.getElementById('primero-' + previous).style.left = '' + posX;
-      // document.getElementById('primero-' + currentComponent.index).style.top = '' + posY;
-      // document.getElementById('primero-' + currentComponent.index).style.left = '' + (posX  + 200);
+      posY = previousPosition.y;
 
     }
+    const componentFactory = this.factoryResolver.resolveComponentFactory(NodeComponent);
+    const componentRef: ComponentRef<NodeComponent> = this.VCR.createComponent(componentFactory);
+    const currentComponent = componentRef.instance;
+    currentComponent.selfRef = currentComponent;
+    currentComponent.index = ++this.indexNode;
+    currentComponent.setOperator( (operator === undefined ? new EmptyOperator() : operator) );
+    // providing parent Component reference to get access to parent class methods
+    currentComponent.compInteraction = this;
+
+    // add reference for newly created component
+    this.nodeListReference.push(componentRef);
+    if (type !== undefined) {
+      currentComponent.icon = type;
+    }
+
     if (posY !== undefined && posX !== undefined) {
       currentComponent.moveTo(posX, posY);
     }
@@ -159,21 +143,6 @@ export class DrawZoneComponent implements OnInit {
 
   }
 
-  /*removeNode(index: number, type?: string, posX?: number, posY?: number) {
-
-    if (this.VCR.length < 1) {
-      return;
-    }
-
-    const componentRef = this.nodeListReference.filter(x => x.instance.index === index)[0];
-    const component: NodeComponent = componentRef.instance as NodeComponent;
-    const vcrIndex: number = this.VCR.indexOf(componentRef);
-
-    // removing component from container
-    this.VCR.remove(vcrIndex);
-
-    this.nodeListReference = this.nodeListReference.filter(x => x.instance.index !== index);
-  }*/
 
   removeNodeInit(index: number) {
     if (this.VCR.length < 1) {

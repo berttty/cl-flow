@@ -27,6 +27,7 @@ import { DetailjobService} from './services/detailjob.service';
 import * as linemate from 'linemate';
 import { PinAreaComponent } from './pin-area/pin-area.component';
 import {MatDialogModule} from '@angular/material';
+import { NodeModalComponent } from './node-modal/node-modal.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,7 @@ const routes: Routes = [
     NodeInitComponent,
     LineComponent,
     PinAreaComponent,
+    NodeModalComponent,
   ],
   imports: [
     BrowserModule,
