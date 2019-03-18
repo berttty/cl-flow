@@ -62,6 +62,10 @@ export class DrawZoneComponent implements OnInit {
   }
 
   createNode(type?: string, posX?: number, posY?: number, previous?: number, operator?: Operator, configuration?: any) {
+    let positionAssigned: {x: number, y: number};
+    positionAssigned = this.determinePos(previous);
+    const nullPos = {x: 0, y: 200};
+
     if (previous !== undefined) {
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
@@ -82,6 +86,9 @@ export class DrawZoneComponent implements OnInit {
 
       posX = previousPosition.x + 200;
       posY = previousPosition.y;
+
+      console.log('previousPosition: ' + previousPosition.x + ' - ' + previousPosition.y);
+      console.log('positionAssigned: ' + positionAssigned.x + ' - ' + positionAssigned.y);
 
     }
     const componentFactory = this.factoryResolver.resolveComponentFactory(NodeComponent);
@@ -104,6 +111,10 @@ export class DrawZoneComponent implements OnInit {
     }
 
     if (posY !== undefined && posX !== undefined) {
+      if (positionAssigned.x !== nullPos.x && positionAssigned.y !== nullPos.y) {
+        posX = positionAssigned.x;
+        posY = positionAssigned.y;
+      }
       currentComponent.moveTo(posX, posY);
     }
 
@@ -197,11 +208,6 @@ export class DrawZoneComponent implements OnInit {
 
     this.nodeListReference = this.nodeListReference.filter(x => x.instance.index !== index);
   }
-
-  moveNode(index: number) {
-
-  }
-
 
   removeNodeInit(index: number, operator?: Operator, configuration?: any) {
     if (this.VCR.length < 1) {
@@ -402,5 +408,41 @@ export class DrawZoneComponent implements OnInit {
       component.movement = false;
       this.onDrag = false;
     }
+  }
+
+  determinePos(previous: number): {x: number, y: number} {
+
+    let maxPosY = 0;
+    let maxPosX = 0;
+    if (previous) {
+      console.log('hay previo: ' + previous);
+
+      const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
+      const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
+
+      let i: number;
+      for (i = 0; i < nodePrevious.lineListReference.length; i++) {
+
+        let j: number;
+        // linea actual
+        const line = nodePrevious.lineListReference[i].instance as LineComponent;
+        for (j = 0; j < line.nodeListReference.length; j++) {
+          const relatedNode = line.nodeListReference[j];
+
+          console.log(relatedNode.index);
+          console.log(nodePrevious.index);
+
+          if (relatedNode.position.y > maxPosY
+            && relatedNode.index !== nodePrevious.index
+            && relatedNode.position.x > nodePrevious.position.x) {
+
+            console.log('Entre: ' + relatedNode.index + ' - ' + nodePrevious.index);
+            maxPosY = relatedNode.position.y;
+            maxPosX = relatedNode.position.x;
+          }
+        }
+      }
+    }
+    return { x: maxPosX, y: maxPosY + 200 };
   }
 }

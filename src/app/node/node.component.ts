@@ -103,17 +103,13 @@ export class NodeComponent implements OnInit {
       this.movement = true;
 
       // TEST
-      this.close = false;
+      this.close = true;
+      this.checkMe();
     }
   }
 
   onStop(event) {
-    // console.log('the position is: ' + this.position.x + '  ' + this.position.y);
-    // console.log('the position will be is: ' + event.x + '  ' + event.y);
-    // this.moveTo(event.x, event.y);
-    // console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
     this.compInteraction.repareEdges(this.index, event.x, event.y, this.position.x, this.position.y);
-
   }
 
   moveTo(posX: number, posY: number) {
@@ -130,6 +126,7 @@ export class NodeComponent implements OnInit {
   }
 
   checkMe(): void {
+
     this.close = !this.close;
 
     if (this.close ===  false) {
