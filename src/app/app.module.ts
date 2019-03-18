@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { SvgCircleModule, SvgLineModule, SvgPolygonModule,
   SvgPolylineModule, SvgTextModule, SvgPathModule, SvgEllipseModule } from 'angular-svg';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import { AppComponent } from './app.component';
@@ -24,7 +25,6 @@ import { AdunitService } from './adunit.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PinningjobService} from './services/pinningjob.service';
 import { DetailjobService} from './services/detailjob.service';
-import * as linemate from 'linemate';
 import { PinAreaComponent } from './pin-area/pin-area.component';
 import {MatDialogModule} from '@angular/material';
 import { NodeModalComponent } from './node-modal/node-modal.component';
@@ -36,6 +36,8 @@ const routes: Routes = [
   }
 ];
 
+// @ts-ignore
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   entryComponents: [
     NodeComponent,

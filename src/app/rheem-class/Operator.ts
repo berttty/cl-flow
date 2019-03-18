@@ -2,6 +2,8 @@ import { Parameter } from './Parameter';
 import {Conexion} from './Conexion';
 import {OperatorType} from './OperatorType';
 import {Platform} from './Platform';
+import {OptionNext} from './OptionNext';
+
 
 export class Operator {
   protected name: string;
@@ -55,10 +57,10 @@ export class Operator {
     return `{
               "name" : "${this.name}",'
               "java_class" : "${this.className}",
-              "parameters" : { ${this.parameters.join(' , ')} },
               "connects_to" : { ${this.connexions.join(' , ')} }
             }
             `;
+    //              "parameters" : { ${this.parameters.join(' , ')} },
   }
 
   isSink(): boolean {
@@ -67,6 +69,10 @@ export class Operator {
 
   isSource(): boolean {
     return false;
+  }
+
+  nextOption(): OptionNext {
+    return new OptionNext(false);
   }
 }
 
