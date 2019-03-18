@@ -16,7 +16,7 @@ export interface NodeInterface {
   removeNode(index: number);
   createNext(index: number);
   removeEdges(index: number);
-  repareEdges(index: number, x, y);
+  repareEdges(index: number, x, y, oldX, oldY);
 }
 
 @Component({
@@ -89,15 +89,19 @@ export class NodeComponent implements OnInit {
     // lista con otros nodos;
       this.compInteraction.removeEdges(this.index);
       this.movement = true;
+
+      // TEST
+      this.close = false;
     }
   }
 
   onStop(event) {
     // console.log('the position is: ' + this.position.x + '  ' + this.position.y);
     // console.log('the position will be is: ' + event.x + '  ' + event.y);
-    this.moveTo(event.x, event.y);
+    // this.moveTo(event.x, event.y);
     // console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
-    this.compInteraction.repareEdges(this.index, event.x, event.y);
+    this.compInteraction.repareEdges(this.index, event.x, event.y, this.position.x, this.position.y);
+
   }
 
   moveTo(posX: number, posY: number) {
@@ -116,6 +120,8 @@ export class NodeComponent implements OnInit {
 
   checkMe() {
     // console.log('toggle: ' + this.close)
+
+
     this.close = !this.close;
 
     if (this.close ===  false) {
