@@ -18,6 +18,7 @@ import {Operator} from '../rheem-class/Operator';
 import {ActionEnum, OptionNext} from '../rheem-class/OptionNext';
 import {NodeModalComponent} from '../node-modal/node-modal.component';
 
+import {LineComponent} from '../line/line.component';
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
 
@@ -25,6 +26,8 @@ library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChi
 export interface NodeInterface {
   removeNode(index: number);
   createNext(index: number);
+  removeEdges(index: number);
+  repareEdges(index: number, x, y, oldX, oldY);
 }
 
 @Component({
@@ -58,6 +61,10 @@ export class NodeComponent implements OnInit {
   public previous: number;
 
   public close: boolean;
+  public movement: boolean;
+
+
+
 
   public lines: number [];
   public lineListReference = [];
@@ -70,6 +77,7 @@ export class NodeComponent implements OnInit {
 
   ngOnInit() {
     this.close = false;
+    this.movement = false;
   }
 
   removeMe(index) {
@@ -86,8 +94,26 @@ export class NodeComponent implements OnInit {
     this.confNextOperator = null;
   }
 
+  onMoving(event) {
+
+    console.log('movimiento detectado');
+    if (this.movement === false) {
+    // lista con otros nodos;
+      this.compInteraction.removeEdges(this.index);
+      this.movement = true;
+
+      // TEST
+      this.close = false;
+    }
+  }
+
   onStop(event) {
-    this.moveTo(event.x, event.y);
+    // console.log('the position is: ' + this.position.x + '  ' + this.position.y);
+    // console.log('the position will be is: ' + event.x + '  ' + event.y);
+    // this.moveTo(event.x, event.y);
+    // console.log('the position after is: ' + this.position.x + '  ' + this.position.y);
+    this.compInteraction.repareEdges(this.index, event.x, event.y, this.position.x, this.position.y);
+
   }
 
   moveTo(posX: number, posY: number) {
@@ -95,6 +121,8 @@ export class NodeComponent implements OnInit {
   }
 
   getPosition() {
+    // console.log('my index + ' + this.index);
+    // console.log('my position + ' + this.position);
     return this.position;
   }
   getType() {

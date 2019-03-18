@@ -27,6 +27,10 @@ export class DrawZoneComponent implements OnInit {
   nodeInitListReference = [];
   lineListReference = [];
 
+  onMoveNode = null;
+  onMoveRelatedNodes = [];
+  onDrag: boolean;
+
   // TODO eliminar es para test
   private rheemPlan: RheemPlan;
   plan = '';
@@ -39,6 +43,7 @@ export class DrawZoneComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.onDrag = false;
   }
 
   createNodeInit() {
@@ -138,9 +143,52 @@ export class DrawZoneComponent implements OnInit {
     let i: number;
     for (i = 0; i < component.lineListReference.length; i++) {
 
+      const line: LineComponent = component.lineListReference[i].instance as LineComponent;
       // TODO Eliminar referencia a la linea en el otro nodo no eliminado
       console.log(component.lineListReference[i]);
       const vcrLineIndex: number = this.VCRLines.indexOf(component.lineListReference[i]);
+
+      console.log('line');
+      console.log(line);
+      let j: number;
+      for (j = 0; j < line.nodeListReference.length; j++) {
+
+        const nodeOfList = line.nodeListReference[j];
+        console.log('nodeOfList');
+        console.log(nodeOfList);
+        if (!(nodeOfList.index === component.index)) {
+
+          let k: number;
+          let ind: number;
+          for (k = 0; k < nodeOfList.lineListReference.length; k++) {
+            const refLine: LineComponent = nodeOfList.lineListReference[k].instance as LineComponent;
+
+            if (refLine === line) {
+              ind = k;
+              break;
+            }
+          }
+          console.log('indice: ' + ind);
+          if (ind > -1) {
+            nodeOfList.lineListReference.splice(ind, 1);
+          }
+
+          /*let k: number;
+          for (k = 0; k < nodeOfList.lineListReference.length; k++) {
+
+          }*/
+        }
+        // console.log(line.nodeListReference[j]);
+      }
+      // BORRAR RELACION!!
+      /*
+      const ind = relatedNode.lineListReference.indexOf(component.lineListReference[i], 0);
+      console.log('indice: ' + ind);
+      if (ind > -1) {
+        relatedNode.lineListReference.splice(ind, 1);
+      }*/
+
+
       this.VCRLines.remove(vcrLineIndex);
     }
 
@@ -199,6 +247,8 @@ export class DrawZoneComponent implements OnInit {
       const currentComponent = componentRef.instance;
       currentComponent.index = ++this.indexLineInit;
 
+      console.log('Creating line: ' + currentComponent.index);
+
       currentComponent.draw2(pastX, pastY, predX, predY);
 
       curr.lineListReference.push(componentRef);
@@ -207,39 +257,150 @@ export class DrawZoneComponent implements OnInit {
       currentComponent.nodeListReference.push(curr);
       currentComponent.nodeListReference.push(prev);
 
+      console.log('adding reference in line to curr: ' + curr.index);
+      console.log('adding reference in line to prev: ' + prev.index);
+
       return currentComponent.index;
 
   }
-/*
-  drawLine() {
 
-    const componentFactory = this.factoryResolver.resolveComponentFactory(LineComponent);
-    const componentRef: ComponentRef<LineComponent> = this.VCR.createComponent(componentFactory);
-    const currentComponent = componentRef.instance;
+  removeEdges(index: number) {
 
-    const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === 1)[0];
-    const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
+    console.log('DRAG: ' + index);
+    const componentRef = this.nodeListReference.filter(x => x.instance.index === index)[0];
+    const component: NodeComponent = componentRef.instance as NodeComponent;
+    const vcrIndex: number = this.VCR.indexOf(componentRef);
 
-    const nodecurrRef = this.nodeListReference.filter( x => x.instance.index === 2)[0];
-    const nodecurr: NodeComponent = nodecurrRef.instance as NodeComponent;
+    let i: number;
+    console.log('Eliminando lineas del nodo con ID: ' + component.index);
+    this.onMoveNode = component;
+    console.log('Ingrese: ');
+    console.log(component);
+    console.log('Quedo: ');
+    console.log(this.onMoveNode);
 
-    const posX = nodePrevious.getPosition().x;
-    const posY = nodePrevious.getPosition().y;
-    const posX2 = nodecurr.getPosition().x;
-    const posY2 = nodecurr.getPosition().y;
+    console.log('Numero de lineas asociadas: ' + component.lineListReference.length);
+    this.onMoveRelatedNodes = [];
+    // Repasando los edges del nodo
+    for (i = 0; i < component.lineListReference.length; i++) {
 
-    const bodyRect = document.body.getBoundingClientRect();
-    const elemRect = document.getElementById('primero-' + 1).getBoundingClientRect();
-    const elemRect2 = document.getElementById('primero-' + 2).getBoundingClientRect();
-    const offsetY   = elemRect.top - bodyRect.top;
-    const offsetX = elemRect.left - bodyRect.left;
-    const offsetY2   = elemRect2.top - bodyRect.top;
-    const offsetX2 = elemRect2.left - bodyRect.left;
+      // TODO Eliminar referencia a la linea en el otro nodo no eliminado
 
-    console.log(elemRect);
-    console.log(elemRect2);
+      let j: number;
+      // linea actual
+      const line = component.lineListReference[i].instance as LineComponent;
 
-    currentComponent.draw2(posX, posY, posX2, posY2);
+      // Se revisan los nodos asociados al edge, siempre deben ser 2
+      console.log('Tiene X nodos asiciados: ' + line.nodeListReference.length);
+      for (j = 0; j < line.nodeListReference.length; j++) {
+        const relatedNode = line.nodeListReference[j];
 
-  }*/
+        if (relatedNode.index !== component.index) {
+
+          console.log('relatedNode: ' + relatedNode.index);
+          this.onMoveRelatedNodes.push(relatedNode);
+          console.log('Borrar relacion desde: ' + relatedNode.index);
+
+          // BORRAR RELACION!!
+          const ind = relatedNode.lineListReference.indexOf(component.lineListReference[i], 0);
+          console.log('indice: ' + ind);
+          if (ind > -1) {
+            relatedNode.lineListReference.splice(ind, 1);
+          }
+        }
+        // console.log(line.nodeListReference[i].lineListReference.filter(x => x.instance.index !== j));
+      }
+
+      const vcrLineIndex: number = this.VCRLines.indexOf(component.lineListReference[i]);
+      this.VCRLines.remove(vcrLineIndex);
+      component.lineListReference[i].destroy();
+    }
+
+    component.lineListReference = [];
+    this.onDrag = true;
+  }
+
+  repareEdges(index: number, newX: number, newY: number, oldX: number, oldY: number) {
+
+    console.log('DROP: ' + index);
+    if (this.onDrag) {
+      const componentRef = this.nodeListReference.filter(x => x.instance.index === index)[0];
+      const component: NodeComponent = componentRef.instance as NodeComponent;
+      const vcrIndex: number = this.VCR.indexOf(componentRef);
+
+
+      let i: number;
+      const nodesToRelate = [];
+      let reposition = false;
+
+      // Revisando si se dropeo sobre otro nodo
+      for (i = 0; i < this.nodeListReference.length; i++) {
+        const compRefX: ComponentRef<NodeComponent> = this.nodeListReference[i];
+        const compX: NodeComponent = compRefX.instance as NodeComponent;
+
+        if (!(component.index === compX.index)) {
+          const otherPos = compX.getPosition();
+
+          const dist = Math.sqrt(Math.pow(otherPos.y - newY, 2) + Math.pow(otherPos.x - newX, 2));
+          // Si al distancia punto a punto es menor a 80, relacionamos
+          // WORKS! Se debe relacionar a MENOS que ya este relacionado
+          if (dist <= 80) {
+            console.log('podria con: ' + compX.index);
+            reposition = true;
+
+            let related = false;
+            // Se debe relacionar a MENOS que ya este relacionado
+            let j: number;
+            for (j = 0; j < this.onMoveRelatedNodes.length; j ++) {
+              if (this.onMoveRelatedNodes[j].index === compX.index) {
+                related = true;
+              }
+            }
+
+            // Siempre se debe volver a su lugar original ANTED DE RELACIONAR
+
+            // En este caso, relacionar
+            if (related === false) {
+              console.log('relaciono con: ' + compX.index);
+              nodesToRelate.push(compX);
+            }
+          }
+        }
+      }
+
+      if (reposition) {
+        component.moveTo(oldX, oldY);
+      } else {
+        component.moveTo(newX, newY);
+      }
+
+      for (i = 0; i < this.onMoveRelatedNodes.length; i++) {
+        const nodePrevious = this.onMoveRelatedNodes[i];
+        const previousPosition = nodePrevious.getPosition();
+
+        if (reposition) {
+          const currentID = this.drawLines(previousPosition.x, previousPosition.y, oldX, oldY, nodePrevious, component);
+        } else {
+          const currentID = this.drawLines(previousPosition.x, previousPosition.y, newX, newY, nodePrevious, component);
+        }
+
+      }
+
+      for (i = 0; i < nodesToRelate.length; i++) {
+        const otherNode = nodesToRelate[i];
+        const otherPosition = otherNode.getPosition();
+
+        if (reposition) {
+          const currentID = this.drawLines(otherPosition.x, otherPosition.y, oldX, oldY, otherNode, component);
+        } else {
+          const currentID = this.drawLines(otherPosition.x, otherPosition.y, newX, newY, otherNode, component);
+        }
+      }
+
+      // TEST
+      component.close = false;
+      component.movement = false;
+      this.onDrag = false;
+    }
+  }
 }

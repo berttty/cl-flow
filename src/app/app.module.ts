@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { SvgCircleModule, SvgLineModule, SvgPolygonModule,
   SvgPolylineModule, SvgTextModule, SvgPathModule, SvgEllipseModule } from 'angular-svg';
-import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -67,8 +67,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-    MatDialogModule,
-    MatTooltipModule
+    MatDialogModule
   ],
   entryComponents: [
     NodeComponent,

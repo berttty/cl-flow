@@ -31,6 +31,4 @@ export class SourceOperator extends Operator {
   isSource(): boolean {
     return true;
   }
-
-
 }

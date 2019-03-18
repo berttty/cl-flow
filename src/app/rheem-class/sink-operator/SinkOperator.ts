@@ -3,7 +3,6 @@ import {Parameter} from '../Parameter';
 import {Platform} from '../Platform';
 import {Conexion} from '../Conexion';
 import {OperatorType} from '../OperatorType';
-import {OptionNext} from '../OptionNext';
 
 export class SinkOperator extends Operator {
   constructor(
@@ -31,9 +30,5 @@ export class SinkOperator extends Operator {
 
   isSink(): boolean {
     return true;
-  }
-
-  nextOption(): OptionNext {
-    return new OptionNext(true);
   }
 }
