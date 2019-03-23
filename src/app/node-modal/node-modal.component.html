@@ -1,7 +1,47 @@
-<h1 mat-dialog-title>Setting of</h1>
+<!-- TODO agregar la opcion de poder modificar el titulo dependiendo del nombre o del tipo de operador que se tenga-->
+<h1 mat-dialog-title>Setting of </h1>
 <div mat-dialog-content>
-  <p></p>
-
+  <div class="row">
+    <div class="input-field col s12">
+      <input id="name-operator" type="text">
+      <label for="name-operator">Name Operator :</label>
+    </div>
+  </div>
+  <div class="row" *ngIf="data.operator.getConfParameters().typeOperator.length > 0">
+    <div class="input-field col s12">
+      <select id="select-type">
+        <option value="" selected>Choose your option</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+      <label>Type of Operator</label>
+    </div>
+  </div>
+  <div class="row" *ngIf="data.operator.getConfParameters().function1">
+    <div class="input-field col s12">
+      <textarea id="textarea1" class="materialize-textarea"></textarea>
+      <label for="textarea1">Fuction 1</label>
+    </div>
+  </div>
+  <div class="row" *ngIf="data.operator.getConfParameters().function2">
+    <div class="input-field col s12">
+      <textarea id="textarea2" class="materialize-textarea"></textarea>
+      <label for="textarea2">Fuction 2</label>
+    </div>
+  </div>
+  <div class="row"  *ngIf="data.operator.getConfParameters().outputClass">
+    <div class="input-field col s12">
+      <input id="input1" class="materialize-textarea" />
+      <label for="input1">Class Output</label>
+    </div>
+  </div>
+  <div class="row"  *ngIf="data.operator.getConfParameters().textInput">
+    <div class="input-field col s12">
+      <input id="input2" type="text"/>
+      <label for="input2">Text Input</label>
+    </div>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>

@@ -7,7 +7,6 @@ import { SvgCircleModule, SvgLineModule, SvgPolygonModule,
   SvgPolylineModule, SvgTextModule, SvgPathModule, SvgEllipseModule } from 'angular-svg';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
-
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { EditorComponent } from './editor/editor.component';
@@ -71,7 +70,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatDialogModule,
     MatTooltipModule
-  ],
+],
   entryComponents: [
     NodeComponent,
     NodeInitComponent,

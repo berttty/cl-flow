@@ -39,7 +39,7 @@ export class DrawZoneComponent implements OnInit {
   lineStructure;
 
   constructor(private factoryResolver: ComponentFactoryResolver) {
-    this.rheemPlan = new RheemPlan();
+
   }
 
   ngOnInit() {
@@ -99,8 +99,6 @@ export class DrawZoneComponent implements OnInit {
     operator =  (operator === undefined ? new EmptyOperator() : operator);
     currentComponent.setOperator( operator );
     currentComponent.selfConfOperator = configuration;
-    this.rheemPlan.addOperator(operator);
-    this.plan = this.rheemPlan.toString();
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
 
@@ -242,7 +240,7 @@ export class DrawZoneComponent implements OnInit {
      source.createConnexion(0, filter, 0);
      filter.createConnexion(0, sink, 0);
      const list = [source, filter, sink];
-     this.plan = `{"operators" : [${list.join(' , ')}], "sink_operators" : [ "${sink.getName()}" ]}`;
+     this.plan  = `{"operators" : [${list.join(' , ')}], "sink_operators" : [ "${sink.getName()}" ]}`;
 
   }
 
@@ -259,7 +257,8 @@ export class DrawZoneComponent implements OnInit {
 
       curr.lineListReference.push(componentRef);
       prev.lineListReference.push(componentRef);
-
+      // TODO  rodrigo: porque no se agrega a la lista de refernecia de las lineas??
+      // this.lineListReference.push(componentRef);
       currentComponent.nodeListReference.push(curr);
       currentComponent.nodeListReference.push(prev);
 
@@ -457,5 +456,27 @@ export class DrawZoneComponent implements OnInit {
       compX.close = true;
       compX.checkMe();
     }
+  }
+
+  generateRheemPlan() {
+    this.rheemPlan = new RheemPlan();
+    this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
+      this.rheemPlan.addOperator(element.instance.getOperator());
+    });
+
+    console.log(this.lineListReference.length);
+
+    this.lineListReference.forEach( (element: ComponentRef<LineComponent>) => {
+      // TODO bertty: make this method as parametric as we can
+      const first: Operator = element.instance.getOperatorPrevious(0);
+      const second: Operator = element.instance.getOperatorPrevious(1);
+      console.log("lalal");
+      this.rheemPlan.addConexion(first, 0, second, 0);
+    });
+
+
+    this.plan = this.rheemPlan.toString();
+
+    // this.nodeListReference
   }
 }
