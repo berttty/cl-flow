@@ -70,10 +70,16 @@ export class NodeComponent implements OnInit {
   public lines: number [];
   public lineListReference = [];
 
+  public predecessorNodesList = [];
+  public successorNodesList = [];
+
   constructor(public dialog: MatDialog) {
     this.lines = [];
     this.lineListReference = [];
     this.indexOption = 0;
+
+    this.predecessorNodesList = [];
+    this.successorNodesList = [];
   }
 
   ngOnInit() {

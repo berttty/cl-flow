@@ -87,9 +87,6 @@ export class DrawZoneComponent implements OnInit {
       posX = previousPosition.x + 200;
       posY = previousPosition.y;
 
-      console.log('previousPosition: ' + previousPosition.x + ' - ' + previousPosition.y);
-      console.log('positionAssigned: ' + positionAssigned.x + ' - ' + positionAssigned.y);
-
     }
     const componentFactory = this.factoryResolver.resolveComponentFactory(NodeComponent);
     const componentRef: ComponentRef<NodeComponent> = this.VCR.createComponent(componentFactory);
@@ -130,15 +127,18 @@ export class DrawZoneComponent implements OnInit {
 
       console.log('nodePrevious: ' + nodePrevious.index + ' numero: ' + nodePrevious.lines.length);
 
+      currentComponent.predecessorNodesList.push(nodePrevious);
+      nodePrevious.successorNodesList.push(currentComponent);
+
+      console.log('nodePrevious.successorNodesList ' + nodePrevious.index);
       let i: number;
-      for (i = 0; i < nodePrevious.lines.length; i++) {
-        console.log(nodePrevious.lines[i]);
+      for (i = 0; i < nodePrevious.successorNodesList.length; i++) {
+        console.log(nodePrevious.successorNodesList[i].index);
       }
 
-      console.log('currentComponent: '  + currentComponent.index + 'numero: ' + currentComponent.lines.length);
-
-      for (i = 0; i < currentComponent.lines.length; i++) {
-        console.log(currentComponent.lines[i]);
+      console.log('currentComponent.predecessorNodesList ' + currentComponent.index);
+      for (i = 0; i < currentComponent.predecessorNodesList.length; i++) {
+        console.log(currentComponent.predecessorNodesList[i].index);
       }
     }
 
@@ -149,24 +149,19 @@ export class DrawZoneComponent implements OnInit {
     const component: NodeComponent = componentRef.instance as NodeComponent;
     const vcrIndex: number = this.VCR.indexOf(componentRef);
 
-    console.log(component);
-
     let i: number;
     for (i = 0; i < component.lineListReference.length; i++) {
 
       const line: LineComponent = component.lineListReference[i].instance as LineComponent;
-      // TODO Eliminar referencia a la linea en el otro nodo no eliminado
-      console.log(component.lineListReference[i]);
+
       const vcrLineIndex: number = this.VCRLines.indexOf(component.lineListReference[i]);
 
-      console.log('line');
-      console.log(line);
       let j: number;
       for (j = 0; j < line.nodeListReference.length; j++) {
 
         const nodeOfList = line.nodeListReference[j];
-        console.log('nodeOfList');
-        console.log(nodeOfList);
+
+        /*Eliminando referencia a linea en el otro nodo*/
         if (!(nodeOfList.index === component.index)) {
 
           let k: number;
@@ -179,7 +174,6 @@ export class DrawZoneComponent implements OnInit {
               break;
             }
           }
-          console.log('indice: ' + ind);
           if (ind > -1) {
             nodeOfList.lineListReference.splice(ind, 1);
           }
@@ -201,6 +195,51 @@ export class DrawZoneComponent implements OnInit {
 
 
       this.VCRLines.remove(vcrLineIndex);
+    }
+
+    /*Repasando sucesores*/
+    for (i = 0; i < component.successorNodesList.length; i++) {
+      const suc = component.successorNodesList[i];
+
+      console.log(suc);
+      let indexCurrSuc: number;
+
+      /*Searching the eliminated node in current succesor*/
+      let j: number;
+      for (j = 0; j < suc.predecessorNodesList.length; j++) {
+        const refNode = suc.predecessorNodesList[j];
+
+        if (refNode === component) {
+          indexCurrSuc = j;
+          break;
+        }
+      }
+
+      if (indexCurrSuc > -1) {
+        suc.predecessorNodesList.splice(indexCurrSuc, 1);
+      }
+    }
+
+    /*Repasando predecesoress*/
+    for (i = 0; i < component.predecessorNodesList.length; i++) {
+      const pre = component.predecessorNodesList[i];
+
+      let indexCurrPre: number;
+
+      /*Searching the eliminated node in current succesor*/
+      let j: number;
+      for (j = 0; j < pre.successorNodesList.length; j++) {
+        const refNode = pre.successorNodesList[j];
+
+        if (refNode === component) {
+          indexCurrPre = j;
+          break;
+        }
+      }
+
+      if (indexCurrPre > -1) {
+        pre.successorNodesList.splice(indexCurrPre, 1);
+      }
     }
 
     // removing component from container
@@ -253,8 +292,6 @@ export class DrawZoneComponent implements OnInit {
       const currentComponent = componentRef.instance;
       currentComponent.index = ++this.indexLineInit;
 
-      console.log('Creating line: ' + currentComponent.index);
-
       currentComponent.draw2(pastX, pastY, predX, predY);
 
       curr.lineListReference.push(componentRef);
@@ -262,9 +299,6 @@ export class DrawZoneComponent implements OnInit {
 
       currentComponent.nodeListReference.push(curr);
       currentComponent.nodeListReference.push(prev);
-
-      console.log('adding reference in line to curr: ' + curr.index);
-      console.log('adding reference in line to prev: ' + prev.index);
 
       return currentComponent.index;
 
@@ -278,38 +312,27 @@ export class DrawZoneComponent implements OnInit {
     const vcrIndex: number = this.VCR.indexOf(componentRef);
 
     let i: number;
-    console.log('Eliminando lineas del nodo con ID: ' + component.index);
     this.onMoveNode = component;
-    console.log('Ingrese: ');
-    console.log(component);
-    console.log('Quedo: ');
-    console.log(this.onMoveNode);
 
-    console.log('Numero de lineas asociadas: ' + component.lineListReference.length);
     this.onMoveRelatedNodes = [];
     // Repasando los edges del nodo
     for (i = 0; i < component.lineListReference.length; i++) {
-
-      // TODO Eliminar referencia a la linea en el otro nodo no eliminado
 
       let j: number;
       // linea actual
       const line = component.lineListReference[i].instance as LineComponent;
 
       // Se revisan los nodos asociados al edge, siempre deben ser 2
-      console.log('Tiene X nodos asiciados: ' + line.nodeListReference.length);
       for (j = 0; j < line.nodeListReference.length; j++) {
         const relatedNode = line.nodeListReference[j];
 
         if (relatedNode.index !== component.index) {
 
-          console.log('relatedNode: ' + relatedNode.index);
           this.onMoveRelatedNodes.push(relatedNode);
-          console.log('Borrar relacion desde: ' + relatedNode.index);
 
           // BORRAR RELACION!!
           const ind = relatedNode.lineListReference.indexOf(component.lineListReference[i], 0);
-          console.log('indice: ' + ind);
+
           if (ind > -1) {
             relatedNode.lineListReference.splice(ind, 1);
           }
@@ -367,7 +390,6 @@ export class DrawZoneComponent implements OnInit {
 
             // En este caso, relacionar
             if (related === false) {
-              console.log('relaciono con: ' + compX.index);
               nodesToRelate.push(compX);
             }
           }
@@ -392,6 +414,7 @@ export class DrawZoneComponent implements OnInit {
 
       }
 
+      /*Relacionando nodos, estos son sucesores de component*/
       for (i = 0; i < nodesToRelate.length; i++) {
         const otherNode = nodesToRelate[i];
         const otherPosition = otherNode.getPosition();
@@ -400,6 +423,20 @@ export class DrawZoneComponent implements OnInit {
           const currentID = this.drawLines(otherPosition.x, otherPosition.y, oldX, oldY, otherNode, component);
         } else {
           const currentID = this.drawLines(otherPosition.x, otherPosition.y, newX, newY, otherNode, component);
+        }
+
+        otherNode.predecessorNodesList.push(component);
+        component.successorNodesList.push(otherNode);
+
+
+        console.log('component.successorNodesList ' + component.index);
+        for (i = 0; i < component.successorNodesList.length; i++) {
+          console.log(component.successorNodesList[i].index);
+        }
+
+        console.log('otherNode.predecessorNodesList ' + otherNode.index);
+        for (i = 0; i < otherNode.predecessorNodesList.length; i++) {
+          console.log(otherNode.predecessorNodesList[i].index);
         }
       }
 

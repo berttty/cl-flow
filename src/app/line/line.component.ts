@@ -71,7 +71,25 @@ export class LineComponent implements AfterViewInit {
     this.context.lineTo(x2, y2 + 50);
     this.context.stroke();
 
-    /*Unitary direction
+
+    /*const vectY = y2 - y1;
+    const vectX = x2 - x1;
+
+    const modY = Math.pow(vectY, 2);
+    const modX = Math.pow(vectX, 2);
+
+    const module = Math.sqrt(modX + modY);
+
+    const vecUniY = vectY / module;
+    const vecUniX = vectX / module;
+
+    this.context.beginPath();
+    this.context.strokeStyle = 'red';
+    this.context.moveTo(x2 - (vecUniX * 40), y2 - (vecUniY * 40));
+    this.context.lineTo(x2 - (vecUniX * 60), y2 - (vecUniY * 40));
+    // this.context.arc(x2 - (vecUniX * 40), y2 - (vecUniY * 40), 50, 0, 2 * Math.PI);
+    this.context.stroke();
+    Unitary direction
     const vectY = y2 - y1;
     const vectX = x2 - x1;
 
