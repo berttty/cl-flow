@@ -25,7 +25,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PinningjobService} from './services/pinningjob.service';
 import { DetailjobService} from './services/detailjob.service';
 import { PinAreaComponent } from './pin-area/pin-area.component';
-import {MatDialogModule} from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
 import { NodeModalComponent } from './node-modal/node-modal.component';
 
 const routes: Routes = [
@@ -69,7 +73,11 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    MatSelectModule
 ],
   entryComponents: [
     NodeComponent,

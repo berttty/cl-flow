@@ -3,46 +3,46 @@
 <div mat-dialog-content>
   <div class="row">
     <div class="input-field col s12">
-      <input id="name-operator" type="text">
+      <input id="name-operator" type="text" matInput [(ngModel)]="data.name">
       <label for="name-operator">Name Operator :</label>
     </div>
   </div>
-  <div class="row" *ngIf="data.operator.getConfParameters().typeOperator.length > 0">
+  <div class="row" [hidden]="data.operator.getConfParameters().typeOperator.length === 0">
     <div class="input-field col s12">
-      <select id="select-type">
-        <option value="" selected>Choose your option</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-      </select>
-      <label>Type of Operator</label>
+      <mat-form-field>
+        <mat-label>Type of Operator</mat-label>
+        <mat-select (selectionChange)="updateOperator($event)">
+          <mat-option *ngFor="let item of data.operator.getConfParameters().typeOperator" [value]="item">{{item}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
-  <div class="row" *ngIf="data.operator.getConfParameters().function1">
+  <div class="row" [hidden]="! data.operator.getConfParameters().function1">
     <div class="input-field col s12">
-      <textarea id="textarea1" class="materialize-textarea"></textarea>
+      <textarea id="textarea1" class="materialize-textarea"  matInput [(ngModel)]="data.function1"></textarea>
       <label for="textarea1">Fuction 1</label>
     </div>
   </div>
-  <div class="row" *ngIf="data.operator.getConfParameters().function2">
+  <div class="row" [hidden]="! data.operator.getConfParameters().function2">
     <div class="input-field col s12">
-      <textarea id="textarea2" class="materialize-textarea"></textarea>
+      <textarea id="textarea2" class="materialize-textarea"  matInput [(ngModel)]="data.function2"></textarea>
       <label for="textarea2">Fuction 2</label>
     </div>
   </div>
-  <div class="row"  *ngIf="data.operator.getConfParameters().outputClass">
+  <div class="row" [hidden]="! data.operator.getConfParameters().outputClass">
     <div class="input-field col s12">
-      <input id="input1" class="materialize-textarea" />
+      <input id="input1" class="materialize-textarea"  matInput [(ngModel)]="data.outputClass"/>
       <label for="input1">Class Output</label>
     </div>
   </div>
-  <div class="row"  *ngIf="data.operator.getConfParameters().textInput">
+  <div class="row" [hidden]="! data.operator.getConfParameters().textInput">
     <div class="input-field col s12">
-      <input id="input2" type="text"/>
+      <input id="input2" type="text"  matInput [(ngModel)]="data.textInput"/>
       <label for="input2">Text Input</label>
     </div>
   </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

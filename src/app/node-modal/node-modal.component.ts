@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import * as M from 'materialize-css';
-
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatFormField, MatLabel, MatInput} from '@angular/material';
+import {Operator} from '../rheem-class/Operator';
 @Component({
   selector: 'app-node-modal',
   templateUrl: './node-modal.component.html',
@@ -12,11 +11,16 @@ export class NodeModalComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-     const sele = document.getElementById('select-type');
-    // mat.FormSelect.init(sele);
-    M.FormSelect.init(sele);
   }
 
+  updateOperator(event) {
+    console.log(event);
+    console.log(event.value);
+    console.log(this.data.operator);
+    const tmp: Operator = (this.data.operator.getOrigin() !== undefined ? this.data.operator.getOrigin() : this.data.operator );
+    this.data.operator = this.data.operator.setTypeOperator(event.value).setOrigin(tmp);
+    console.log(this.data.operator);
+  }
 
 
 }

@@ -64,9 +64,6 @@ export class NodeComponent implements OnInit {
   public close: boolean;
   public movement: boolean;
 
-
-
-
   public lines: number [];
   public lineListReference = [];
 
@@ -190,10 +187,19 @@ export class NodeComponent implements OnInit {
   }
 
   openDialog(): void {
-    this.selfConfOperator.operator = this.operator
+    this.selfConfOperator.operator = this.operator;
     console.log(this.selfConfOperator);
-    console.log(typeof this.operator);
-    this.dialog.open(NodeModalComponent, {width: '800px', data: this.selfConfOperator});
+    const dialogRef = this.dialog.open(NodeModalComponent, {width: '800px', data: this.selfConfOperator});
+    dialogRef.afterClosed().subscribe( result => {
+      this.operator = result.operator;
+      if ( result !== undefined ) {
+        this.operator = result.operator;
+        this.getOperator().addValueConfParameters(result);
+        if ( result.outputClass !== undefined ) {
+          this.operator.setClassOutput(result.outputClass);
+        }
+      }
+    });
   }
 
   private validateObject(obj: any, ...option: string[]): boolean {

@@ -22,12 +22,12 @@ export class Parameter {
   }
 
   public toString(): string {
-    /*return `{
+    return `{
         "name" :"param",
         "inputType": "${ (this.isUDF ? 'UDF' : 'string') }",
         "type" : "${this.classType}",
-        "value" : "${this.value}" }`;*/
-    return `"${ (this.classType) }" :"${this.value}"`;
+        "value" : "${this.value}" }`;
+    // return `{"${ (this.classType) }" :"${this.value}"}`;
 
   }
 }

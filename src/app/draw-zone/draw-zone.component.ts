@@ -9,6 +9,7 @@ import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
 import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
 import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
 import {RheemPlan} from '../rheem-class/RheemPlan';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-draw-zone',
@@ -498,22 +499,15 @@ export class DrawZoneComponent implements OnInit {
   generateRheemPlan() {
     this.rheemPlan = new RheemPlan();
     this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
-      this.rheemPlan.addOperator(element.instance.getOperator());
-    });
-
-    console.log(this.lineListReference.length);
-
-    this.lineListReference.forEach( (element: ComponentRef<LineComponent>) => {
+      const first: Operator = element.instance.getOperator();
+      this.rheemPlan.addOperator(first);
+      let index = 0;
       // TODO bertty: make this method as parametric as we can
-      const first: Operator = element.instance.getOperatorPrevious(0);
-      const second: Operator = element.instance.getOperatorPrevious(1);
-      console.log("lalal");
-      this.rheemPlan.addConexion(first, 0, second, 0);
+      element.instance.successorNodesList.forEach( (node: NodeComponent ) => {
+        this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
+        index = index + 1;
+      });
     });
-
-
     this.plan = this.rheemPlan.toString();
-
-    // this.nodeListReference
   }
 }

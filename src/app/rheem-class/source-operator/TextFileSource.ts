@@ -24,9 +24,7 @@ export class TextFileSource extends SourceOperator {
   }
 
 
-  getConfParameters(): any {
-    const opt: any = super.getConfParameters();
-    opt.textInput = true;
-    return opt;
-  }
+
+
+
 }

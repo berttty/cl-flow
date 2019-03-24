@@ -31,4 +31,15 @@ export class SourceOperator extends Operator {
   isSource(): boolean {
     return true;
   }
+
+  getConfParameters(): any {
+    const opt: any = super.getConfParameters();
+    opt.textInput = true;
+    return opt;
+  }
+
+  addValueConfParameters(values: any): void {
+    super.addValueConfParameters(values);
+    this.parameters[0].setValue(values.textInput);
+  }
 }

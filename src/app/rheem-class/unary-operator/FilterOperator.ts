@@ -17,7 +17,7 @@ export class FilterOperator extends UnaryOperator {
       [
         new Parameter(
           'PredicateDescriptor.SerializablePredicate',
-          FilterOperator.generateUDFFilter(udf, inputClass),
+          FilterOperator.generateUDF(udf, inputClass),
           true
         ),
         new Parameter('java.lang.Class', inputClass)
@@ -31,7 +31,7 @@ export class FilterOperator extends UnaryOperator {
     );
   }
 
-  static generateUDFFilter(funCode: string, inputClass: string) {
+  static generateUDF(funCode: string, inputClass: string) {
     return `package org.qcri.rheem.rest.PredicateDescriptor;
             import org.qcri.rheem.core.function.FunctionDescriptor;
             public class SerializablePredicate_UdfFactory {
@@ -45,4 +45,9 @@ export class FilterOperator extends UnaryOperator {
             }
           }`;
   }
+
+  protected setUDF(udfText: string) {
+    this.parameters[0].setValue(FilterOperator.generateUDF(udfText, this.classInput));
+  }
+
 }

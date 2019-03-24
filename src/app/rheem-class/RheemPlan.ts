@@ -40,6 +40,6 @@ export class RheemPlan {
   }
 
   public toString(): string {
-    return this.listOperator.join(' , ') + '    conexiones: ' + this.conexions.join(' , ');
+    return '[' + this.listOperator.join(' , ') + ']    conexiones: ' + this.conexions.join(' , ');
   }
 }
