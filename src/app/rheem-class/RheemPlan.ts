@@ -27,6 +27,7 @@ export class RheemPlan {
   public addConexion(opNameStart: string | Operator, indexStart: number, opNameEnd: string | Operator, indexEnd: number ) {
     const opStart: Operator = (typeof opNameStart === 'string' ? this.getOperator(opNameStart) : opNameStart);
     const opEnd: Operator = (typeof opNameEnd === 'string' ? this.getOperator(opNameEnd) : opNameEnd);
+    opStart.createConnexion(indexStart, opEnd, indexEnd);
     this.conexions.push( new Conexion(opStart, indexStart, opEnd, indexEnd) );
   }
 
@@ -39,6 +40,6 @@ export class RheemPlan {
   }
 
   public toString(): string {
-    return this.listOperator.join(' , ');
+    return this.listOperator.join(' , ') + '    conexiones: ' + this.conexions.join(' , ');
   }
 }

@@ -74,5 +74,15 @@ export class Operator {
   nextOption(): OptionNext {
     return new OptionNext(false);
   }
+
+  getConfParameters(): any {
+    return {
+      typeOperator: [],
+      function1: false,
+      function2: false,
+      outputClass: false,
+      textInput: false
+    };
+  }
 }
 

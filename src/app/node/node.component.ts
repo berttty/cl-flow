@@ -190,8 +190,10 @@ export class NodeComponent implements OnInit {
   }
 
   openDialog(): void {
+    this.selfConfOperator.operator = this.operator
     console.log(this.selfConfOperator);
-    this.dialog.open(NodeModalComponent, {data: this.selfConfOperator});
+    console.log(typeof this.operator);
+    this.dialog.open(NodeModalComponent, {width: '800px', data: this.selfConfOperator});
   }
 
   private validateObject(obj: any, ...option: string[]): boolean {
@@ -201,5 +203,9 @@ export class NodeComponent implements OnInit {
                   return ! test.includes(ele);
               })
           .length === 0 ;
+  }
+
+  public getOperator(): Operator {
+    return this.operator;
   }
 }

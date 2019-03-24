@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Stroke } from 'angular-svg';
 import {NodeComponent} from '../node/node.component';
+import {Operator} from '../rheem-class/Operator';
 
 @Component({
   selector: 'app-line',
@@ -16,6 +17,7 @@ export class LineComponent implements AfterViewInit {
   private context: CanvasRenderingContext2D;
   private el: HTMLCanvasElement;
   public index: number;
+  // TODO Rodrigo: deben ser dos lista una para los anteriores y una para los siguientes
   public nodeListReference: NodeComponent[];
 
   constructor() {
@@ -118,4 +120,11 @@ export class LineComponent implements AfterViewInit {
       const hy2 = y2;
       this.pathString = 'M ' + x1 + ' ' + y1 + ' C ' + hx1 + ' ' + hy1 + ' ' + hx2 + ' ' + hy2 + ' ' + x2 + ' ' + y2;
     }*/
+
+  public getOperatorPrevious(index?: number): Operator {
+    if ( index === undefined ) {
+      index = 0;
+    }
+    return this.nodeListReference[index].getOperator();
+  }
 }
