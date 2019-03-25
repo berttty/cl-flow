@@ -51,7 +51,7 @@ export class DrawZoneComponent implements OnInit {
     );
     rheemPlanService.requestMetaQueue$.subscribe(
       id => {
-        console.log('DrawZone consuming request');
+        console.log('DrawZone consuming requestMeta');
         rheemPlanService.generateAnswerMeta(
           this.generateRheemPlan(true)
         );
@@ -514,7 +514,7 @@ export class DrawZoneComponent implements OnInit {
 
   generateRheemPlan(withMetaInfo?: boolean): RheemPlan {
     if ( withMetaInfo === undefined ) {
-      withMetaInfor = false;
+      withMetaInfo = false;
     }
     this.rheemPlan = new RheemPlan();
     this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
@@ -526,6 +526,14 @@ export class DrawZoneComponent implements OnInit {
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
+      if ( withMetaInfo ) {
+        console.log('withMeta');
+        const meta: any = {};
+        meta.position = element.instance.getPosition();
+        meta.icon = element.instance.getType();
+        meta.conf = element.instance.selfConfOperator;
+        first.setMetaInformation(meta);
+      }
     });
     this.plan = this.rheemPlan.toString();
     return this.rheemPlan;

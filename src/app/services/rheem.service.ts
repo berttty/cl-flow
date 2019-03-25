@@ -12,8 +12,12 @@ export class RheemService {
   constructor(private http: HttpClient) {
   }
 
-  static generateContent(json: string): any {
-    return JSON.parse(json.replace(/(\r\n|\n|\r)/gm, ' ' ) );
+  static generateContent(json: any | string): any {
+    if (typeof  json === 'string') {
+      JSON.parse(json.replace(/(\r\n|\n|\r)/gm, ' ' ) );
+    } else {
+      return json;
+    }
   }
 
   execute(json: string): boolean {
@@ -24,7 +28,7 @@ export class RheemService {
     return true;
   }
 
-  savePlan(json: string): boolean {
+  savePlan(json: any | string): boolean {
     console.log('saving in the db');
     this.http.post(`${this.uriDB}/add`, RheemService.generateContent(json)
     ).subscribe(

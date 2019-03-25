@@ -51,13 +51,14 @@ export class ActionButtonComponent implements OnInit {
   }
 
   preSave(): void {
-    this.isSaving = true;
     this.rheemPlanService.generateRequestMeta('' + this.indexRequest++ );
   }
 
   doSave(plan: RheemPlan): void {
-    this.rheemService.savePlan(plan.toString());
-    this.isSaving = false;
+    this.rheemService.savePlan(plan);
   }
 
+  preOpen() {
+
+  }
 }

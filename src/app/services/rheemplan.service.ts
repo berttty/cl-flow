@@ -9,7 +9,7 @@ export class RheemPlanService {
   private request = new Subject<string>();
   private answer = new Subject<RheemPlan>();
 
-  private requestMeta = new Subject()<string>();
+  private requestMeta = new Subject<string>();
   private answerMeta = new Subject<RheemPlan>();
 
   // Observable string streams
