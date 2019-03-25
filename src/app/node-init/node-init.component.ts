@@ -37,7 +37,7 @@ export class NodeInitComponent implements OnInit {
   onStop(event) {
     // console.log('the position is: ' + this.position.x + '  ' + this.position.y);
     this.moveTo(event.x, event.y);
-    // console.log('the position after is: ' + event.x + '  ' + event.y);
+    console.log('the position after is: ' + event.x + '  ' + event.y);
   }
 
   moveTo(posX: number, posY: number) {

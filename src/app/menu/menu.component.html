@@ -1,3 +1,4 @@
+<script src="menu.component.ts"></script>
 <div class="cl-br-border-left">
   <div class="cl-br-menu-main">
     <div class="cl-br-menu-header" (click)="menuHeaderAction()" [ngClass]="isOpen ? 'width' : ''">
@@ -10,7 +11,7 @@
 
         <ul class="cl-br-menu-wout-margin">
           <li>
-            <a href="#" (click)="toggleNavigationSub('source', true)">
+            <a href="#" (click)="toggleNavigationSub('source', true)" draggable="true" (dragend)="endDrag($event)">
               <span>
                 <fa-icon [icon]="['fas', 'coins']" size="2x"></fa-icon>
               </span>

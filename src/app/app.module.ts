@@ -33,6 +33,7 @@ import { MatInputModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { NodeModalComponent } from './node-modal/node-modal.component';
 import { ActionButtonModalComponent } from './action-button-modal/action-button-modal.component';
+import {MenuDrawService} from './services/menuDraw.service';
 
 const routes: Routes = [
   {
@@ -95,7 +96,8 @@ const routes: Routes = [
     RheemService,
     PinningjobService,
     DetailjobService,
-    RheemPlanService
+    RheemPlanService,
+    MenuDrawService
   ],
   bootstrap: [AppComponent]
 })

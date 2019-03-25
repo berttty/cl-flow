@@ -14,6 +14,8 @@ import { faBrain } from '@fortawesome/free-solid-svg-icons';
 import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 import { faBullseye } from '@fortawesome/free-solid-svg-icons';
 import { faChild } from '@fortawesome/free-solid-svg-icons';
+import {MenuDrawService} from '../services/menuDraw.service';
+import {RheemPlan} from '../rheem-class/RheemPlan';
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild);
 @Component({
@@ -54,7 +56,13 @@ export class MenuComponent implements OnInit {
     raw_data_storage: 'close',
     relational_storage: 'close',
   };
-  constructor() { }
+  constructor(private menuDrawService: MenuDrawService) {
+    menuDrawService.answerQueue$.subscribe(
+      (answer: RheemPlan) => {
+        console.log(answer);
+      }
+    );
+  }
 
   ngOnInit() {
   }
@@ -93,6 +101,14 @@ export class MenuComponent implements OnInit {
 
   closeSubMenu(menuName: string) {
     this.navigationSubState[menuName] =  'close';
+  }
+
+  endDrag(event) {
+    console.log('lalala');
+    console.log(event);
+    console.log(event.screenX);
+    console.log(event.screenY);
+    this.menuDrawService.generateRequest(event.screenX, event.screenY - 100);
   }
 
 }

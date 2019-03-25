@@ -11,6 +11,7 @@ import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
 import {RheemPlan} from '../rheem-class/RheemPlan';
 import {RheemPlanService} from '../services/rheemplan.service';
 import {Parameter} from '../rheem-class/Parameter';
+import {MenuDrawService} from '../services/menuDraw.service';
 
 @Component({
   selector: 'app-draw-zone',
@@ -40,7 +41,7 @@ export class DrawZoneComponent implements OnInit {
 
   lineStructure;
 
-  constructor(private factoryResolver: ComponentFactoryResolver, private rheemPlanService: RheemPlanService) {
+  constructor(private factoryResolver: ComponentFactoryResolver, private rheemPlanService: RheemPlanService, private menuDrawService: MenuDrawService) {
     rheemPlanService.requestQueue$.subscribe(
       id => {
         console.log('DrawZone consuming request');
@@ -65,13 +66,19 @@ export class DrawZoneComponent implements OnInit {
         rheemPlanService.generateAnswerDraw('generated');
       }
     );
+
+    menuDrawService.requestQueue$.subscribe(
+      (vec: number[]) => {
+        this.createNodeInit(vec[0], vec[1]);
+      }
+    );
   }
 
   ngOnInit() {
     this.onDrag = false;
   }
 
-  createNodeInit() {
+  createNodeInit(posX?: number, posY?: number) {
     const componentFactory = this.factoryResolver.resolveComponentFactory(NodeInitComponent);
     const componentRef: ComponentRef<NodeInitComponent> = this.VCR.createComponent(componentFactory);
     const currentComponent = componentRef.instance;
@@ -81,7 +88,10 @@ export class DrawZoneComponent implements OnInit {
 
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
-    currentComponent.moveTo(200, 300);
+    currentComponent.moveTo(
+      ( posX !== undefined ? posX : 200 ),
+      ( posY !== undefined ? posY : 300 )
+    );
     // add reference for newly created component
     this.nodeInitListReference.push(componentRef);
   }
