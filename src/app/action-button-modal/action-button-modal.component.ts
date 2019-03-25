@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatFormField, MatLabel, MatInput} from '@angular/material';
 
 @Component({
   selector: 'app-action-button-modal',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActionButtonModalComponent implements OnInit {
 
-  constructor() { }
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }

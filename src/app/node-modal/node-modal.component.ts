@@ -14,12 +14,8 @@ export class NodeModalComponent implements OnInit {
   }
 
   updateOperator(event) {
-    console.log(event);
-    console.log(event.value);
-    console.log(this.data.operator);
     const tmp: Operator = (this.data.operator.getOrigin() !== undefined ? this.data.operator.getOrigin() : this.data.operator );
     this.data.operator = this.data.operator.setTypeOperator(event.value).setOrigin(tmp);
-    console.log(this.data.operator);
   }
 
 

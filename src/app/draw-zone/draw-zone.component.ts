@@ -9,7 +9,6 @@ import {TextFileSource} from '../rheem-class/source-operator/TextFileSource';
 import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
 import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
 import {RheemPlan} from '../rheem-class/RheemPlan';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 import {RheemPlanService} from '../services/rheemplan.service';
 
 @Component({
@@ -55,6 +54,14 @@ export class DrawZoneComponent implements OnInit {
         rheemPlanService.generateAnswerMeta(
           this.generateRheemPlan(true)
         );
+      }
+    );
+
+    rheemPlanService.requestDrawQueue$.subscribe(
+      (plan: RheemPlan) => {
+        console.log('DrawZone consuming requestDraw');
+        this.drawPlan(plan);
+        rheemPlanService.generateAnswerDraw('generated');
       }
     );
   }
@@ -537,5 +544,11 @@ export class DrawZoneComponent implements OnInit {
     });
     this.plan = this.rheemPlan.toString();
     return this.rheemPlan;
+  }
+
+  drawPlan(plan: any): void {
+    console.log('drawing the plan');
+    console.log(plan);
+    return;
   }
 }

@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run build & \"npm run serve-db\" \"npm run serve\"",
-    "serve": "ng serve --port 8086",
+    "serve": "ng serve --port 8086 --live-reload false",
     "serve-db": "node server.js",
     "build": "ng build",
     "test": "ng test",

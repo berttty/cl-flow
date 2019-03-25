@@ -88,7 +88,8 @@ const routes: Routes = [
     LineComponent,
     JobsPinComponent,
     JobsModalComponent,
-    NodeModalComponent
+    NodeModalComponent,
+    ActionButtonModalComponent
   ],
   providers: [
     RheemService,

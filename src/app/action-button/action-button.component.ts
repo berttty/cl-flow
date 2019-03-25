@@ -7,6 +7,10 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { RheemService } from '../services/rheem.service';
 import {RheemPlanService} from '../services/rheemplan.service';
 import {RheemPlan} from '../rheem-class/RheemPlan';
+import {NodeModalComponent} from '../node-modal/node-modal.component';
+import {ActionButtonModalComponent} from '../action-button-modal/action-button-modal.component';
+import {MatDialog} from '@angular/material';
+import {map} from 'rxjs/operators';
 
 
 library.add(faPlay, faFolderOpen, faSave, faCogs);
@@ -23,7 +27,7 @@ export class ActionButtonComponent implements OnInit {
 
   private indexRequest: number;
 
-  constructor(private rheemService: RheemService, private rheemPlanService: RheemPlanService) {
+  constructor(private rheemService: RheemService, private rheemPlanService: RheemPlanService, public dialog: MatDialog) {
     this.indexRequest = 1;
     rheemPlanService.answerQueue$.subscribe(
       (answer: RheemPlan) => {
@@ -33,6 +37,11 @@ export class ActionButtonComponent implements OnInit {
     rheemPlanService.answerMetaQueue$.subscribe(
       (answer: RheemPlan) => {
         this.doSave(answer);
+      }
+    );
+    rheemPlanService.answerDrawQueue$.subscribe(
+      (answer: string) => {
+        console.log('plan ready');
       }
     );
   }
@@ -59,6 +68,23 @@ export class ActionButtonComponent implements OnInit {
   }
 
   preOpen() {
+    let index = 0;
+    this.rheemService.getList().subscribe(
+      res => {
+        const values = [];
+        res.forEach( ( element: any ) => {
+          values.push({id: element._id, name: (element.name !== undefined ? element.name : 'Plan ' + index++)});
+        });
+        const dialogRef = this.dialog.open(ActionButtonModalComponent, {width: '800px', data: {list: values}});
+        dialogRef.afterClosed().subscribe( result => {
+          this.rheemService.getPlan(result).subscribe(a => this.plotRheemPlan(a));
+        });
+        return values;
+      }
+    );
+  }
 
+  plotRheemPlan(json: any): void {
+    this.rheemPlanService.generateRequestDraw(json);
   }
 }

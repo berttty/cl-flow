@@ -7,12 +7,17 @@ export class RheemPlan {
   private sources: Operator[];
   private sinks: Operator[];
 
-  constructor() {
-    this.conexions = [];
-    this.listOperator = [];
-    this.sources = [];
-    this.sinks = [];
+  constructor(json?: any) {
+    if (json !== undefined) {
+      // TODO generar aca la logica de creado
+    } else {
+      this.conexions = [];
+      this.listOperator = [];
+      this.sources = [];
+      this.sinks = [];
+    }
   }
+
 
   addOperator(op: Operator) {
     if ( op.isSink() ) {

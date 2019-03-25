@@ -19,20 +19,20 @@ RheemPlanUnitRoutes.route('/add').post(function (req, res) {
 
 // Defined get data(index or listing) route
 RheemPlanUnitRoutes.route('/').get(function (req, res) {
-  AdUnit.find(function (err, adUnits){
+  RheemPlanUnit.find(function (err, rheemUnits){
     if(err){
       console.log(err);
     }
     else {
-      res.json(adUnits);
+      res.json(rheemUnits);
     }
   });
 });
 
 // Defined edit route
-RheemPlanUnitRoutes.route('/edit/:id').get(function (req, res) {
+RheemPlanUnitRoutes.route('/get/:id').get(function (req, res) {
   let id = req.params.id;
-  AdUnit.findById(id, function (err, adUnit){
+  RheemPlanUnit.findById(id, function (err, adUnit){
     res.json(adUnit);
   });
 });

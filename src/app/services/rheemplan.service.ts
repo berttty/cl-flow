@@ -12,6 +12,9 @@ export class RheemPlanService {
   private requestMeta = new Subject<string>();
   private answerMeta = new Subject<RheemPlan>();
 
+  private requestDraw = new Subject<any>();
+  private answerDraw = new Subject<string>();
+
   // Observable string streams
   requestQueue$ = this.request.asObservable();
   answerQueue$ = this.answer.asObservable();
@@ -19,6 +22,8 @@ export class RheemPlanService {
   requestMetaQueue$ = this.requestMeta.asObservable();
   answerMetaQueue$ = this.answerMeta.asObservable();
 
+  requestDrawQueue$ = this.requestDraw.asObservable();
+  answerDrawQueue$ = this.answerDraw.asObservable();
 
   generateRequest(id: string): void {
     console.log('generating request');
@@ -38,5 +43,15 @@ export class RheemPlanService {
   generateAnswerMeta(plan: RheemPlan): void {
     console.log('generating answer');
     this.answerMeta.next(plan);
+  }
+
+  generateRequestDraw(plan: any): void {
+    console.log('generating request');
+    this.requestDraw.next(plan);
+  }
+
+  generateAnswerDraw(answer: string): void {
+    console.log('generating answer');
+    this.answerDraw.next(answer);
   }
 }

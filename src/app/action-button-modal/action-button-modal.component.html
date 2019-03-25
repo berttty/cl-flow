@@ -1,3 +1,16 @@
-<p>
-  action-button-modal works!
-</p>
+<!-- TODO agregar la opcion de poder modificar el titulo dependiendo del nombre o del tipo de operador que se tenga-->
+<h1 mat-dialog-title>Open My Plans </h1>
+<div mat-dialog-content>
+  <div class="example-container">
+    <mat-form-field>
+      <mat-label>My Plans</mat-label>
+      <mat-select [(ngModel)]="data.id">
+        <mat-option *ngFor="let item of data.list" [value]="item.id">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Ok</button>
+</div>

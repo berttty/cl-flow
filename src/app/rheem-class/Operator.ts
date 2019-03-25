@@ -12,7 +12,7 @@ export class Operator {
   protected classOutput: string;
   protected udfTexts: string[];
   protected parameters: Parameter[];
-  protected connexions: Conexion[];
+  protected connexions: Conexion[] | any[];
   protected broadcasts: Conexion[];
   protected type: OperatorType;
   protected platforms: Platform[];
@@ -122,6 +122,17 @@ export class Operator {
 
   setMetaInformation( metainfo: any ): void {
     this.metaInformation = metainfo;
+  }
+
+  getMetaInformation( ): any {
+    return this.metaInformation;
+  }
+  getConexions(): Conexion[] {
+    return this.connexions;
+  }
+
+  setConexiones(tmp: any[]): void {
+    this.connexions = tmp;
   }
 }
 
