@@ -18,6 +18,7 @@ export class Operator {
   protected platforms: Platform[];
   protected origin: Operator;
   protected metaInformation: any;
+  protected keyClass: string;
 
   constructor(
       className: string,
@@ -29,7 +30,8 @@ export class Operator {
       platforms?: Platform[],
       connexions?: Conexion[],
       broadcasts?: Conexion[],
-      udfTexts?: string[]
+      udfTexts?: string[],
+      keyClass?: string
   ) {
     this.name = name;
     this.className = className;
@@ -40,6 +42,7 @@ export class Operator {
     this.platforms = (platforms === undefined ? [] : platforms);
     this.broadcasts = (broadcasts === undefined ? [] : broadcasts);
     this.udfTexts = (udfTexts === undefined ? [] : udfTexts);
+    this.keyClass = keyClass;
   }
 
   getName() {
@@ -66,6 +69,19 @@ export class Operator {
   setClassInput(input: string): void {
     this.classInput = input;
   }
+
+  setKeyClass(key: string): void {
+    this.keyClass = key;
+  }
+
+  getKeyClass() {
+    return this.keyClass;
+  }
+
+  getClassInput() {
+    return this.classInput;
+  }
+
   getClassOutput() {
     return this.classOutput;
   }

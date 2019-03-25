@@ -39,7 +39,7 @@ export class FilterOperator extends UnaryOperator {
             public static FunctionDescriptor.SerializablePredicate create() {
               return new FunctionDescriptor.SerializablePredicate<${inputClass}>() {
               @Override
-              public boolean test(${inputClass} dataPoint) {
+              public boolean test(${inputClass} input) {
                   return  ${funCode};
                 }
               };
