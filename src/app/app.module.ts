@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { NodeModalComponent } from './node-modal/node-modal.component';
+import { ActionButtonModalComponent } from './action-button-modal/action-button-modal.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,7 @@ const routes: Routes = [
     LineComponent,
     PinAreaComponent,
     NodeModalComponent,
+    ActionButtonModalComponent,
   ],
   imports: [
     BrowserModule,
