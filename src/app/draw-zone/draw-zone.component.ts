@@ -10,6 +10,7 @@ import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
 import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
 import {RheemPlan} from '../rheem-class/RheemPlan';
 import {RheemPlanService} from '../services/rheemplan.service';
+import {Parameter} from '../rheem-class/Parameter';
 
 @Component({
   selector: 'app-draw-zone',
@@ -142,28 +143,41 @@ export class DrawZoneComponent implements OnInit {
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
       const previousPosition = nodePrevious.getPosition();
-      const currentID = this.drawLines(previousPosition.x, previousPosition.y, posX, posY, nodePrevious, currentComponent);
+      this.createConexion(nodePrevious, currentComponent);
+      // TODO put in a function
+    }
+  }
 
-      nodePrevious.lines.push(currentID);
-      currentComponent.lines.push(currentID);
+  createConexion(nodePrevious, currentComponent) {
+    const previousPosition = nodePrevious.getPosition();
+    const currentPosition = currentComponent.getPosition();
+    const currentID = this.drawLines(
+                        previousPosition.x,
+                        previousPosition.y,
+                        currentPosition.x,
+                        currentPosition.y,
+                        nodePrevious,
+                        currentComponent
+    );
 
-      console.log('nodePrevious: ' + nodePrevious.index + ' numero: ' + nodePrevious.lines.length);
+    nodePrevious.lines.push(currentID);
+    currentComponent.lines.push(currentID);
 
-      currentComponent.predecessorNodesList.push(nodePrevious);
-      nodePrevious.successorNodesList.push(currentComponent);
+    console.log('nodePrevious: ' + nodePrevious.index + ' numero: ' + nodePrevious.lines.length);
 
-      console.log('nodePrevious.successorNodesList ' + nodePrevious.index);
-      let i: number;
-      for (i = 0; i < nodePrevious.successorNodesList.length; i++) {
-        console.log(nodePrevious.successorNodesList[i].index);
-      }
+    currentComponent.predecessorNodesList.push(nodePrevious);
+    nodePrevious.successorNodesList.push(currentComponent);
 
-      console.log('currentComponent.predecessorNodesList ' + currentComponent.index);
-      for (i = 0; i < currentComponent.predecessorNodesList.length; i++) {
-        console.log(currentComponent.predecessorNodesList[i].index);
-      }
+    console.log('nodePrevious.successorNodesList ' + nodePrevious.index);
+    let i: number;
+    for (i = 0; i < nodePrevious.successorNodesList.length; i++) {
+      console.log(nodePrevious.successorNodesList[i].index);
     }
 
+    console.log('currentComponent.predecessorNodesList ' + currentComponent.index);
+    for (i = 0; i < currentComponent.predecessorNodesList.length; i++) {
+      console.log(currentComponent.predecessorNodesList[i].index);
+    }
   }
 
   removeNode(index: number) {
@@ -529,7 +543,9 @@ export class DrawZoneComponent implements OnInit {
       this.rheemPlan.addOperator(first);
       let index = 0;
       // TODO bertty: make this method as parametric as we can
+      console.log('before to the list of succesor');
       element.instance.successorNodesList.forEach( (node: NodeComponent ) => {
+        console.log('doing the conexion');
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
@@ -549,6 +565,42 @@ export class DrawZoneComponent implements OnInit {
   drawPlan(plan: any): void {
     console.log('drawing the plan');
     console.log(plan);
+    plan.listOperator.forEach(
+      (ope: any) => {
+        const operator: Operator = OperatorFactory.buildOperator(ope.metaInformation.conf);
+        if ( operator.getClassName() === undefined ) {
+          operator.setClassName(ope.className);
+        }
+        operator.setName(ope.name);
+        operator.cleanParameters();
+        ope.parameters.forEach(
+          (param: any) => {
+            const tmp: Parameter = new Parameter(param.classType, param.value, param.isUDF, param.index);
+            operator.addParameters(tmp);
+        });
+        operator.setClassOutput(ope.classOutput);
+        this.createNode(
+          ope.metaInformation.conf.icon,
+          ope.metaInformation.position.x,
+          ope.metaInformation.position.y,
+          undefined,
+          operator,
+          ope.metaInformation.conf
+        );
+      }
+    );
+    plan.conexions.forEach(
+      (con: any) => {
+        const first = con.startOperator;
+        const second = con.endOperator;
+        console.log(first);
+        console.log(second);
+        const firstNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === first)[0];
+        const secondNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === second)[0];
+        this.createConexion(firstNode.instance, secondNode.instance);
+      }
+    );
+
     return;
   }
 }

@@ -5,11 +5,16 @@ export class Parameter {
   private isUDF: boolean;
   private index: number;
 
-  constructor(classType: string, value?: string, isUDF?: boolean) {
+  constructor(classType: string, value?: string, isUDF?: boolean, index?: number) {
     this.classType = classType;
     this.value = value;
     this.isUDF = (isUDF === undefined ? false : isUDF);
-    this.index = Parameter.indexGlobal++;
+    if (index !== undefined && index > Parameter.indexGlobal) {
+      this.index = index;
+      Parameter.indexGlobal = index + 1;
+    } else {
+      this.index = Parameter.indexGlobal++;
+    }
   }
 
   getClassType(): string {

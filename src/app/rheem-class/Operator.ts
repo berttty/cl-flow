@@ -46,6 +46,19 @@ export class Operator {
     return this.name;
   }
 
+  setName(name: string): Operator {
+    this.name = name;
+    return this;
+  }
+
+  getClassName(): string {
+    return this.className;
+  }
+
+  setClassName(clName: string): void {
+    this.className = clName;
+  }
+
   setClassOutput(output: string): void {
     this.classOutput = output;
   }
@@ -133,6 +146,14 @@ export class Operator {
 
   setConexiones(tmp: any[]): void {
     this.connexions = tmp;
+  }
+
+  cleanParameters(): void {
+    this.parameters = [];
+  }
+
+  addParameters(param: Parameter): void {
+    this.parameters.push(param);
   }
 }
 
