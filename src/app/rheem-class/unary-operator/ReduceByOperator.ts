@@ -87,7 +87,15 @@ export class ReduceByOperator extends UnaryOperator {
     opt.function1 = true;
     opt.function2 = true;
     opt.keyFun = true;
+    opt.outputClass = true;
     return opt;
+  }
+
+  addValueConfParameters(values: any): void {
+    super.addValueConfParameters(values);
+    this.setUDF( values.function1 );
+    this.udfTexts[0] = values.function1;
+    this.udfTexts.push(values.function2);
   }
 
 }

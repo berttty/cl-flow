@@ -58,7 +58,7 @@ export class MenuComponent implements OnInit {
   };
   constructor(private menuDrawService: MenuDrawService) {
     menuDrawService.answerQueue$.subscribe(
-      (answer: RheemPlan) => {
+      (answer: string) => {
         console.log(answer);
       }
     );

@@ -54,7 +54,7 @@ export class UnaryOperator extends Operator {
   protected setUDF(udfText: string) {}
 
   setTypeOperator(typeOperator: string): Operator {
-    const name: string = typeOperator.replace(' ', '');
+    const name: string = typeOperator.replace(/ /g, '');
     return OperatorFactory.buildOperator(name);
   }
 

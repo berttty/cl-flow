@@ -40,6 +40,7 @@ export const Operators: any = {
 };
 export class OperatorFactory {
   static buildOperator(params: any | string): Operator {
+    console.log(params);
     const className: string = (typeof params === 'string' ? params : params.MetaOperator);
     return new Operators[className]();
   }
