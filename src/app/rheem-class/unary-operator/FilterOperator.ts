@@ -17,7 +17,7 @@ export class FilterOperator extends UnaryOperator {
       [
         new Parameter(
           'PredicateDescriptor.SerializablePredicate',
-          FilterOperator.generateUDF(udf, inputClass),
+          FilterOperator.generateUDF(null, udf, inputClass),
           true
         ),
         new Parameter('java.lang.Class', inputClass)
@@ -27,14 +27,15 @@ export class FilterOperator extends UnaryOperator {
       inputClass,
       platforms,
       connexions,
-      broadcasts
+      broadcasts,
+      [ udf ]
     );
   }
 
-  static generateUDF(funCode: string, inputClass: string) {
-    return `package org.qcri.rheem.rest.PredicateDescriptor;
+  static generateUDF(alias: string, funCode: string, inputClass: string) {
+    return `package org.qcri.rheem.rest;
             import org.qcri.rheem.core.function.FunctionDescriptor;
-            public class SerializablePredicate_UdfFactory {
+            public class ${alias}_UdfFactory {
             public static FunctionDescriptor.SerializablePredicate create() {
               return new FunctionDescriptor.SerializablePredicate<${inputClass}>() {
               @Override
@@ -47,7 +48,25 @@ export class FilterOperator extends UnaryOperator {
   }
 
   protected setUDF(udfText: string) {
-    this.parameters[0].setValue(FilterOperator.generateUDF(udfText, this.classInput));
+    this.parameters[0].setValue(FilterOperator.generateUDF(this.parameters[0].getAlias(), udfText, this.classInput));
   }
 
+  addValueConfParameters(values: any): void {
+    super.addValueConfParameters(values);
+    this.setUDF( values.function1 );
+    this.udfTexts[0] = values.function1;
+  }
+
+
+  protected validateConfiguration() {
+    super.validateConfiguration();
+    this.setUDF(this.udfTexts[0]);
+  }
+
+
+  setClassInput(input: string): void {
+    super.setClassInput(input);
+    this.parameters[1].setValue(input);
+    this.setClassOutput(input);
+  }
 }

@@ -27,4 +27,11 @@ export class TextFileSink extends SinkOperator {
       broadcasts
     );
   }
+
+
+  setClassInput(input: string): void {
+    super.setClassInput(input);
+    this.parameters[1].setValue(input);
+    this.setClassOutput(input);
+  }
 }

@@ -193,6 +193,7 @@ export class NodeComponent implements OnInit {
     dialogRef.afterClosed().subscribe( result => {
       this.operator = result.operator;
       if ( result !== undefined ) {
+        console.log(result);
         this.operator = result.operator;
         this.getOperator().addValueConfParameters(result);
         if ( result.outputClass !== undefined ) {

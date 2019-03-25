@@ -12,21 +12,31 @@ import {FilterOperator} from '../unary-operator/FilterOperator';
 import {UnaryOperator} from '../unary-operator/UnaryOperator';
 import {TableSource} from '../source-operator/TableSource';
 import {MapOperator} from '../unary-operator/MapOperator';
+import {FlatMapOperator} from '../unary-operator/FlatMapOperator';
+import {MapPartitionOperator} from '../unary-operator/MapPartitionOperator';
+import {ReduceByOperator} from '../unary-operator/ReduceByOperator';
+import {SampleOperator} from '../unary-operator/SampleOperator';
+import {ZipWithIndexOperator} from '../unary-operator/ZipWithIndexOperator';
 
 export const Operators: any = {
-  AIOperator,
   EmptyOperator,
+  AIOperator,
   PreparationOperator,
   BinaryOperator,
   LoopOperator,
   SinkOperator,
-  TextFileSink,
+    TextFileSink,
   SourceOperator,
-  TextFileSource,
-  FilterOperator,
-  MapOperator,
+    TextFileSource,
+    TableSource,
   UnaryOperator,
-  TableSource
+    FilterOperator,
+    MapOperator,
+    FlatMapOperator,
+    MapPartitionOperator,
+    ReduceByOperator,
+    SampleOperator,
+    ZipWithIndexOperator
 };
 export class OperatorFactory {
   static buildOperator(params: any | string): Operator {

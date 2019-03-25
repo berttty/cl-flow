@@ -20,7 +20,8 @@ import { NodeInitComponent } from './node-init/node-init.component';
 import { LineComponent } from './line/line.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { AdunitService } from './adunit.service';
+import { RheemService } from './services/rheem.service';
+import { RheemPlanService } from './services/rheemplan.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PinningjobService} from './services/pinningjob.service';
 import { DetailjobService} from './services/detailjob.service';
@@ -88,9 +89,10 @@ const routes: Routes = [
     NodeModalComponent
   ],
   providers: [
-    AdunitService,
+    RheemService,
     PinningjobService,
-    DetailjobService
+    DetailjobService,
+    RheemPlanService
   ],
   bootstrap: [AppComponent]
 })

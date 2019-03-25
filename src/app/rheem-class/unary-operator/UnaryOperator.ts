@@ -34,7 +34,15 @@ export class UnaryOperator extends Operator {
   getConfParameters(): any {
     const opt: any = super.getConfParameters();
     opt.function1 = true;
-    opt.typeOperator = ['Filter Operator', 'Map Operator'];
+    opt.typeOperator = [
+      'Filter Operator',
+      'Map Operator',
+      'FlatMap Operator',
+      'Reduce By Operator',
+      'Zip With Index Operator',
+      'Map Partition Operator',
+      'Sample Operator'
+    ];
     return opt;
   }
 

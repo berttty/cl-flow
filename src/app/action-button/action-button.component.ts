@@ -4,6 +4,9 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
+import { RheemService } from '../services/rheem.service';
+import {RheemPlanService} from '../services/rheemplan.service';
+import {RheemPlan} from '../rheem-class/RheemPlan';
 
 
 library.add(faPlay, faFolderOpen, faSave, faCogs);
@@ -18,9 +21,43 @@ library.add(faPlay, faFolderOpen, faSave, faCogs);
 })
 export class ActionButtonComponent implements OnInit {
 
-  constructor() { }
+  private indexRequest: number;
+
+  constructor(private rheemService: RheemService, private rheemPlanService: RheemPlanService) {
+    this.indexRequest = 1;
+    rheemPlanService.answerQueue$.subscribe(
+      (answer: RheemPlan) => {
+          this.doExecute(answer);
+      }
+    );
+    rheemPlanService.answerMetaQueue$.subscribe(
+      (answer: RheemPlan) => {
+        this.doSave(answer);
+      }
+    );
+  }
 
   ngOnInit() {
+  }
+
+  preExecute(): void {
+    console.log('preExecute');
+    this.rheemPlanService.generateRequest(  '' + this.indexRequest++ );
+  }
+
+  doExecute(plan: RheemPlan): void {
+    console.log('doExecute');
+    this.rheemService.execute(plan.toString());
+  }
+
+  preSave(): void {
+    this.isSaving = true;
+    this.rheemPlanService.generateRequestMeta('' + this.indexRequest++ );
+  }
+
+  doSave(plan: RheemPlan): void {
+    this.rheemService.savePlan(plan.toString());
+    this.isSaving = false;
   }
 
 }

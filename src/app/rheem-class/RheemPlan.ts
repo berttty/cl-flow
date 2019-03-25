@@ -40,6 +40,22 @@ export class RheemPlan {
   }
 
   public toString(): string {
-    return '[' + this.listOperator.join(' , ') + ']    conexiones: ' + this.conexions.join(' , ');
+    return '{ "operators" : ['
+              +
+                  this.listOperator
+                      .join(' , ')
+              +
+            '], "sink_operators" : ['
+              +
+                  this.listOperator
+                      .filter(
+                        (ele: Operator) => ele.isSink()
+                      )
+                      .map(
+                        (ele: Operator) => '"' + ele.getName() + '"'
+                      )
+                      .join(' , ')
+              +
+            ']}' ;
   }
 }

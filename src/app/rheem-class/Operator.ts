@@ -17,6 +17,7 @@ export class Operator {
   protected type: OperatorType;
   protected platforms: Platform[];
   protected origin: Operator;
+  protected metaInformation: any;
 
   constructor(
       className: string,
@@ -66,10 +67,11 @@ export class Operator {
   }
 
   public toString(): string {
+    this.validateConfiguration();
     return `{
               "name" : "${this.name}",
               "java_class" : "${this.className}",
-              "parameters" : { "0" : [ ${this.parameters.join(' , ')} ] },
+              "parameters" : {  ${this.parameters.join(' , ')} },
               "connects_to" : { ${this.connexions.join(' , ')} }
             }
             `;
@@ -92,6 +94,7 @@ export class Operator {
       typeOperator: [],
       function1: false,
       function2: false,
+      KeyFun: false,
       outputClass: false,
       textInput: false
     };
@@ -111,6 +114,14 @@ export class Operator {
   setOrigin(ope: Operator): Operator {
     this.origin = ope;
     return this;
+  }
+
+  protected validateConfiguration() {
+    return;
+  }
+
+  setMetaInformation( metainfo: any ): void {
+    this.metaInformation = metainfo;
   }
 }
 

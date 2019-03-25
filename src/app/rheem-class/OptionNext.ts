@@ -138,12 +138,12 @@ export class OptionNext {
                 ActionEnum.CREATE_NEW,
                 {
                   icon: 'bullseye',
-                  MetaOperator: 'SinkOperator',
-                  TypeOperator: 'SinkOperator'
+                  MetaOperator: 'TextFileSink',
+                  TypeOperator: 'TextFileSink'
                 }
               )
             )
-            .addSubOption(
+            /*.addSubOption(
               new Option(
                 2,
                 'Relational',
@@ -155,7 +155,7 @@ export class OptionNext {
                   TypeOperator: 'SinkOperator'
                 }
               )
-            )
+            )*/
     );
   }
 

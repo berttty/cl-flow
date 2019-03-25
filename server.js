@@ -13,13 +13,15 @@ mongoose.connect(config.DB).then(
   err => { console.log('Can not connect to the database'+ err)}
 );
 // Route to adunit
-const adUnitRoutes = require('./routes/adunit.route');
+// const adUnitRoutes = require('./routes/adunit.route');
+const rheemDBRoutes = require('./routes/rheemDB.route');
 
 app.use(bodyParser.json());
 app.use(cors());
 const port = 4200;//process.env.PORT || 4200;
 
-app.use('/adunits', adUnitRoutes);
+// app.use('/adunits', adUnitRoutes);
+app.use('/rheemDB', rheemDBRoutes);
 
 const server = app.listen(port, function(){
   console.log('Listening on port ' + port);

@@ -15,7 +15,6 @@ export class PinAreaComponent implements OnInit {
   subscription: Subscription;
 
   constructor(private factoryResolver: ComponentFactoryResolver, private service: PinningjobService) {
-    console.log('Pin Job Action');
     this.subscription = service.pinning$.subscribe(
       id => {
         console.log('generating pin-job for card: ' + id);
@@ -32,7 +31,7 @@ export class PinAreaComponent implements OnInit {
     // this.service.pinnedStatusMethod(this.);
   }
 
-  createPin(id: string){
+  createPin(id: string) {
     const componentFactory = this.factoryResolver.resolveComponentFactory(JobsPinComponent);
     const componentRef: ComponentRef<JobsPinComponent> = this.VCR_job_pin.createComponent(componentFactory);
     const currentComponent = componentRef.instance;

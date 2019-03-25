@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "showCircularDependencies": false,
             "outputPath": "dist/rheem-studio",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -27,7 +28,8 @@
               "node_modules/materialize-css/dist/css/materialize.css"
             ],
             "scripts": [
-              "node_modules/materialize-css/dist/js/materialize.js"
+              "node_modules/materialize-css/dist/js/materialize.js",
+              "node_modules/hammerjs/hammer.min.js"
             ],
             "es5BrowserSupport": true
           },

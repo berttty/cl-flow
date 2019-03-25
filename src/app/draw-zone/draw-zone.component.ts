@@ -10,6 +10,7 @@ import {OperatorFactory} from '../rheem-class/factory/OperatorFactory';
 import {EmptyOperator} from '../rheem-class/special-operator/EmptyOperator';
 import {RheemPlan} from '../rheem-class/RheemPlan';
 import {el} from '@angular/platform-browser/testing/src/browser_util';
+import {RheemPlanService} from '../services/rheemplan.service';
 
 @Component({
   selector: 'app-draw-zone',
@@ -39,8 +40,23 @@ export class DrawZoneComponent implements OnInit {
 
   lineStructure;
 
-  constructor(private factoryResolver: ComponentFactoryResolver) {
-
+  constructor(private factoryResolver: ComponentFactoryResolver, private rheemPlanService: RheemPlanService) {
+    rheemPlanService.requestQueue$.subscribe(
+      id => {
+        console.log('DrawZone consuming request');
+        rheemPlanService.generateAnswer(
+          this.generateRheemPlan()
+        );
+      }
+    );
+    rheemPlanService.requestMetaQueue$.subscribe(
+      id => {
+        console.log('DrawZone consuming request');
+        rheemPlanService.generateAnswerMeta(
+          this.generateRheemPlan(true)
+        );
+      }
+    );
   }
 
   ngOnInit() {
@@ -496,7 +512,10 @@ export class DrawZoneComponent implements OnInit {
     }
   }
 
-  generateRheemPlan() {
+  generateRheemPlan(withMetaInfo?: boolean): RheemPlan {
+    if ( withMetaInfo === undefined ) {
+      withMetaInfor = false;
+    }
     this.rheemPlan = new RheemPlan();
     this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
       const first: Operator = element.instance.getOperator();
@@ -509,5 +528,6 @@ export class DrawZoneComponent implements OnInit {
       });
     });
     this.plan = this.rheemPlan.toString();
+    return this.rheemPlan;
   }
 }

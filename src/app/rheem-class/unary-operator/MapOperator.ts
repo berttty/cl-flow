@@ -18,7 +18,7 @@ export class MapOperator extends UnaryOperator {
       [
         new Parameter(
           'FunctionDescriptor.SerializableFunction',
-          MapOperator.generateUDF(udf, inputClass),
+          MapOperator.generateUDF(udf, inputClass, outputClass),
           true
         ),
         new Parameter('java.lang.Class', inputClass),
@@ -35,11 +35,11 @@ export class MapOperator extends UnaryOperator {
   }
 
   static generateUDF(funCode: string, inputClass: string, outputClass: string) {
-    return `package org.qcri.rheem.rest.PredicateDescriptor;
+    return `package org.qcri.rheem.rest;
             import ${inputClass}
             import ${outputClass}
             import org.qcri.rheem.core.function.FunctionDescriptor;
-            public class OPNAME_PARAMNAME_UdfFactory {
+            public class MapOperator_${this.name}_UdfFactory {
               public static FunctionDescriptor.SerializableFunction create() {
                   return new FunctionDescriptor.SerializableFunction<${inputClass}, ${outputClass}>() {
                       @Override
@@ -64,7 +64,7 @@ export class MapOperator extends UnaryOperator {
   }
 
   protected setUDF(udfText: string) {
-    this.parameters[0].setValue(MapOperator.generateUDF(udfText, this.classInput));
+    this.parameters[0].setValue(MapOperator.generateUDF(udfText, this.classInput, this.getClassOutput()));
   }
 
 
