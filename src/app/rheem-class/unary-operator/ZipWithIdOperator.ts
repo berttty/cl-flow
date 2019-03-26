@@ -3,7 +3,7 @@ import {Platform} from '../Platform';
 import {Conexion} from '../Conexion';
 import {Parameter} from '../Parameter';
 
-export class ZipWithIndexOperator extends UnaryOperator {
+export class ZipWithIdOperator extends UnaryOperator {
   constructor(
     name: string,
     inputClass?: string,
@@ -16,7 +16,7 @@ export class ZipWithIndexOperator extends UnaryOperator {
     super(
       'org.qcri.rheem.basic.operators.ZipWithIdOperator',
       [
-        new Parameter('java.lang.Class', inputClass),
+        new Parameter('java.lang.Class', inputClass)
       ],
       name,
       inputClass,

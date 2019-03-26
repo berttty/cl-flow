@@ -39,7 +39,7 @@ export class UnaryOperator extends Operator {
       'Map Operator',
       'FlatMap Operator',
       'Reduce By Operator',
-      'Zip With Index Operator',
+      'Zip With Id Operator',
       'Map Partition Operator',
       'Sample Operator'
     ];

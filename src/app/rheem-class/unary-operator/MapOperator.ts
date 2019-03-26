@@ -35,10 +35,14 @@ export class MapOperator extends UnaryOperator {
   }
 
   static generateUDF(alias: string, funCode: string, inputClass: string, outputClass: string) {
+    if ( funCode !== undefined && funCode.startsWith('#') ) {
+      return MapOperator.generateUDFSpecial(alias, funCode.slice(1), inputClass, outputClass);
+    }
     return `package org.qcri.rheem.rest;
             import ${inputClass};
             import ${outputClass};
             import java.util.*;
+            import java.util.stream.*;
             import org.qcri.rheem.core.function.FunctionDescriptor;
             public class ${alias}_UdfFactory {
               public static FunctionDescriptor.SerializableFunction create() {
@@ -53,6 +57,21 @@ export class MapOperator extends UnaryOperator {
                           return ${funCode};
                       }
                   };
+              }
+            }`;
+  }
+
+  static generateUDFSpecial(alias: string, funCode: string, inputClass: string, outputClass: string) {
+    return `package org.qcri.rheem.rest;
+            import ${inputClass};
+            import ${outputClass};
+            import java.util.*;
+            import java.util.stream.*;
+            import org.qcri.rheem.apps.simwords.*;
+            import org.qcri.rheem.core.function.FunctionDescriptor;
+            public class ${alias}_UdfFactory {
+              public static FunctionDescriptor.SerializableFunction create() {
+                  return ${funCode};
               }
             }`;
   }
@@ -82,6 +101,11 @@ export class MapOperator extends UnaryOperator {
   setClassInput(input: string): void {
     super.setClassInput(input);
     this.parameters[1].setValue(input);
+    this.setUDF(this.udfTexts[0]);
+  }
+
+  validateConfiguration() {
+    super.validateConfiguration();
     this.setUDF(this.udfTexts[0]);
   }
 }

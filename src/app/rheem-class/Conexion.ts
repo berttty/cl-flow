@@ -14,7 +14,8 @@ export class Conexion {
   }
 
   public toString(): string {
-    return `"${this.startSocket}" : [ { "${this.endOperator.getName()}" : ${this.endSocket} } ]`;
+   // return `"${this.startSocket}" : [ { "${this.endOperator.getName()}" : ${this.endSocket} } ]`;
+    return `{ "${this.endOperator.getName()}" : ${this.endSocket} }`;
   }
 
 }

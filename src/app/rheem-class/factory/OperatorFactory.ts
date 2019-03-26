@@ -16,7 +16,7 @@ import {FlatMapOperator} from '../unary-operator/FlatMapOperator';
 import {MapPartitionOperator} from '../unary-operator/MapPartitionOperator';
 import {ReduceByOperator} from '../unary-operator/ReduceByOperator';
 import {SampleOperator} from '../unary-operator/SampleOperator';
-import {ZipWithIndexOperator} from '../unary-operator/ZipWithIndexOperator';
+import {ZipWithIdOperator} from '../unary-operator/ZipWithIdOperator';
 
 export const Operators: any = {
   EmptyOperator,
@@ -36,7 +36,7 @@ export const Operators: any = {
     MapPartitionOperator,
     ReduceByOperator,
     SampleOperator,
-    ZipWithIndexOperator
+    ZipWithIdOperator
 };
 export class OperatorFactory {
   static serial = 0;
