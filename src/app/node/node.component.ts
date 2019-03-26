@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ComponentRef, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
@@ -17,8 +17,10 @@ import {
 import {Operator} from '../rheem-class/Operator';
 import {ActionEnum, OptionNext} from '../rheem-class/OptionNext';
 import {NodeModalComponent} from '../node-modal/node-modal.component';
+import {ModalBroadcastComponent} from '../modal-broadcast/modal-broadcast.component';
 
 import {LineComponent} from '../line/line.component';
+import {DrawZoneComponent} from '../draw-zone/draw-zone.component';
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
 
@@ -29,6 +31,7 @@ export interface NodeInterface {
   removeEdges(index: number);
   repareEdges(index: number, x, y, oldX, oldY);
   closeAllNodes();
+  DrawBroadLine(ori, des);
 }
 
 @Component({
@@ -66,9 +69,11 @@ export class NodeComponent implements OnInit {
 
   public lines: number [];
   public lineListReference = [];
+  public broadLinesReference = [];
 
   public predecessorNodesList = [];
   public successorNodesList = [];
+  public editor: DrawZoneComponent;
 
   constructor(public dialog: MatDialog) {
     this.lines = [];
@@ -173,6 +178,9 @@ export class NodeComponent implements OnInit {
       case ActionEnum.DELETE:
         this.removeMe(this.index);
         break;
+      case ActionEnum.BROADCAST:
+        this.openBroadcast();
+        break;
       case ActionEnum.CREATE_NEW:
         if ( ! this.validateObject(actionOption, 'icon', 'MetaOperator', 'TypeOperator')) {
           console.error('We need add option in create');
@@ -200,6 +208,39 @@ export class NodeComponent implements OnInit {
           this.operator.setClassOutput(result.outputClass);
         }
       }
+    });
+  }
+
+  openBroadcast(): void {
+    // this.selfConfOperator.operator = this.operator;
+    // this.editor.nodeListReference;
+
+    let i: number;
+    const nodesListObj = [];
+    for (i = 0; i < this.editor.nodeListReference.length; i++) {
+      const compRefX: ComponentRef<NodeComponent> = this.editor.nodeListReference[i];
+      const compX: NodeComponent = compRefX.instance as NodeComponent;
+
+      if (compX !== this) {
+        nodesListObj.push(compX);
+      }
+    }
+
+    const dialogRef = this.dialog.open(ModalBroadcastComponent, {width: '800px', data: {nodesList: nodesListObj, currentNode: this}});
+    dialogRef.afterClosed().subscribe( result => {
+      console.log(result);
+
+      this.compInteraction.DrawBroadLine(this, result);
+      /*Ahora debemos dibujar la linea*/
+      /*this.operator = result.operator;
+      if ( result !== undefined ) {
+        console.log(result);
+        this.operator = result.operator;
+        this.getOperator().addValueConfParameters(result);
+        if ( result.outputClass !== undefined ) {
+          this.operator.setClassOutput(result.outputClass);
+        }
+      }*/
     });
   }
 

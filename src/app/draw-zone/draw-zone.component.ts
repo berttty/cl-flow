@@ -32,6 +32,7 @@ export class DrawZoneComponent implements OnInit {
 
   onMoveNode = null;
   onMoveRelatedNodes = [];
+  onMoveBroadcastNodes = [];
   onDrag: boolean;
 
   // TODO eliminar es para test
@@ -133,6 +134,7 @@ export class DrawZoneComponent implements OnInit {
     currentComponent.selfConfOperator = configuration;
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
+    currentComponent.editor = this;
 
     // add reference for newly created component
     this.nodeListReference.push(componentRef);
@@ -243,6 +245,8 @@ export class DrawZoneComponent implements OnInit {
       this.VCRLines.remove(vcrLineIndex);
     }
 
+    this.removeBroadLines(component);
+
     /*Repasando sucesores*/
     for (i = 0; i < component.successorNodesList.length; i++) {
       const suc = component.successorNodesList[i];
@@ -316,6 +320,8 @@ export class DrawZoneComponent implements OnInit {
     const componentRef = this.nodeListReference.filter(x => x.instance.index === index)[0];
     const component: NodeComponent = componentRef.instance as NodeComponent;
 
+    component.editor = this;
+
     this.createNode(component.getType(), component.position.x, component.position.y, index);
   }
 
@@ -338,7 +344,7 @@ export class DrawZoneComponent implements OnInit {
       const currentComponent = componentRef.instance;
       currentComponent.index = ++this.indexLineInit;
 
-      currentComponent.draw2(pastX, pastY, predX, predY);
+      currentComponent.draw2(pastX, pastY, predX, predY, 'purple');
 
       curr.lineListReference.push(componentRef);
       prev.lineListReference.push(componentRef);
@@ -393,6 +399,39 @@ export class DrawZoneComponent implements OnInit {
     }
 
     component.lineListReference = [];
+
+    this.onMoveBroadcastNodes = [];
+    // Repasando los edges del nodo
+    for (i = 0; i < component.broadLinesReference.length; i++) {
+
+      let j: number;
+      // linea actual
+      const line = component.broadLinesReference[i].instance as LineComponent;
+
+      // Se revisan los nodos asociados al edge, siempre deben ser 2
+      for (j = 0; j < line.nodeListReference.length; j++) {
+        const relatedNode = line.nodeListReference[j];
+
+        if (relatedNode.index !== component.index) {
+
+          this.onMoveBroadcastNodes.push(relatedNode);
+
+          // BORRAR RELACION!!
+          const ind = relatedNode.broadLinesReference.indexOf(component.broadLinesReference[i], 0);
+
+          if (ind > -1) {
+            relatedNode.broadLinesReference.splice(ind, 1);
+          }
+        }
+
+      }
+
+      const vcrLineIndex: number = this.VCRLines.indexOf(component.broadLinesReference[i]);
+      this.VCRLines.remove(vcrLineIndex);
+      component.broadLinesReference[i].destroy();
+    }
+    component.broadLinesReference = [];
+
     this.onDrag = true;
   }
 
@@ -486,6 +525,8 @@ export class DrawZoneComponent implements OnInit {
           console.log(otherNode.predecessorNodesList[i].index);
         }
       }
+
+      this.repareBroadLines(component);
 
       // TEST
       component.close = false;
@@ -612,5 +653,81 @@ export class DrawZoneComponent implements OnInit {
     );
 
     return;
+  }
+
+  DrawBroadLine(ori: NodeComponent, des: NodeComponent) {
+
+    const componentFactory = this.factoryResolver.resolveComponentFactory(LineComponent);
+    const componentRef: ComponentRef<LineComponent> = this.VCRLines.createComponent(componentFactory);
+    const currentComponent = componentRef.instance;
+    currentComponent.index = ++this.indexLineInit;
+
+    currentComponent.draw2(ori.getPosition().x, ori.getPosition().y, des.getPosition().x, des.getPosition().y, 'green');
+
+    ori.broadLinesReference.push(componentRef);
+    des.broadLinesReference.push(componentRef);
+
+    currentComponent.nodeListReference.push(ori);
+    currentComponent.nodeListReference.push(des);
+
+    /*curr.lineListReference.push(componentRef);
+    prev.lineListReference.push(componentRef);
+    currentComponent.nodeListReference.push(curr);
+    currentComponent.nodeListReference.push(prev);*/
+
+    return currentComponent.index;
+  }
+
+  removeBroadLines(component: NodeComponent) {
+    let i: number;
+    for (i = 0; i < component.broadLinesReference.length; i++) {
+
+      const line: LineComponent = component.broadLinesReference[i].instance as LineComponent;
+
+      const vcrLineIndex: number = this.VCRLines.indexOf(component.broadLinesReference[i]);
+
+      let j: number;
+      for (j = 0; j < line.nodeListReference.length; j++) {
+
+        const nodeOfList = line.nodeListReference[j];
+
+        /*Eliminando referencia a linea en el otro nodo*/
+        if (!(nodeOfList.index === component.index)) {
+
+          let k: number;
+          let ind: number;
+          for (k = 0; k < nodeOfList.broadLinesReference.length; k++) {
+            const refLine: LineComponent = nodeOfList.broadLinesReference[k].instance as LineComponent;
+
+            if (refLine === line) {
+              ind = k;
+              break;
+            }
+          }
+          if (ind > -1) {
+            nodeOfList.broadLinesReference.splice(ind, 1);
+          }
+        }
+      }
+
+      this.VCRLines.remove(vcrLineIndex);
+    }
+  }
+
+  repareBroadLines(component: NodeComponent) {
+    let i: number;
+    for (i = 0; i < this.onMoveBroadcastNodes.length; i++) {
+      const nodePrevious = this.onMoveBroadcastNodes[i];
+      const previousPosition = nodePrevious.getPosition();
+
+      this.DrawBroadLine(component, nodePrevious);
+
+      /*if (reposition) {
+        const currentID = this.drawLines(previousPosition.x, previousPosition.y, oldX, oldY, nodePrevious, component);
+      } else {
+        const currentID = this.drawLines(previousPosition.x, previousPosition.y, newX, newY, nodePrevious, component);
+      }*/
+
+    }
   }
 }

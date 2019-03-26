@@ -11,6 +11,7 @@ import {NodeModalComponent} from '../node-modal/node-modal.component';
 import {ActionButtonModalComponent} from '../action-button-modal/action-button-modal.component';
 import {MatDialog} from '@angular/material';
 import {map} from 'rxjs/operators';
+import {ActionButtonModalSaveComponent} from '../action-button-modal-save/action-button-modal-save.component';
 
 
 library.add(faPlay, faFolderOpen, faSave, faCogs);
@@ -60,7 +61,13 @@ export class ActionButtonComponent implements OnInit {
   }
 
   preSave(): void {
-    this.rheemPlanService.generateRequestMeta('' + this.indexRequest++ );
+
+    const dialogRef = this.dialog.open(ActionButtonModalSaveComponent, {width: '800px', height: '800px'});
+    dialogRef.afterClosed().subscribe( result => {
+      if (result === true) {
+        this.rheemPlanService.generateRequestMeta('' + this.indexRequest++);
+      }
+    });
   }
 
   doSave(plan: RheemPlan): void {

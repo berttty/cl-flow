@@ -19,6 +19,7 @@ export class LineComponent implements AfterViewInit {
   public index: number;
   // TODO Rodrigo: deben ser dos lista una para los anteriores y una para los siguientes
   public nodeListReference: NodeComponent[];
+  private distance: number;
 
   constructor() {
     this.nodeListReference = [];
@@ -42,7 +43,7 @@ export class LineComponent implements AfterViewInit {
     // this.context.fillText('@realappie', x, y);
   }
 
-  public draw2(x1, y1, x2, y2) {
+  public draw2(x1, y1, x2, y2, color) {
     this.el = this.canvasEl.nativeElement as HTMLCanvasElement;
     this.context = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
     this.context.font = '30px Arial';
@@ -63,14 +64,20 @@ export class LineComponent implements AfterViewInit {
 
     this.context.lineWidth = 1;
     this.context.lineJoin = this.context.lineCap = 'round';
-    this.context.strokeStyle = 'purple';
+    this.context.strokeStyle = color;
     this.context.lineWidth = 5;
 
     this.context.beginPath();
 
+    this.distance = 0;
+    if (color === 'purple') {
+      this.distance = 50;
+    } else {
+      this.distance = 60;
+    }
 
-    this.context.moveTo(x1, y1 + 50);
-    this.context.lineTo(x2, y2 + 50);
+    this.context.moveTo(x1, y1 + this.distance);
+    this.context.lineTo(x2, y2 + this.distance);
     this.context.stroke();
 
 

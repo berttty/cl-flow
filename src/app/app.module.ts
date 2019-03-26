@@ -34,6 +34,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NodeModalComponent } from './node-modal/node-modal.component';
 import { ActionButtonModalComponent } from './action-button-modal/action-button-modal.component';
 import {MenuDrawService} from './services/menuDraw.service';
+import { ActionButtonModalSaveComponent } from './action-button-modal-save/action-button-modal-save.component';
+import { ModalBroadcastComponent } from './modal-broadcast/modal-broadcast.component';
 
 const routes: Routes = [
   {
@@ -60,6 +62,8 @@ const routes: Routes = [
     PinAreaComponent,
     NodeModalComponent,
     ActionButtonModalComponent,
+    ActionButtonModalSaveComponent,
+    ModalBroadcastComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +94,9 @@ const routes: Routes = [
     JobsPinComponent,
     JobsModalComponent,
     NodeModalComponent,
-    ActionButtonModalComponent
+    ActionButtonModalComponent,
+    ActionButtonModalSaveComponent,
+    ModalBroadcastComponent
   ],
   providers: [
     RheemService,

@@ -1,7 +1,8 @@
 export enum ActionEnum {
   SETTINGS = 'settings',
   DELETE = 'delete',
-  CREATE_NEW = 'create_new'
+  CREATE_NEW = 'create_new',
+  BROADCAST = 'broadcast'
 }
 
 export class OptionNext {
@@ -21,7 +22,7 @@ export class OptionNext {
             {}
           )
         )
-        .addSubOption(new Option( 2, '', 'cogs', null))
+        .addSubOption(new Option( 2, '', 'cogs', ActionEnum.BROADCAST))
         .addSubOption(new Option( 3, 'Delete', 'trash-alt', ActionEnum.DELETE))
     );
     if (empty) {
