@@ -639,7 +639,7 @@ export class DrawZoneComponent implements OnInit {
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
-      let index = 0;
+      index = 0;
       element.instance.successorBroadcast.forEach( (node: NodeComponent) => {
         if (asOperator) {
           if (node.getOperator().isSink() || node.getOperator().isSource()) {

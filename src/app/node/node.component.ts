@@ -242,6 +242,7 @@ export class NodeComponent implements OnInit, AfterViewInit  {
 
   openDialog(): void {
     this.selfConfOperator.operator = this.operator;
+    this.selfConfOperator.name = this.operator.getName();
     console.log(this.selfConfOperator);
     const dialogRef = this.dialog.open(NodeModalComponent, {width: '800px', data: this.selfConfOperator});
     dialogRef.afterClosed().subscribe( result => {

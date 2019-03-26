@@ -11,7 +11,7 @@ import {Operator} from '../rheem-class/Operator';
 export class RheemService {
 
   uri = 'http://192.168.50.29:8089/rheem';
-  uriDB = 'http://localhost:4200/rheemDB';
+  uriDB = 'http://10.4.4.49:50051/rheemDB';
 
   constructor(private http: HttpClient) {
   }

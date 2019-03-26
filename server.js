@@ -18,7 +18,7 @@ const rheemDBRoutes = require('./routes/rheemDB.route');
 
 app.use(bodyParser.json());
 app.use(cors());
-const port = 4200;//process.env.PORT || 4200;
+const port = 50051;//process.env.PORT || 4200;
 
 // app.use('/adunits', adUnitRoutes);
 app.use('/rheemDB', rheemDBRoutes);
