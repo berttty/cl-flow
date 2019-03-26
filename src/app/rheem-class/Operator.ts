@@ -105,8 +105,8 @@ export class Operator {
               "name" : "${this.name}",
               "java_class" : "${this.className}",
               "parameters" : {  ${this.parameters.join(' , ')} },
-              "connects_to" : { ${this.connexions.join(' , ')} },
-              "broadcasts_to" : { ${this.connexions.join(' , ')} }
+              "connects_to" : { "0" : [ ${this.connexions.join(' , ')} ] },
+              "broadcasts_to" : { "0" : [ ${this.broadcasts.join(' , ')} ] }
             }
             `;
   }

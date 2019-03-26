@@ -9,9 +9,11 @@ export class Parameter {
     this.classType = classType;
     this.value = value;
     this.isUDF = (isUDF === undefined ? false : isUDF);
-    if (index !== undefined && index > Parameter.indexGlobal) {
+    if (index !== undefined ) {
       this.index = index;
-      Parameter.indexGlobal = index + 1;
+      if (index > Parameter.indexGlobal) {
+        Parameter.indexGlobal = index + 1;
+      }
     } else {
       this.index = Parameter.indexGlobal++;
     }
