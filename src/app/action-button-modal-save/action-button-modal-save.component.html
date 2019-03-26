@@ -1,0 +1,11 @@
+<!-- TODO agregar la opcion de poder modificar el titulo dependiendo del nombre o del tipo de operador que se tenga-->
+<h1 mat-dialog-title>Saving Plan </h1>
+<div mat-dialog-content>
+  <div class="example-container">
+    <h2>Are you sure?</h2>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+</div>
