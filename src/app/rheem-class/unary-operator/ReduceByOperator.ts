@@ -104,11 +104,11 @@ export class ReduceByOperator extends UnaryOperator {
   }
 
   protected setUDFKey(udfText: string) {
-    this.parameters[1].setValue(ReduceByOperator.generateUDFKey(this.parameters[1].getAlias(), udfText, this.getClassInput(), this.getKeyClass()));
+    this.parameters[0].setValue(ReduceByOperator.generateUDFKey(this.parameters[0].getAlias(), udfText, this.getClassInput(), this.getKeyClass()));
   }
 
   protected setUDF(udfText: string) {
-    this.parameters[0].setValue(ReduceByOperator.generateUDF(this.parameters[0].getAlias(), udfText, this.getClassInput()));
+    this.parameters[1].setValue(ReduceByOperator.generateUDF(this.parameters[1].getAlias(), udfText, this.getClassInput()));
   }
 
   setClassInput(input: string): void {
@@ -119,8 +119,15 @@ export class ReduceByOperator extends UnaryOperator {
   }
 
   setClassOutput(output: string): void {
-    super.setClassOutput(output);
+    super.setClassOutput(this.getClassInput());
     this.setKeyClass(output);
+  }
+
+  getClassOutput(): string {
+    if (this.classOutput === undefined){
+      this.classOutput = this.getClassInput();
+    }
+    return this.classOutput;
   }
 
   setKeyClass(key: string): void {
