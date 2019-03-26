@@ -274,7 +274,7 @@ export class NodeComponent implements OnInit, AfterViewInit  {
 
     const dialogRef = this.dialog.open(ModalBroadcastComponent, {width: '800px', data: {nodesList: nodesListObj, currentNode: this}});
     dialogRef.afterClosed().subscribe( result => {
-      console.log(result);
+      console.log('result is ' + result);
 
       this.compInteraction.DrawBroadLine(this, result);
 

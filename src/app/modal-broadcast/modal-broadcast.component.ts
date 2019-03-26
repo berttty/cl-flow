@@ -12,7 +12,11 @@ export class ModalBroadcastComponent implements OnInit {
 
   selectedTarget: any;
   classOutputSelected: any;
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalBroadcastComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   ngOnInit() {
     /*Corresponde a un node component*/
@@ -23,5 +27,9 @@ export class ModalBroadcastComponent implements OnInit {
     this.selectedTarget = (event.value);
     /*const node: NodeComponent = (event.value);*/
     // console.log(this.selectedTarget);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

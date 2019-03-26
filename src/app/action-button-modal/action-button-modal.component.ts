@@ -8,9 +8,17 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatFormField, MatLabel, MatInp
 })
 export class ActionButtonModalComponent implements OnInit {
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
+  // constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public dialogRef: MatDialogRef<ActionButtonModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   ngOnInit() {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

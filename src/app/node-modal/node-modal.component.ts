@@ -9,7 +9,12 @@ import {Operator} from '../rheem-class/Operator';
 export class NodeModalComponent implements OnInit {
   selected: any;
   classOutputSelected: any;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  /*constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }*/
+  constructor(
+    public dialogRef: MatDialogRef<NodeModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
 
   ngOnInit() {
     this.selected = this.getNameClass(this.data.operator.className);
@@ -34,6 +39,10 @@ export class NodeModalComponent implements OnInit {
 
   updateOutPutClass(event) {
     this.data.outputClass = event.value;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
