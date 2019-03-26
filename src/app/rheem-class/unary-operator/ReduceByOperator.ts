@@ -50,7 +50,7 @@ export class ReduceByOperator extends UnaryOperator {
               public static FunctionDescriptor.SerializableFunction create() {
                   return new FunctionDescriptor.SerializableFunction<${inputClass}, ${keyClass}>() {
                       @Override
-                      public ${keyClass} apply(${inputClass} dataPoint) {
+                      public ${keyClass} apply(${inputClass} input) {
                           /*
                           * TODO: - Implement your Map udf here !
                           *       - Replace INPUT and OUTPUT with good types!
@@ -72,7 +72,7 @@ export class ReduceByOperator extends UnaryOperator {
               public static FunctionDescriptor.SerializableBinaryOperator create() {
                   return new FunctionDescriptor.SerializableBinaryOperator<${inputClass}>() {
                       @Override
-                      public ${inputClass} apply(${inputClass} dataPointA, ${inputClass} dataPointB) {
+                      public ${inputClass} apply(${inputClass} inputA, ${inputClass} inputB) {
                           /*
                           * TODO: - Implement your Map udf here !
                           *       - Replace INPUT and OUTPUT with good types!

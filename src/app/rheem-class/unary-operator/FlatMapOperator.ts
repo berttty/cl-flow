@@ -39,7 +39,7 @@ export class FlatMapOperator extends UnaryOperator {
             import ${inputClass};
             import ${outputClass};
             import java.util.*;
-            System.Linq
+            import java.util.stream.*;
             import org.qcri.rheem.core.function.FunctionDescriptor;
             public class ${alias}_UdfFactory {
               public static FunctionDescriptor.SerializableFunction create() {

@@ -7,11 +7,9 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { RheemService } from '../services/rheem.service';
 import {RheemPlanService} from '../services/rheemplan.service';
 import {RheemPlan} from '../rheem-class/RheemPlan';
-import {NodeModalComponent} from '../node-modal/node-modal.component';
 import {ActionButtonModalComponent} from '../action-button-modal/action-button-modal.component';
 import {MatDialog} from '@angular/material';
-import {map} from 'rxjs/operators';
-
+import {MatSnackBar} from '@angular/material';
 
 library.add(faPlay, faFolderOpen, faSave, faCogs);
 
@@ -27,7 +25,12 @@ export class ActionButtonComponent implements OnInit {
 
   private indexRequest: number;
 
-  constructor(private rheemService: RheemService, private rheemPlanService: RheemPlanService, public dialog: MatDialog) {
+  constructor(
+        private rheemService: RheemService,
+        private rheemPlanService: RheemPlanService,
+        public dialog: MatDialog,
+        private snackBar: MatSnackBar
+  ) {
     this.indexRequest = 1;
     rheemPlanService.answerQueue$.subscribe(
       (answer: RheemPlan) => {
@@ -50,12 +53,12 @@ export class ActionButtonComponent implements OnInit {
   }
 
   preExecute(): void {
-    console.log('preExecute');
+    this.openMessage('Generating Plan');
     this.rheemPlanService.generateRequest(  '' + this.indexRequest++ );
   }
 
   doExecute(plan: RheemPlan): void {
-    console.log('doExecute');
+    this.openMessage('Starting Execution');
     this.rheemService.execute(plan.toString());
   }
 
@@ -86,5 +89,13 @@ export class ActionButtonComponent implements OnInit {
 
   plotRheemPlan(json: any): void {
     this.rheemPlanService.generateRequestDraw(json);
+  }
+
+  openMessage(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
   }
 }

@@ -543,19 +543,33 @@ export class DrawZoneComponent implements OnInit {
     }
   }
 
-  generateRheemPlan(withMetaInfo?: boolean): RheemPlan {
+  generateRheemPlan(withMetaInfo?: boolean, asOperator?: boolean): RheemPlan {
     if ( withMetaInfo === undefined ) {
       withMetaInfo = false;
     }
+    if (asOperator === undefined) {
+      asOperator = false;
+    }
+
     this.rheemPlan = new RheemPlan();
     this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
       const first: Operator = element.instance.getOperator();
+      if (asOperator) {
+        if (first.isSource() || first.isSink()) {
+          return;
+        }
+      }
       this.rheemPlan.addOperator(first);
       let index = 0;
       // TODO bertty: make this method as parametric as we can
       console.log('before to the list of succesor');
       element.instance.successorNodesList.forEach( (node: NodeComponent ) => {
         console.log('doing the conexion');
+        if (asOperator) {
+          if (node.getOperator().isSink() || node.getOperator().isSource()) {
+            return;
+          }
+        }
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
