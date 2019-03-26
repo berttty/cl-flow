@@ -6,6 +6,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import {MenuDrawService} from '../services/menuDraw.service';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
@@ -14,10 +15,23 @@ import { faBrain } from '@fortawesome/free-solid-svg-icons';
 import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 import { faBullseye } from '@fortawesome/free-solid-svg-icons';
 import { faChild } from '@fortawesome/free-solid-svg-icons';
-import {MenuDrawService} from '../services/menuDraw.service';
-import {RheemPlan} from '../rheem-class/RheemPlan';
+import { faHdd } from '@fortawesome/free-solid-svg-icons';
+import { faTable } from '@fortawesome/free-solid-svg-icons';
+import { faFileCsv } from '@fortawesome/free-solid-svg-icons';
+import { faSyringe } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faObjectGroup } from '@fortawesome/free-solid-svg-icons';
+import { faTags } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild);
+library.add(
+  faBars, faCoins, faHammer, faBrain, faPuzzlePiece,
+  faBullseye, faChild, faHdd, faTable, faFileCsv,
+  faSyringe, faChartLine, faObjectGroup, faTags, faAngleRight,
+  faAngleDoubleRight
+);
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',

@@ -16,13 +16,7 @@ export class ZipWithIndexOperator extends UnaryOperator {
     super(
       'org.qcri.rheem.basic.operators.ZipWithIdOperator',
       [
-        new Parameter(
-          'FunctionDescriptor.SerializableFunction',
-          ZipWithIndexOperator.generateUDF(null, udf, inputClass, outputClass),
-          true
-        ),
         new Parameter('java.lang.Class', inputClass),
-        new Parameter('java.lang.Class', outputClass)
       ],
       name,
       inputClass,
@@ -30,58 +24,30 @@ export class ZipWithIndexOperator extends UnaryOperator {
       platforms,
       connexions,
       broadcasts,
-      [udf]
+      []
     );
-  }
-
-  static generateUDF(alias: string, funCode: string, inputClass: string, outputClass: string) {
-    return `package org.qcri.rheem.rest;
-            import ${inputClass};
-            import ${outputClass};
-            import java.util.*;
-            import org.qcri.rheem.core.function.FunctionDescriptor;
-            public class ${alias}_UdfFactory {
-              public static FunctionDescriptor.SerializableFunction create() {
-                  return new FunctionDescriptor.SerializableFunction<Iterable<${inputClass}>, Iterable<${outputClass}>>() {
-                      @Override
-                      public Iterable<${outputClass}> apply(${inputClass} input) {
-                          /*
-                          * TODO: - Implement your Map udf here !
-                          *       - Replace INPUT and OUTPUT with good types!
-                          *       - Don't forget the imports !
-                          * */
-                          return ${funCode};
-                      }
-                  };
-              }
-            }`;
   }
 
   addValueConfParameters(values: any): void {
     super.addValueConfParameters(values);
-    this.setUDF( values.function1 );
-    this.udfTexts[0] = values.function1;
   }
 
   getConfParameters(): any {
     const opt: any = super.getConfParameters();
-    opt.outputClass = true;
+    opt.function1 = false;
     return opt;
   }
 
-  protected setUDF(udfText: string) {
-    this.parameters[0].setValue(ZipWithIndexOperator.generateUDF(this.parameters[0].getAlias(), udfText, this.getClassInput(), this.getClassOutput()));
+  setClassOutput(output: string): void {
+    super.setClassOutput('org.qcri.rheem.basic.data.Tuple2');
   }
 
-
-  setClassOutput(output: string): void {
-    super.setClassOutput(output);
-    this.parameters[2].setValue(output);
+  getClassOutput(): string {
+    return 'org.qcri.rheem.basic.data.Tuple2';
   }
 
   setClassInput(input: string): void {
     super.setClassInput(input);
-    this.parameters[1].setValue(input);
-    this.setUDF(this.udfTexts[0]);
+    this.parameters[0].setValue(input);
   }
 }

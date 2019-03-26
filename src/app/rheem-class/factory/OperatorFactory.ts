@@ -49,15 +49,20 @@ export class OperatorFactory {
     console.log(nameSource.toLowerCase());
     switch (nameSource.toLowerCase()) {
       case 'hdfs':
+        return {
+          icon: 'hdfs',
+          MetaOperator: 'TextFileSource',
+          TypeOperator: 'TextFileSource'
+        };
       case 'lfs':
         return {
-          icon: 'coins',
+          icon: 'hdd',
           MetaOperator: 'TextFileSource',
           TypeOperator: 'TextFileSource'
         };
       case 'postgresql':
         return {
-          icon: 'coins',
+          icon: 'postgresql',
           MetaOperator: 'TableSource',
           TypeOperator: 'TableSource'
         };

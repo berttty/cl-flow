@@ -36,6 +36,7 @@ import { ActionButtonModalComponent } from './action-button-modal/action-button-
 import {MenuDrawService} from './services/menuDraw.service';
 import { ActionButtonModalSaveComponent } from './action-button-modal-save/action-button-modal-save.component';
 import { ModalBroadcastComponent } from './modal-broadcast/modal-broadcast.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const routes: Routes = [
   {
@@ -85,7 +86,8 @@ const routes: Routes = [
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
 ],
   entryComponents: [
     NodeComponent,
