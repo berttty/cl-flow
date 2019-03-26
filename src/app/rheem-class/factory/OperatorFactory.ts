@@ -39,10 +39,12 @@ export const Operators: any = {
     ZipWithIndexOperator
 };
 export class OperatorFactory {
+  static serial = 0;
+
   static buildOperator(params: any | string): Operator {
     console.log(params);
     const className: string = (typeof params === 'string' ? params : params.MetaOperator);
-    return new Operators[className]();
+    return new Operators[className]().setName(className + '_' + (OperatorFactory.serial++));
   }
 
   static getConfigurationSource(nameSource: string) {

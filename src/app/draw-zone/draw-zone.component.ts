@@ -43,9 +43,9 @@ export class DrawZoneComponent implements OnInit {
   lineStructure;
 
   constructor(
-        private factoryResolver: ComponentFactoryResolver,
-        private rheemPlanService: RheemPlanService,
-        private menuDrawService: MenuDrawService
+      private factoryResolver: ComponentFactoryResolver,
+      private rheemPlanService: RheemPlanService,
+      private menuDrawService: MenuDrawService
   ) {
     rheemPlanService.requestQueue$.subscribe(
       id => {
@@ -622,7 +622,6 @@ export class DrawZoneComponent implements OnInit {
     this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
       const first: Operator = element.instance.getOperator();
       if (asOperator) {
-        console.log('dsasdas  ' + asOperator );
         if (first.isSource() || first.isSink()) {
           return;
         }
@@ -632,9 +631,7 @@ export class DrawZoneComponent implements OnInit {
       // TODO bertty: make this method as parametric as we can
       console.log('before to the list of succesor');
       element.instance.successorNodesList.forEach( (node: NodeComponent ) => {
-        console.log('doing the conexion');
         if (asOperator) {
-          console.log('dasdas');
           if (node.getOperator().isSink() || node.getOperator().isSource()) {
             return;
           }
@@ -642,6 +639,7 @@ export class DrawZoneComponent implements OnInit {
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
+      // element.instance.
       if ( withMetaInfo ) {
         console.log('withMeta');
         const meta: any = {};
@@ -652,6 +650,7 @@ export class DrawZoneComponent implements OnInit {
       }
     });
     this.plan = this.rheemPlan.toString();
+    console.log(this.plan);
     return this.rheemPlan;
   }
 
@@ -754,6 +753,53 @@ export class DrawZoneComponent implements OnInit {
 
       this.VCRLines.remove(vcrLineIndex);
     }
+    // Cleaning predecessors
+    for (i = 0; i < component.predecessorBroadcast.length; i++) {
+      const relativeNode: NodeComponent = component.predecessorBroadcast[i];
+
+      console.log('yo: ' + component.index);
+      console.log('papa: ' + relativeNode.index);
+      let k: number;
+      let ind: number;
+      for (k = 0; k < relativeNode.successorBroadcast.length; k++) {
+        const possibleThis: NodeComponent = relativeNode.successorBroadcast[k];
+
+        console.log('hijos: ' + possibleThis.index);
+
+        if (possibleThis === component) {
+
+          console.log('SOY YOO!!. EN INDEX: ' + k);
+          ind = k;
+          break;
+        }
+      }
+
+      if (ind > -1) {
+        console.log('Entre');
+        relativeNode.successorBroadcast.splice(ind, 1);
+        console.log('Elimine');
+      }
+    }
+
+    // Cleaning successor
+    for (i = 0; i < component.successorBroadcast.length; i++) {
+      const relativeNode: NodeComponent = component.successorBroadcast[i];
+
+      let k: number;
+      let ind: number;
+
+      for (k = 0; k < relativeNode.predecessorBroadcast.length; k++) {
+        const possibleThis: NodeComponent = relativeNode.predecessorBroadcast[k];
+
+        if (possibleThis === component) {
+          ind = k;
+          break;
+        }
+      }
+      if (ind > -1) {
+        relativeNode.predecessorBroadcast.splice(ind, 1);
+      }
+    }
   }
 
   repareBroadLines(component: NodeComponent) {
@@ -764,12 +810,12 @@ export class DrawZoneComponent implements OnInit {
 
       this.DrawBroadLine(component, nodePrevious);
 
-      /*if (reposition) {
-        const currentID = this.drawLines(previousPosition.x, previousPosition.y, oldX, oldY, nodePrevious, component);
-      } else {
-        const currentID = this.drawLines(previousPosition.x, previousPosition.y, newX, newY, nodePrevious, component);
-      }*/
+    }
 
+    console.log(component.successorBroadcast.length);
+
+    for (i = 0; i < component.successorBroadcast.length; i ++)  {
+      console.log(component.successorBroadcast[i]);
     }
   }
 }
