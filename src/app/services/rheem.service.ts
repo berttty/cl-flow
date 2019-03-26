@@ -46,6 +46,16 @@ export class RheemService {
           };
         }
       );
+      json.broadcasts = json.broadcasts.map(
+        (con: Conexion) =>  {
+          return {
+            endOperator: con.endOperator.getName(),
+            endSocket: con.endSocket,
+            startOperator: con.startOperator.getName(),
+            startSocket: con.startSocket
+          };
+        }
+      );
       json.sinks = json.sinks.map(
         (ope: Operator) =>  {
           return ope.getName();
@@ -66,6 +76,18 @@ export class RheemService {
                 endSocket: con.endSocket,
                 startOperator: con.startOperator.getName(),
                 startSocket: con.startSocket
+                };
+              }
+            )
+          );
+          ope.setBroadcasts(
+            ope.getBroadcasts().map(
+              (con: Conexion) => {
+                return {
+                  endOperator: con.endOperator.getName(),
+                  endSocket: con.endSocket,
+                  startOperator: con.startOperator.getName(),
+                  startSocket: con.startSocket
                 };
               }
             )

@@ -13,7 +13,7 @@ export class Operator {
   protected udfTexts: string[];
   protected parameters: Parameter[];
   protected connexions: Conexion[] | any[];
-  protected broadcasts: Conexion[];
+  protected broadcasts: Conexion[] | any[];
   protected type: OperatorType;
   protected platforms: Platform[];
   protected origin: Operator;
@@ -91,6 +91,10 @@ export class Operator {
     this.addConnexion(new Conexion(this, indexSocket, nextOperator, nextSocket));
   }
 
+  createBroadcast(indexSocket: number, nextOperator: Operator, nextSocket: number) {
+    this.broadcasts.push(new Conexion(this, indexSocket, nextOperator, nextSocket));
+  }
+
   addConnexion(connexion: Conexion) {
     this.connexions.push(connexion);
   }
@@ -163,6 +167,14 @@ export class Operator {
 
   setConexiones(tmp: any[]): void {
     this.connexions = tmp;
+  }
+
+  getBroadcasts(): Conexion[] {
+    return this.broadcasts;
+  }
+
+  setBroadcasts(tmp: any[]): void {
+    this.broadcasts = tmp;
   }
 
   cleanParameters(): void {
