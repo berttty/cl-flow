@@ -3,42 +3,58 @@
 <div mat-dialog-content>
   <div class="row">
     <div class="input-field col s12">
+      <label for="name-operator" class="active">Name Operator :</label>
       <input id="name-operator" type="text" matInput [(ngModel)]="data.name">
-      <label for="name-operator">Name Operator :</label>
     </div>
   </div>
   <div class="row" [hidden]="data.operator.getConfParameters().typeOperator.length === 0">
-    <div class="input-field col s12">
+    <div class="input-field col s12 full-container">
       <mat-form-field>
         <mat-label>Type of Operator</mat-label>
-        <mat-select (selectionChange)="updateOperator($event)">
-          <mat-option *ngFor="let item of data.operator.getConfParameters().typeOperator" [value]="item">{{item}}</mat-option>
+        <mat-select (selectionChange)="updateOperator($event)" [(value)]="selected">
+          <mat-option *ngFor="let item of data.operator.getConfParameters().typeOperator" [value]="withoutSpace(item)">{{item}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
   <div class="row" [hidden]="! data.operator.getConfParameters().function1">
     <div class="input-field col s12">
+      <label for="textarea1" class="active">Fuction 1</label>
       <textarea id="textarea1" class="materialize-textarea"  matInput [(ngModel)]="data.function1"></textarea>
-      <label for="textarea1">Fuction 1</label>
+
     </div>
   </div>
   <div class="row" [hidden]="! data.operator.getConfParameters().function2">
     <div class="input-field col s12">
+      <label for="textarea2" class="active">Fuction 2</label>
       <textarea id="textarea2" class="materialize-textarea"  matInput [(ngModel)]="data.function2"></textarea>
-      <label for="textarea2">Fuction 2</label>
     </div>
   </div>
   <div class="row" [hidden]="! data.operator.getConfParameters().outputClass">
-    <div class="input-field col s12">
-      <input id="input1" class="materialize-textarea"  matInput [(ngModel)]="data.outputClass"/>
-      <label for="input1">Class Output</label>
+    <div class="input-field col s12 full-container">
+      <mat-form-field>
+        <mat-label>Class Output</mat-label>
+        <mat-select (selectionChange)="updateOutPutClass($event)" [(value)]="classOutputSelected">
+          <mat-option value="java.lang.Boolean">Boolean</mat-option>
+          <mat-option value="java.lang.Character">Char</mat-option>
+          <mat-option value="java.util.Collection">Collection</mat-option>
+          <mat-option value="java.lang.Double">Double</mat-option>
+          <mat-option value="java.lang.Float">Float</mat-option>
+          <mat-option value="java.lang.Integer">Integer</mat-option>
+          <mat-option value="java.lang.Iterable">Iterable</mat-option>
+          <mat-option value="java.util.List">List</mat-option>
+          <mat-option value="java.lang.Long">Long</mat-option>
+          <mat-option value="org.qcri.rheem.basic.data.Record">Record</mat-option>
+          <mat-option value="java.lang.String">String</mat-option>
+          <mat-option value="org.qcri.rheem.basic.data.Tuple2">Tuple2</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
   <div class="row" [hidden]="! data.operator.getConfParameters().textInput">
     <div class="input-field col s12">
-      <input id="input2" type="text"  matInput [(ngModel)]="data.textInput"/>
-      <label for="input2">Text Input</label>
+      <label for="input2" class="active">Text Input:</label>
+      <input id="input2" type="text" matInput [(ngModel)]="data.textInput"/>
     </div>
   </div>
 </div>

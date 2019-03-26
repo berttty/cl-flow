@@ -155,5 +155,9 @@ export class Operator {
   addParameters(param: Parameter): void {
     this.parameters.push(param);
   }
+
+  getTypeOperator(): string {
+    return this.constructor.name;
+  }
 }
 
