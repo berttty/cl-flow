@@ -11,27 +11,28 @@ export class ReduceByOperator extends UnaryOperator {
     udfKey?: string,
     platforms?: Platform[],
     connexions?: Conexion[],
-    broadcasts?: Conexion[]
+    broadcasts?: Conexion[],
+    keyClass?: string
   ) {
     super(
       'org.qcri.rheem.basic.operators.ReduceByOperator',
       [
         new Parameter(
           'PredicateDescriptor.SerializablePredicate',
-          ReduceByOperator.generateUDF(udf, inputClass, inputClass),
+          ReduceByOperator.generateUDFKey(null, udfKey, inputClass, keyClass),
           true
         ),
         new Parameter(
           'FunctionDescriptor.SerializableBinaryOperator',
-          ReduceByOperator.generateUDFKey(udfKey, inputClass),
+          ReduceByOperator.generateUDF(null, udf, inputClass),
           true
         ),
-        new Parameter('java.lang.Class', inputClass),
+        new Parameter('java.lang.Class', keyClass),
         new Parameter('java.lang.Class', inputClass)
       ],
       name,
       inputClass,
-      inputClass,
+      keyClass,
       platforms,
       connexions,
       broadcasts,
@@ -39,16 +40,17 @@ export class ReduceByOperator extends UnaryOperator {
     );
   }
 
-  static generateUDF(funCode: string, inputClass: string, outputClass: string) {
+  static generateUDFKey(alias: string, funCode: string, inputClass: string, keyClass: string) {
     return `package org.qcri.rheem.rest;
-            import ${inputClass}
-            import ${outputClass}
+            import ${inputClass};
+            import ${keyClass};
+            import java.util.*;
             import org.qcri.rheem.core.function.FunctionDescriptor;
-            public class ReduceByOperator_${this.name}_UdfFactory {
+            public class ${alias}_UdfFactory {
               public static FunctionDescriptor.SerializableFunction create() {
-                  return new FunctionDescriptor.SerializableFunction<${inputClass}, ${outputClass}>() {
+                  return new FunctionDescriptor.SerializableFunction<${inputClass}, ${keyClass}>() {
                       @Override
-                      public ${outputClass} apply(${inputClass} dataPoint) {
+                      public ${keyClass} apply(${inputClass} dataPoint) {
                           /*
                           * TODO: - Implement your Map udf here !
                           *       - Replace INPUT and OUTPUT with good types!
@@ -61,11 +63,12 @@ export class ReduceByOperator extends UnaryOperator {
             }`;
   }
 
-  static generateUDFKey(funCode: string, inputClass: string) {
+  static generateUDF(alias: string, funCode: string, inputClass: string) {
     return `package org.qcri.rheem.rest;
-            import ${inputClass}
+            import ${inputClass};
+            import java.util.*;
             import org.qcri.rheem.core.function.FunctionDescriptor;
-            public class ReduceByOperator_Key_${this.name}_UdfFactory {
+            public class ${alias}_UdfFactory {
               public static FunctionDescriptor.SerializableBinaryOperator create() {
                   return new FunctionDescriptor.SerializableBinaryOperator<${inputClass}>() {
                       @Override
@@ -82,6 +85,15 @@ export class ReduceByOperator extends UnaryOperator {
             }`;
   }
 
+  addValueConfParameters(values: any): void {
+    super.addValueConfParameters(values);
+    this.setUDFKey( values.function1 );
+    this.setUDF( values.function2 );
+    this.udfTexts[1] = values.function1;
+    this.udfTexts[0] = (values.function2);
+    this.setKeyClass(values.outputClass);
+  }
+
   getConfParameters(): any {
     const opt: any = super.getConfParameters();
     opt.function1 = true;
@@ -91,11 +103,35 @@ export class ReduceByOperator extends UnaryOperator {
     return opt;
   }
 
-  addValueConfParameters(values: any): void {
-    super.addValueConfParameters(values);
-    this.setUDF( values.function1 );
-    this.udfTexts[0] = values.function1;
-    this.udfTexts.push(values.function2);
+  protected setUDFKey(udfText: string) {
+    this.parameters[1].setValue(ReduceByOperator.generateUDFKey(this.parameters[1].getAlias(), udfText, this.getClassInput(), this.getKeyClass()));
   }
 
+  protected setUDF(udfText: string) {
+    this.parameters[0].setValue(ReduceByOperator.generateUDF(this.parameters[0].getAlias(), udfText, this.getClassInput()));
+  }
+
+  setClassInput(input: string): void {
+    super.setClassInput(input);
+    this.parameters[3].setValue(input);
+    this.setUDF(this.udfTexts[0]);
+    this.setUDFKey(this.udfTexts[1]);
+  }
+
+  setClassOutput(output: string): void {
+    super.setClassOutput(output);
+    this.setKeyClass(output);
+  }
+
+  setKeyClass(key: string): void {
+    super.setKeyClass(key);
+    this.parameters[2].setValue(key);
+    this.setUDFKey(this.udfTexts[1]);
+  }
+
+  protected validateConfiguration() {
+    super.validateConfiguration();
+    this.setUDFKey(this.udfTexts[1]);
+    this.setUDF(this.udfTexts[0]);
+  }
 }

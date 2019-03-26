@@ -18,7 +18,7 @@ export class MapOperator extends UnaryOperator {
       [
         new Parameter(
           'FunctionDescriptor.SerializableFunction',
-          MapOperator.generateUDF(udf, inputClass, outputClass),
+          MapOperator.generateUDF(null, udf, inputClass, outputClass),
           true
         ),
         new Parameter('java.lang.Class', inputClass),
@@ -34,16 +34,17 @@ export class MapOperator extends UnaryOperator {
     );
   }
 
-  static generateUDF(funCode: string, inputClass: string, outputClass: string) {
+  static generateUDF(alias: string, funCode: string, inputClass: string, outputClass: string) {
     return `package org.qcri.rheem.rest;
-            import ${inputClass}
-            import ${outputClass}
+            import ${inputClass};
+            import ${outputClass};
+            import java.util.*;
             import org.qcri.rheem.core.function.FunctionDescriptor;
-            public class MapOperator_${this.name}_UdfFactory {
+            public class ${alias}_UdfFactory {
               public static FunctionDescriptor.SerializableFunction create() {
                   return new FunctionDescriptor.SerializableFunction<${inputClass}, ${outputClass}>() {
                       @Override
-                      public ${outputClass} apply(${inputClass} dataPoint) {
+                      public ${outputClass} apply(${inputClass} input) {
                           /*
                           * TODO: - Implement your Map udf here !
                           *       - Replace INPUT and OUTPUT with good types!
@@ -56,6 +57,11 @@ export class MapOperator extends UnaryOperator {
             }`;
   }
 
+  addValueConfParameters(values: any): void {
+    super.addValueConfParameters(values);
+    this.setUDF( values.function1 );
+    this.udfTexts[0] = values.function1;
+  }
 
   getConfParameters(): any {
     const opt: any = super.getConfParameters();
@@ -64,7 +70,7 @@ export class MapOperator extends UnaryOperator {
   }
 
   protected setUDF(udfText: string) {
-    this.parameters[0].setValue(MapOperator.generateUDF(udfText, this.classInput, this.getClassOutput()));
+    this.parameters[0].setValue(MapOperator.generateUDF(this.parameters[0].getAlias(), udfText, this.classInput, this.getClassOutput()));
   }
 
 

@@ -34,4 +34,9 @@ export class TextFileSink extends SinkOperator {
     this.parameters[1].setValue(input);
     this.setClassOutput(input);
   }
+
+  protected validateConfiguration() {
+    super.validateConfiguration();
+    this.setClassInput(this.getClassInput());
+  }
 }
