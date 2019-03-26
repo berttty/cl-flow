@@ -1,0 +1,30 @@
+<!-- TODO agregar la opcion de poder modificar el titulo dependiendo del nombre o del tipo de operador que se tenga-->
+<h1 mat-dialog-title>Broadcasts</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="input-field col s12">
+      <label for="name-operator" class="active">Name Origin Operator :</label>
+      <input id="name-operator" type="text" matInput [(ngModel)]="data.currentNode.index">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <label for="name-broadcast" class="active">Name Broadcast :</label>
+      <input id="name-broadcast" type="text">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 full-container">
+      <mat-form-field>
+        <mat-label>Name Target Operator :</mat-label>
+        <mat-select (selectionChange)="updateOperator($event)" [(value)]="selected">
+          <mat-option *ngFor="let item of data.nodesList" [value]="item">{{item.index}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="selectedTarget" cdkFocusInitial>Ok</button>
+</div>
