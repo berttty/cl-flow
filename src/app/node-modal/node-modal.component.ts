@@ -17,11 +17,13 @@ export class NodeModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selected = this.getNameClass(this.data.operator.className);
-    const tmp: Operator = (this.data.operator.getOrigin() !== undefined ? this.data.operator.getOrigin() : this.data.operator );
-    this.data.operator = this.data.operator.setTypeOperator(this.selected).setOrigin(tmp);
-    this.classOutputSelected = this.data.outputClass;
-    console.log(this.classOutputSelected);
+    if (this.data.operator !== undefined) {
+      this.selected = this.getNameClass(this.data.operator.className);
+      const tmp: Operator = (this.data.operator.getOrigin() !== undefined ? this.data.operator.getOrigin() : this.data.operator);
+      this.data.operator = this.data.operator.setTypeOperator(this.selected).setOrigin(tmp);
+      this.classOutputSelected = this.data.outputClass;
+      console.log(this.classOutputSelected);
+    }
   }
 
   updateOperator(event) {
@@ -34,6 +36,7 @@ export class NodeModalComponent implements OnInit {
   }
 
   getNameClass(tmp: string): string {
+    if (tmp === undefined) return
     return tmp.split('.').pop();
   }
 
