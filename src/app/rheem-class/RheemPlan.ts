@@ -2,6 +2,8 @@ import {Operator} from './Operator';
 import {Conexion} from './Conexion';
 
 export class RheemPlan {
+  private name: string;
+  private type: string;
   private listOperator: Operator[];
   private conexions: Conexion[];
   private sources: Operator[];
@@ -18,6 +20,23 @@ export class RheemPlan {
     }
   }
 
+  getName(): string {
+    return this.name;
+  }
+
+  setName(name: string): RheemPlan {
+    this.name = name;
+    return this;
+  }
+
+  getType(): string {
+    return this.type;
+  }
+
+  setType(type: string): RheemPlan {
+    this.type = type;
+    return this;
+  }
 
   addOperator(op: Operator) {
     if ( op.isSink() ) {

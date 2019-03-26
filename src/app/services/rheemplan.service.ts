@@ -9,7 +9,7 @@ export class RheemPlanService {
   private request = new Subject<string>();
   private answer = new Subject<RheemPlan>();
 
-  private requestMeta = new Subject<string>();
+  private requestMeta = new Subject<any>();
   private answerMeta = new Subject<RheemPlan>();
 
   private requestOpe = new Subject<string>();
@@ -41,9 +41,9 @@ export class RheemPlanService {
     this.answer.next(plan);
   }
 
-  generateRequestMeta(id: string): void {
+  generateRequestMeta(obj: any): void {
     console.log('generating request');
-    this.requestMeta.next(id);
+    this.requestMeta.next(obj);
   }
 
   generateAnswerMeta(plan: RheemPlan): void {

@@ -66,11 +66,12 @@ export class ActionButtonComponent implements OnInit {
   }
 
   preSave(): void {
-
-    const dialogRef = this.dialog.open(ActionButtonModalSaveComponent, {width: '800px', height: '800px'});
+    const dataValues = {};
+    const dialogRef = this.dialog.open(ActionButtonModalSaveComponent, {width: '400px', data: dataValues });
     dialogRef.afterClosed().subscribe( result => {
+      console.log(dataValues);
       if (result === true) {
-        this.rheemPlanService.generateRequestMeta('' + this.indexRequest++);
+        this.rheemPlanService.generateRequestMeta(dataValues);
       }
     });
   }

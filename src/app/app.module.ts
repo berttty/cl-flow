@@ -37,6 +37,8 @@ import {MenuDrawService} from './services/menuDraw.service';
 import { ActionButtonModalSaveComponent } from './action-button-modal-save/action-button-modal-save.component';
 import { ModalBroadcastComponent } from './modal-broadcast/modal-broadcast.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatButtonModule} from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -87,7 +89,9 @@ const routes: Routes = [
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRadioModule,
+    MatButtonModule
 ],
   entryComponents: [
     NodeComponent,

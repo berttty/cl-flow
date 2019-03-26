@@ -42,7 +42,11 @@ export class DrawZoneComponent implements OnInit {
 
   lineStructure;
 
-  constructor(private factoryResolver: ComponentFactoryResolver, private rheemPlanService: RheemPlanService, private menuDrawService: MenuDrawService) {
+  constructor(
+        private factoryResolver: ComponentFactoryResolver,
+        private rheemPlanService: RheemPlanService,
+        private menuDrawService: MenuDrawService
+  ) {
     rheemPlanService.requestQueue$.subscribe(
       id => {
         console.log('DrawZone consuming request');
@@ -52,10 +56,17 @@ export class DrawZoneComponent implements OnInit {
       }
     );
     rheemPlanService.requestMetaQueue$.subscribe(
-      id => {
+      obj => {
         console.log('DrawZone consuming requestMeta');
+        const value = obj.optionSave !== 'plan';
+        console.log('asOperator: ' + value);
         rheemPlanService.generateAnswerMeta(
-          this.generateRheemPlan(true)
+          this.generateRheemPlan(
+            true,
+            value
+          )
+          .setName(obj.name)
+          .setType(obj.optionSave)
         );
       }
     );
@@ -611,6 +622,7 @@ export class DrawZoneComponent implements OnInit {
     this.nodeListReference.forEach((element: ComponentRef<NodeComponent> ) => {
       const first: Operator = element.instance.getOperator();
       if (asOperator) {
+        console.log('dsasdas  ' + asOperator );
         if (first.isSource() || first.isSink()) {
           return;
         }
@@ -622,6 +634,7 @@ export class DrawZoneComponent implements OnInit {
       element.instance.successorNodesList.forEach( (node: NodeComponent ) => {
         console.log('doing the conexion');
         if (asOperator) {
+          console.log('dasdas');
           if (node.getOperator().isSink() || node.getOperator().isSource()) {
             return;
           }

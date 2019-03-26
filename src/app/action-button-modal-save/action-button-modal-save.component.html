@@ -1,11 +1,25 @@
 <!-- TODO agregar la opcion de poder modificar el titulo dependiendo del nombre o del tipo de operador que se tenga-->
-<h1 mat-dialog-title>Saving Plan </h1>
+<h1 mat-dialog-title>Saving Working Area </h1>
 <div mat-dialog-content>
-  <div class="example-container">
-    <h2>Are you sure?</h2>
+  <div class="row">
+    <div class="col s12">
+      <label>Pick How you want save the plan: </label>
+      <mat-radio-group class="cl-radio-group" [(ngModel)]="data.optionSave" >
+        <mat-radio-button class="cl-radio-button" value="plan">as a Plan</mat-radio-button>
+        <mat-radio-button class="cl-radio-button" value="operator">as an Operator</mat-radio-button>
+      </mat-radio-group>
+    </div>
   </div>
+
+  <div class="row" *ngIf="data.optionSave !== undefined">
+    <div class="input-field col s12">
+      <label for="name-operator" class="active">Name of {{data.optionSave | titlecase}} :</label>
+      <input id="name-operator" type="text" matInput [(ngModel)]="data.name">
+    </div>
+  </div>
+
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
 </div>
