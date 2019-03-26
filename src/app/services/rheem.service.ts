@@ -76,7 +76,7 @@ export class RheemService {
         }
       );
     }
-
+    console.log(json);
     this.http.post(`${this.uriDB}/add`, RheemService.generateContent(json)
     ).subscribe(
       res => console.log('Done Save')

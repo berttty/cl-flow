@@ -42,7 +42,11 @@ export class DrawZoneComponent implements OnInit {
 
   lineStructure;
 
-  constructor(private factoryResolver: ComponentFactoryResolver, private rheemPlanService: RheemPlanService, private menuDrawService: MenuDrawService) {
+  constructor(
+      private factoryResolver: ComponentFactoryResolver,
+      private rheemPlanService: RheemPlanService,
+      private menuDrawService: MenuDrawService
+  ) {
     rheemPlanService.requestQueue$.subscribe(
       id => {
         console.log('DrawZone consuming request');
@@ -605,15 +609,16 @@ export class DrawZoneComponent implements OnInit {
       // TODO bertty: make this method as parametric as we can
       console.log('before to the list of succesor');
       element.instance.successorNodesList.forEach( (node: NodeComponent ) => {
-        console.log('doing the conexion');
         if (asOperator) {
           if (node.getOperator().isSink() || node.getOperator().isSource()) {
             return;
           }
         }
+        console.log('doing the conexion');
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
+      // element.instance.
       if ( withMetaInfo ) {
         console.log('withMeta');
         const meta: any = {};
@@ -624,6 +629,7 @@ export class DrawZoneComponent implements OnInit {
       }
     });
     this.plan = this.rheemPlan.toString();
+    console.log(this.plan);
     return this.rheemPlan;
   }
 
@@ -684,6 +690,8 @@ export class DrawZoneComponent implements OnInit {
     currentComponent.nodeListReference.push(ori);
     currentComponent.nodeListReference.push(des);
 
+
+
     /*curr.lineListReference.push(componentRef);
     prev.lineListReference.push(componentRef);
     currentComponent.nodeListReference.push(curr);
@@ -694,8 +702,9 @@ export class DrawZoneComponent implements OnInit {
 
   removeBroadLines(component: NodeComponent) {
     let i: number;
+    console.log('largo');
+    console.log(component.broadLinesReference.length);
     for (i = 0; i < component.broadLinesReference.length; i++) {
-
       const line: LineComponent = component.broadLinesReference[i].instance as LineComponent;
 
       const vcrLineIndex: number = this.VCRLines.indexOf(component.broadLinesReference[i]);
@@ -705,7 +714,6 @@ export class DrawZoneComponent implements OnInit {
 
         const nodeOfList = line.nodeListReference[j];
 
-        /*Eliminando referencia a linea en el otro nodo*/
         if (!(nodeOfList.index === component.index)) {
 
           let k: number;
@@ -723,8 +731,54 @@ export class DrawZoneComponent implements OnInit {
           }
         }
       }
-
       this.VCRLines.remove(vcrLineIndex);
+    }
+    // Cleaning predecessors
+    for (i = 0; i < component.predecessorBroadcast.length; i++) {
+      const relativeNode: NodeComponent = component.predecessorBroadcast[i];
+
+      console.log('yo: ' + component.index);
+      console.log('papa: ' + relativeNode.index);
+      let k: number;
+      let ind: number;
+      for (k = 0; k < relativeNode.successorBroadcast.length; k++) {
+        const possibleThis: NodeComponent = relativeNode.successorBroadcast[k];
+
+        console.log('hijos: ' + possibleThis.index);
+
+        if (possibleThis === component) {
+
+          console.log('SOY YOO!!. EN INDEX: ' + k);
+          ind = k;
+          break;
+        }
+      }
+
+      if (ind > -1) {
+        console.log('Entre');
+        relativeNode.successorBroadcast.splice(ind, 1);
+        console.log('Elimine');
+      }
+    }
+
+    // Cleaning successor
+    for (i = 0; i < component.successorBroadcast.length; i++) {
+      const relativeNode: NodeComponent = component.successorBroadcast[i];
+
+      let k: number;
+      let ind: number;
+
+      for (k = 0; k < relativeNode.predecessorBroadcast.length; k++) {
+        const possibleThis: NodeComponent = relativeNode.predecessorBroadcast[k];
+
+        if (possibleThis === component) {
+          ind = k;
+          break;
+        }
+      }
+      if (ind > -1) {
+        relativeNode.predecessorBroadcast.splice(ind, 1);
+      }
     }
   }
 
@@ -736,12 +790,12 @@ export class DrawZoneComponent implements OnInit {
 
       this.DrawBroadLine(component, nodePrevious);
 
-      /*if (reposition) {
-        const currentID = this.drawLines(previousPosition.x, previousPosition.y, oldX, oldY, nodePrevious, component);
-      } else {
-        const currentID = this.drawLines(previousPosition.x, previousPosition.y, newX, newY, nodePrevious, component);
-      }*/
+    }
 
+    console.log(component.successorBroadcast.length);
+
+    for (i = 0; i < component.successorBroadcast.length; i ++)  {
+      console.log(component.successorBroadcast[i]);
     }
   }
 }

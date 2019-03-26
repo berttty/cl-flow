@@ -1,5 +1,5 @@
-import {Component, ComponentRef, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentRef, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatTooltip} from '@angular/material';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
   faBars,
@@ -19,8 +19,8 @@ import {ActionEnum, OptionNext} from '../rheem-class/OptionNext';
 import {NodeModalComponent} from '../node-modal/node-modal.component';
 import {ModalBroadcastComponent} from '../modal-broadcast/modal-broadcast.component';
 
-import {LineComponent} from '../line/line.component';
 import {DrawZoneComponent} from '../draw-zone/draw-zone.component';
+
 
 library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
 
@@ -47,7 +47,8 @@ export interface NodeInterface {
     './node.level2.ele5.component.css'
   ]
 })
-export class NodeComponent implements OnInit {
+export class NodeComponent implements OnInit, AfterViewInit  {
+  @ViewChild('nodeRoot') tooltip: MatTooltip;
   public index: number;
   public selfRef: NodeComponent;
   public icon: string;
@@ -73,6 +74,9 @@ export class NodeComponent implements OnInit {
 
   public predecessorNodesList = [];
   public successorNodesList = [];
+  public predecessorBroadcast = [];
+  public successorBroadcast = [];
+
   public editor: DrawZoneComponent;
 
   constructor(public dialog: MatDialog) {
@@ -82,11 +86,17 @@ export class NodeComponent implements OnInit {
 
     this.predecessorNodesList = [];
     this.successorNodesList = [];
+
+    this.predecessorBroadcast = [];
+    this.successorBroadcast = [];
   }
 
   ngOnInit() {
     this.close = false;
     this.movement = false;
+  }
+
+  ngAfterViewInit() {
   }
 
   removeMe(index) {
@@ -231,6 +241,9 @@ export class NodeComponent implements OnInit {
       console.log(result);
 
       this.compInteraction.DrawBroadLine(this, result);
+
+      this.successorBroadcast.push(result);
+      result.predecessorBroadcast.push(this);
       /*Ahora debemos dibujar la linea*/
       /*this.operator = result.operator;
       if ( result !== undefined ) {
