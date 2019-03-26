@@ -710,6 +710,8 @@ export class DrawZoneComponent implements OnInit {
         const firstNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === first)[0];
         const secondNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === second)[0];
         this.DrawBroadLine(firstNode.instance, secondNode.instance);
+        firstNode.instance.successorBroadcast.push(secondNode.instance);
+        secondNode.instance.predecessorBroadcast.push(firstNode.instance);
       }
     );
 
