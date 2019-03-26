@@ -639,7 +639,16 @@ export class DrawZoneComponent implements OnInit {
         this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
         index = index + 1;
       });
-      // element.instance.
+      let index = 0;
+      element.instance.successorBroadcast.forEach( (node: NodeComponent) => {
+        if (asOperator) {
+          if (node.getOperator().isSink() || node.getOperator().isSource()) {
+            return;
+          }
+        }
+        this.rheemPlan.addBroadcast(first, 0, node.getOperator(), index);
+        index = index + 1;
+      });
       if ( withMetaInfo ) {
         console.log('withMeta');
         const meta: any = {};
@@ -690,6 +699,19 @@ export class DrawZoneComponent implements OnInit {
         const firstNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === first)[0];
         const secondNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === second)[0];
         this.createConexion(firstNode.instance, secondNode.instance);
+      }
+    );
+    plan.broadcasts.forEach(
+      (con: any) => {
+        const first = con.startOperator;
+        const second = con.endOperator;
+        console.log(first);
+        console.log(second);
+        const firstNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === first)[0];
+        const secondNode = this.nodeListReference.filter( x => x.instance.getOperator().getName() === second)[0];
+        this.DrawBroadLine(firstNode.instance, secondNode.instance);
+        firstNode.instance.successorBroadcast.push(secondNode.instance);
+        secondNode.instance.predecessorBroadcast.push(firstNode.instance);
       }
     );
 

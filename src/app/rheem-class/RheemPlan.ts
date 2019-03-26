@@ -6,6 +6,7 @@ export class RheemPlan {
   private type: string;
   private listOperator: Operator[];
   private conexions: Conexion[];
+  private broadcasts: Conexion[];
   private sources: Operator[];
   private sinks: Operator[];
 
@@ -17,6 +18,7 @@ export class RheemPlan {
       this.listOperator = [];
       this.sources = [];
       this.sinks = [];
+      this.broadcasts = [];
     }
   }
 
@@ -53,6 +55,13 @@ export class RheemPlan {
     const opEnd: Operator = (typeof opNameEnd === 'string' ? this.getOperator(opNameEnd) : opNameEnd);
     opStart.createConnexion(indexStart, opEnd, indexEnd);
     this.conexions.push( new Conexion(opStart, indexStart, opEnd, indexEnd) );
+  }
+
+  public addBroadcast(opNameStart: string | Operator, indexStart: number, opNameEnd: string | Operator, indexEnd: number ) {
+    const opStart: Operator = (typeof opNameStart === 'string' ? this.getOperator(opNameStart) : opNameStart);
+    const opEnd: Operator = (typeof opNameEnd === 'string' ? this.getOperator(opNameEnd) : opNameEnd);
+    opStart.createBroadcast(indexStart, opEnd, indexEnd);
+    this.broadcasts.push( new Conexion(opStart, indexStart, opEnd, indexEnd) );
   }
 
   getOperator(name: string): Operator {
