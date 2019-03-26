@@ -83,6 +83,8 @@ export class NodeComponent implements OnInit, AfterViewInit  {
   public successorBroadcast = [];
 
   public editor: DrawZoneComponent;
+  public idCustomOperator: any;
+  public operatorname: any;
 
   constructor(public dialog: MatDialog) {
     this.lines = [];
@@ -247,7 +249,9 @@ export class NodeComponent implements OnInit, AfterViewInit  {
     dialogRef.afterClosed().subscribe( result => {
       this.operator = result.operator;
       if ( result !== undefined ) {
+        console.log('result');
         console.log(result);
+        this.operatorname = result.name;
         this.operator = result.operator;
         this.getOperator().addValueConfParameters(result);
         if ( result.outputClass !== undefined ) {

@@ -24,6 +24,8 @@ import { faObjectGroup } from '@fortawesome/free-solid-svg-icons';
 import { faTags } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import {ActionButtonModalComponent} from '../action-button-modal/action-button-modal.component';
+import {RheemService} from '../services/rheem.service';
 
 library.add(
   faBars, faCoins, faHammer, faBrain, faPuzzlePiece,
@@ -56,6 +58,7 @@ library.add(
 
 })
 export class MenuComponent implements OnInit {
+  values = [];
   isOpen = false;
   navigationSubState: { [menu: string]: string} = {
     source: 'close',
@@ -70,12 +73,15 @@ export class MenuComponent implements OnInit {
     raw_data_storage: 'close',
     relational_storage: 'close',
   };
-  constructor(private menuDrawService: MenuDrawService) {
+  constructor(private menuDrawService: MenuDrawService, private rheemService: RheemService) {
+
+    this.gettingCustomOperators();
     menuDrawService.answerQueue$.subscribe(
       (answer: string) => {
         console.log(answer);
       }
     );
+
   }
 
   ngOnInit() {
@@ -117,12 +123,30 @@ export class MenuComponent implements OnInit {
     this.navigationSubState[menuName] =  'close';
   }
 
-  endDrag(event) {
+  endDrag(event, item) {
     console.log('lalala');
     console.log(event);
     console.log(event.screenX);
     console.log(event.screenY);
-    this.menuDrawService.generateRequest(event.screenX, event.screenY - 100);
+    console.log(item);
+    this.menuDrawService.generateRequest(event.screenX, event.screenY - 100, item) ;
   }
 
+  gettingCustomOperators() {
+
+    this.rheemService.getList().subscribe(
+      res => {
+        console.log('rescate!!');
+        res.filter(oper => oper.type !== 'plan').forEach((element: any) => {
+          console.log(element);
+          this.values.push(element);
+        });
+        /*const dialogRef = this.dialog.open(ActionButtonModalComponent, {width: '800px', data: {list: values}});
+        dialogRef.afterClosed().subscribe(result => {
+          this.rheemService.getPlan(result).subscribe(a => this.plotRheemPlan(a));
+        });
+        return values;*/
+      }
+    );
+  }
 }

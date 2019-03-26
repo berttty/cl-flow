@@ -12,9 +12,10 @@ export class MenuDrawService {
   requestQueue$ = this.request.asObservable();
   answerQueue$ = this.answer.asObservable();
 
-  generateRequest(posX: number, posY: number): void {
+  generateRequest(posX: number, posY: number, item): void {
     console.log('generating request');
-    this.request.next([posX, posY]);
+    console.log(item);
+    this.request.next([posX, posY, item]);
   }
 
   generateAnswer(answer: string): void {

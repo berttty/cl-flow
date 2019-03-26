@@ -316,12 +316,18 @@
             </ul>
           </li>
           <li>
-            <a href="#">
+            <a href="#" (click)="toggleNavigationSub('custom')">
               <span>
                 <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon>
               </span>
               Custom Operations
             </a>
+            <ul [@toggleHeight]="navigationSubState.custom">
+              <li *ngFor="let item of values" [value]="item.data"><a  href="#" draggable="true" (dragend)="endDrag($event, item)"> <span> <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon> </span> {{item.name}} </a></li>
+              <!--<a *ngFor="let item of values" href="#" (click)="toggleNavigationSub('custom')" [value]="item.data"> <span> <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon> </span>{{item.name}}</a>
+              <li *ngFor="let item of values" href="#" ><a> {{item.name}} </a></li>-->
+              <!--<a *ngFor="let item of data.list" href="#" (click)="toggleNavigationSub('custom')" [value]="item.id"> <span> <fa-icon [icon]="['fas', 'child']" size="2x"></fa-icon> </span>{{item.name}}</a>-->
+            </ul>
           </li>
         </ul>
       </div>

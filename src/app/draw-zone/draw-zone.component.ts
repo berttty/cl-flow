@@ -81,7 +81,26 @@ export class DrawZoneComponent implements OnInit {
 
     menuDrawService.requestQueue$.subscribe(
       (vec: number[]) => {
-        this.createNodeInit(vec[0], vec[1]);
+        console.log(vec[2]);
+
+
+
+        /*const conf: any = OperatorFactory.buildOperator(EmptyOperator);
+          // .getConfigurationSource(platform);
+        const op: Operator = OperatorFactory.buildOperator(conf);
+*/
+        if (vec[2] !== undefined) {
+
+          const op: Operator = OperatorFactory.buildOperator('EmptyOperator');
+          op.setName(vec[2].name);
+          op.setClassName(vec[2]._id);
+
+          /*createNode(type?: string, posX?: number, posY?: number, previous?: number, operator?: Operator, configuration?: any)*/
+          this.createNode('child', vec[0], vec[1], undefined, op, undefined);
+        } else {
+          this.createNodeInit(vec[0], vec[1]);
+        }
+
       }
     );
   }
@@ -112,6 +131,11 @@ export class DrawZoneComponent implements OnInit {
     let positionAssigned: {x: number, y: number};
     positionAssigned = this.determinePos(previous);
     const nullPos = {x: 0, y: 200};
+
+    console.log('AQUIIII');
+    console.log(type);
+    console.log(operator);
+    console.log(configuration);
 
     if (previous !== undefined) {
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
@@ -146,6 +170,11 @@ export class DrawZoneComponent implements OnInit {
     // providing parent Component reference to get access to parent class methods
     currentComponent.compInteraction = this;
     currentComponent.editor = this;
+
+    if (operator !== null) {
+      currentComponent.operatorname = operator.getName();
+      currentComponent.idCustomOperator = operator.getClassName();
+    }
 
     // add reference for newly created component
     this.nodeListReference.push(componentRef);
@@ -316,6 +345,7 @@ export class DrawZoneComponent implements OnInit {
     const componentRef = this.nodeInitListReference.filter(x => x.instance.index === index)[0];
     const component: NodeInitComponent = componentRef.instance as NodeInitComponent;
     const vcrIndex: number = this.VCR.indexOf(componentRef);
+
     this.createNode(component.getType(), component.position.x, component.position.y, undefined, operator, configuration);
 
 
@@ -666,6 +696,7 @@ export class DrawZoneComponent implements OnInit {
   drawPlan(plan: any): void {
     console.log('drawing the plan');
     console.log(plan);
+    if (plan === null) {return; }
     plan.listOperator.forEach(
       (ope: any) => {
         const operator: Operator = OperatorFactory.buildOperator(ope.metaInformation.conf);
