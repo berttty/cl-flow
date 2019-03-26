@@ -22,7 +22,7 @@ export class OptionNext {
             {}
           )
         )
-        .addSubOption(new Option( 2, '', 'cogs', ActionEnum.BROADCAST))
+        .addSubOption(new Option( 2, '', 'broadcast-tower', ActionEnum.BROADCAST))
         .addSubOption(new Option( 3, 'Delete', 'trash-alt', ActionEnum.DELETE))
     );
     if (empty) {
@@ -35,10 +35,10 @@ export class OptionNext {
               new Option(
                 1,
                 'Missing Values Imputation',
-                 'hammer',
+                 'syringe',
                       ActionEnum.CREATE_NEW,
                 {
-                  icon: 'hammer',
+                  icon: 'syringe',
                   MetaOperator: 'PreparationOperator',
                   TypeOperator: 'MVICleaning',
                 }
@@ -48,10 +48,10 @@ export class OptionNext {
               new Option(
                 2,
                 'Outliers Removal',
-                'hammer',
+                'chart-line',
                 ActionEnum.CREATE_NEW,
                 {
-                  icon: 'hammer',
+                  icon: 'chart-line',
                   MetaOperator: 'PreparationOperator',
                   TypeOperator: 'ORCleaning'
                 }
@@ -64,10 +64,10 @@ export class OptionNext {
             new Option(
               1,
               'Clustering',
-              'brain',
+              'object-group',
               ActionEnum.CREATE_NEW,
               {
-                icon: 'brain',
+                icon: 'object-group',
                 MetaOperator: 'AIOperator',
                 TypeOperator: 'Clustering'
               }
@@ -77,10 +77,10 @@ export class OptionNext {
             new Option(
               2,
               'Classification',
-              'brain',
+              'tags',
               ActionEnum.CREATE_NEW,
               {
-                icon: 'brain',
+                icon: 'tags',
                 MetaOperator: 'AIOperator',
                 TypeOperator: 'Classification'
               }
@@ -93,10 +93,10 @@ export class OptionNext {
               new Option(
                 1,
                 'Binary Operator',
-                'puzzle-piece',
+                'angle-double-right',
                 ActionEnum.CREATE_NEW,
                 {
-                  icon: 'puzzle-piece',
+                  icon: 'angle-double-right',
                   MetaOperator: 'BinaryOperator',
                   TypeOperator: 'BinaryOperator'
                 }
@@ -106,16 +106,16 @@ export class OptionNext {
               new Option(
                 2,
                 'Unary Operator',
-                'puzzle-piece',
+                'angle-right',
                 ActionEnum.CREATE_NEW,
                 {
-                  icon: 'puzzle-piece',
+                  icon: 'angle-right',
                   MetaOperator: 'UnaryOperator',
                   TypeOperator: 'UnaryOperator'
                 }
               )
             )
-            .addSubOption(
+            /*.addSubOption(
               new Option(
                 3,
                 'Loop Operator',
@@ -127,7 +127,7 @@ export class OptionNext {
                   TypeOperator: 'LoopOperator'
                 }
               )
-            )
+            )*/
     );
     this.options.push(
         new Option( 5, 'Data Storage', 'bullseye')
@@ -135,10 +135,10 @@ export class OptionNext {
               new Option(
                 1,
                 'Raw Data',
-                'bullseye',
+                'file-csv',
                 ActionEnum.CREATE_NEW,
                 {
-                  icon: 'bullseye',
+                  icon: 'file-csv',
                   MetaOperator: 'TextFileSink',
                   TypeOperator: 'TextFileSink'
                 }
@@ -148,10 +148,10 @@ export class OptionNext {
               new Option(
                 2,
                 'Relational',
-                'bullseye',
+                'table',
                 ActionEnum.CREATE_NEW,
                 {
-                  icon: 'bullseye',
+                  icon: 'table',
                   MetaOperator: 'SinkOperator',
                   TypeOperator: 'SinkOperator'
                 }

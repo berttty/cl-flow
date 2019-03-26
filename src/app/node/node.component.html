@@ -1,6 +1,6 @@
 <div id="primero-{{index}}" class="cl-br-node-l1-s5 lineable" ngDraggable  (movingOffset)="onMoving($event)" (endOffset)="onStop($event)" [position]="position">
   <input type="checkbox" href="#" class="cl-br-node-l1-s5-open" [checked]="close" name="cl-br-node-l1-s5-open" id="cl-br-node-l1-s5-open-{{index}}"/>
-  <label class="cl-br-node-l1-s5-open-button" (dblclick)="checkMe()">
+  <label class="cl-br-node-l1-s5-open-button" (dblclick)="checkMe(true)">
     <span class="cl-br-node-hamburger-l1-s5 cl-br-node-hamburger-l1-s5-1"></span>
     <div class="cl-br-node-init-hamburger-2">
       <ng-container *ngIf="icon !== 'hdfs' && icon !== 'postgresql'; then onlyIcon; else logosIcon">
@@ -65,7 +65,7 @@
     </div>
     <span class="cl-br-node-hamburger-l1-s5 cl-br-node-hamburger-l1-s5-3"></span>
   </label>
-  <a *ngFor="let opt of nextOpt.getOptions()" href="#" class="cl-br-node-l1-s5-item" matTooltip="{{opt.getName()}}">
+  <a *ngFor="let opt of nextOpt.getOptions()" href="#" class="cl-br-node-l1-s5-item" matTooltip="{{opt.getName()}}" (click)=checkMeCloseOthers(opt.getIndex())>
       <div class="cl-br-node-l2-s5-e{{opt.getIndex()}}">
           <input type="checkbox" href="#" class="cl-br-node-l2-s5-e{{opt.getIndex()}}-open" [checked]="updateDobleClose(opt.getIndex())" name="cl-br-node-l2-s5-e{{opt.getIndex()}}-open" id="cl-br-node-l2-s5-e{{opt.getIndex()}}-open-{{index}}"/>
           <label class="cl-br-node-l2-s5-e{{opt.getIndex()}}-open-button" (click)=checkMeDetail(opt.getIndex()) >

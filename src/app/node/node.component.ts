@@ -11,7 +11,8 @@ import {
   faCoins,
   faHammer,
   faPuzzlePiece,
-  faTrashAlt
+  faTrashAlt,
+  faBroadcastTower
 } from '@fortawesome/free-solid-svg-icons';
 
 import {Operator} from '../rheem-class/Operator';
@@ -22,7 +23,7 @@ import {ModalBroadcastComponent} from '../modal-broadcast/modal-broadcast.compon
 import {LineComponent} from '../line/line.component';
 import {DrawZoneComponent} from '../draw-zone/draw-zone.component';
 
-library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog);
+library.add(faBars, faCoins, faHammer, faBrain, faPuzzlePiece, faBullseye, faChild, faTrashAlt, faCogs, faCog, faBroadcastTower);
 
 
 export interface NodeInterface {
@@ -32,6 +33,8 @@ export interface NodeInterface {
   repareEdges(index: number, x, y, oldX, oldY);
   closeAllNodes();
   DrawBroadLine(ori, des);
+
+  closeGlobal(node: NodeComponent);
 }
 
 @Component({
@@ -99,7 +102,7 @@ export class NodeComponent implements OnInit {
     this.compInteraction.createNext(index);
     // WE MUST DISAPPEAR THE OPTIONS FOR SELECT CREATION
     // The options are only css
-    this.checkMe();
+    this.checkMe(true);
     this.confNextOperator = null;
   }
 
@@ -137,7 +140,7 @@ export class NodeComponent implements OnInit {
     return this.selection;
   }
 
-  checkMe(): void {
+  checkMe(original?): void {
 
     this.close = !this.close;
 
@@ -148,6 +151,35 @@ export class NodeComponent implements OnInit {
       this.dobleClose[4] = false;
       this.dobleClose[5] = false;
     }
+
+    if (original === true) {
+      this.compInteraction.closeGlobal(this);
+    }
+  }
+
+  checkMeCloseOthers(index): void {
+
+    console.log(index);
+
+    let i: number;
+    for (i = 0; i < 6; i++) {
+      if (i !== index) {
+        this.dobleClose[i] = false;
+      }
+    }
+    /*this.close = !this.close;
+
+    if (this.close ===  false) {
+      this.dobleClose[1] = false;
+      this.dobleClose[2] = false;
+      this.dobleClose[3] = false;
+      this.dobleClose[4] = false;
+      this.dobleClose[5] = false;
+    }*/
+  }
+
+  checkMeCloseGlobal() {
+    console.log('global_closing');
   }
 
   checkMeDetail(index): void {
@@ -174,12 +206,14 @@ export class NodeComponent implements OnInit {
       case ActionEnum.SETTINGS:
         console.log('open the console please');
         this.openDialog();
+        this.checkMe();
         break;
       case ActionEnum.DELETE:
         this.removeMe(this.index);
         break;
       case ActionEnum.BROADCAST:
         this.openBroadcast();
+        this.checkMe();
         break;
       case ActionEnum.CREATE_NEW:
         if ( ! this.validateObject(actionOption, 'icon', 'MetaOperator', 'TypeOperator')) {
@@ -231,6 +265,9 @@ export class NodeComponent implements OnInit {
       console.log(result);
 
       this.compInteraction.DrawBroadLine(this, result);
+
+      this.close = true;
+      this.checkMe();
       /*Ahora debemos dibujar la linea*/
       /*this.operator = result.operator;
       if ( result !== undefined ) {

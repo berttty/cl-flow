@@ -580,7 +580,22 @@ export class DrawZoneComponent implements OnInit {
       const compX: NodeComponent = compRefX.instance as NodeComponent;
 
       compX.close = true;
-      compX.checkMe();
+      compX.checkMe(false);
+    }
+  }
+
+  closeGlobal(node: NodeComponent) {
+
+    let i: number;
+    for (i = 0; i < this.nodeListReference.length; i++) {
+
+      const compRefX: ComponentRef<NodeComponent> = this.nodeListReference[i];
+      const compX: NodeComponent = compRefX.instance as NodeComponent;
+
+      if (node !== compX) {
+        compX.close = true;
+        compX.checkMe(false);
+      }
     }
   }
 
