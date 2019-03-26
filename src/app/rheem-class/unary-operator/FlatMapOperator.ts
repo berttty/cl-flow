@@ -35,7 +35,7 @@ export class FlatMapOperator extends UnaryOperator {
   }
 
   static generateUDF(alias: string, funCode: string, inputClass: string, outputClass: string) {
-    if ( funCode.startsWith('#') ) {
+    if ( funCode !== undefined && funCode.startsWith('#') ) {
       return this.generateUDFSpecial(alias, funCode.slice(1), inputClass, outputClass);
     }
     return `package org.qcri.rheem.rest;
