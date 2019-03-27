@@ -80,7 +80,7 @@ export class DrawZoneComponent implements OnInit {
     );
 
     menuDrawService.requestQueue$.subscribe(
-      (vec: number[]) => {
+      (vec: any[]) => {
         console.log(vec[2]);
 
 
@@ -141,7 +141,9 @@ export class DrawZoneComponent implements OnInit {
       const nodePreviousRef = this.nodeListReference.filter( x => x.instance.index === previous)[0];
       const nodePrevious: NodeComponent = nodePreviousRef.instance as NodeComponent;
       if (operator === undefined) {
+        console.log("here???????????????????");
         operator = OperatorFactory.buildOperator(nodePrevious.confNextOperator);
+        console.log(operator);
       }
       if (configuration === undefined) {
         configuration = nodePrevious.confNextOperator;
@@ -666,7 +668,7 @@ export class DrawZoneComponent implements OnInit {
             return;
           }
         }
-        this.rheemPlan.addConexion(first, 0, node.getOperator(), index);
+        this.rheemPlan.addConexion(first, 0, node.getOperator(), node.getOperator().getSlotNumber());
         index = index + 1;
       });
       index = 0;

@@ -1,20 +1,26 @@
-import {EmptyOperator} from './EmptyOperator';
+import {AIOperator} from './AIOperator';
 import {Parameter} from '../Parameter';
 import {OperatorType} from '../OperatorType';
 import {Platform} from '../Platform';
 import {Conexion} from '../Conexion';
 
-export class AIOperator extends EmptyOperator {
+export class ClassificationOperator extends AIOperator {
   constructor(
     className?: string,
     parameters?: Parameter[],
     name?: string,
-    classInput?: string,
-    classOutput?: string,
     platforms?: Platform[],
     connexions?: Conexion[],
     broadcasts?: Conexion[]
   ) {
-    super(className, parameters, OperatorType.Ai, name, classInput, classOutput, platforms, connexions, broadcasts);
+    super(
+      'org.qcri.rheem.rest.SGDOperator',
+      [],
+      name,
+      'java.lang.String',
+      'java.lang.String',
+      platforms,
+      connexions,
+      broadcasts);
   }
 }

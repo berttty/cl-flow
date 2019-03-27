@@ -19,7 +19,7 @@ export class Operator {
   protected origin: Operator;
   protected metaInformation: any;
   protected keyClass: string;
-
+  protected slotIndex: number;
   constructor(
       className: string,
       parameters: Parameter[],
@@ -43,6 +43,7 @@ export class Operator {
     this.broadcasts = (broadcasts === undefined ? [] : broadcasts);
     this.udfTexts = (udfTexts === undefined ? [] : udfTexts);
     this.keyClass = keyClass;
+    this.slotIndex = 0;
   }
 
   getName() {
@@ -187,6 +188,12 @@ export class Operator {
 
   getTypeOperator(): string {
     return this.constructor.name;
+  }
+
+  getSlotNumber(): number {
+    const tmp = this.slotIndex;
+    this.slotIndex ++;
+    return tmp;
   }
 }
 

@@ -17,10 +17,12 @@ import {MapPartitionOperator} from '../unary-operator/MapPartitionOperator';
 import {ReduceByOperator} from '../unary-operator/ReduceByOperator';
 import {SampleOperator} from '../unary-operator/SampleOperator';
 import {ZipWithIdOperator} from '../unary-operator/ZipWithIdOperator';
+import {ClassificationOperator} from '../special-operator/ClassificationOperator';
 
 export const Operators: any = {
   EmptyOperator,
   AIOperator,
+    ClassificationOperator,
   PreparationOperator,
   BinaryOperator,
   LoopOperator,
@@ -44,6 +46,7 @@ export class OperatorFactory {
   static buildOperator(params: any | string): Operator {
     console.log(params);
     const className: string = (typeof params === 'string' ? params : params.MetaOperator);
+    console.log('crearemos  '+ className);
     return new Operators[className]().setName(className + '_' + (OperatorFactory.serial++));
   }
 

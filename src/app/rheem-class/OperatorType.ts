@@ -3,5 +3,6 @@ export enum OperatorType {
   Source = 'source',
   Unary = 'unary',
   Binary = 'binary',
-  Loop = 'loop'
+  Loop = 'loop',
+  Ai = 'ai'
 }
