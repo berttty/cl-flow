@@ -532,14 +532,24 @@ export class DrawZoneComponent implements OnInit {
       }
 
       for (i = 0; i < this.onMoveRelatedNodes.length; i++) {
-        const nodePrevious = this.onMoveRelatedNodes[i];
+        const nodePrevious: NodeComponent = this.onMoveRelatedNodes[i];
         const previousPosition = nodePrevious.getPosition();
 
-        if (reposition) {
-          const currentID = this.drawLines(previousPosition.x, previousPosition.y, oldX, oldY, nodePrevious, component);
+        if (nodePrevious.successorNodesList.filter( lala => lala === component).length === 1) {
+          if (reposition) {
+            const currentID = this.drawLines(previousPosition.x, previousPosition.y, oldX, oldY, nodePrevious, component);
+          } else {
+            const currentID = this.drawLines(previousPosition.x, previousPosition.y, newX, newY, nodePrevious, component);
+          }
         } else {
-          const currentID = this.drawLines(previousPosition.x, previousPosition.y, newX, newY, nodePrevious, component);
+          if (reposition) {
+            const currentID = this.drawLines(oldX, oldY, previousPosition.x, previousPosition.y, component, nodePrevious);
+          } else {
+            const currentID = this.drawLines(newX, newY, previousPosition.x, previousPosition.y, component, nodePrevious);
+          }
         }
+
+
 
       }
 
@@ -549,9 +559,9 @@ export class DrawZoneComponent implements OnInit {
         const otherPosition = otherNode.getPosition();
 
         if (reposition) {
-          const currentID = this.drawLines(otherPosition.x, otherPosition.y, oldX, oldY, otherNode, component);
+          const currentID = this.drawLines(oldX, oldY, otherPosition.x, otherPosition.y, component, otherNode);
         } else {
-          const currentID = this.drawLines(otherPosition.x, otherPosition.y, newX, newY, otherNode, component);
+          const currentID = this.drawLines(newX, newY, otherPosition.x, otherPosition.y, component, otherNode);
         }
 
         otherNode.predecessorNodesList.push(component);
@@ -758,7 +768,11 @@ export class DrawZoneComponent implements OnInit {
     const currentComponent = componentRef.instance;
     currentComponent.index = ++this.indexLineInit;
 
-    currentComponent.draw2(ori.getPosition().x, ori.getPosition().y, des.getPosition().x, des.getPosition().y, 'green');
+    if (ori.successorBroadcast.filter( lala => lala === des).length === 1) {
+      currentComponent.draw2(ori.getPosition().x, ori.getPosition().y, des.getPosition().x, des.getPosition().y, 'green');
+    } else {
+      currentComponent.draw2(des.getPosition().x, des.getPosition().y, ori.getPosition().x, ori.getPosition().y, 'green');
+    }
 
     ori.broadLinesReference.push(componentRef);
     des.broadLinesReference.push(componentRef);

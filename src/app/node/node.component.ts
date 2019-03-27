@@ -280,13 +280,15 @@ export class NodeComponent implements OnInit, AfterViewInit  {
     dialogRef.afterClosed().subscribe( result => {
       console.log('result is ' + result);
 
+      this.successorBroadcast.push(result);
+      result.predecessorBroadcast.push(this);
+
       this.compInteraction.DrawBroadLine(this, result);
 
       this.close = true;
       this.checkMe();
 
-      this.successorBroadcast.push(result);
-      result.predecessorBroadcast.push(this);
+
       /*Ahora debemos dibujar la linea*/
       /*this.operator = result.operator;
       if ( result !== undefined ) {
