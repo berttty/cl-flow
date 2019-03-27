@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 export class MenuDrawService {
 
   // Observable string sources
-  private request = new Subject<number[]>();
+  private request = new Subject<any[]>();
   private answer = new Subject<string>();
 
   // Observable string streams

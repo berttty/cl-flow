@@ -22,7 +22,7 @@ export class OptionNext {
             {}
           )
         )
-        .addSubOption(new Option( 2, '', 'broadcast-tower', ActionEnum.BROADCAST))
+        .addSubOption(new Option( 2, 'Broadcast', 'broadcast-tower', ActionEnum.BROADCAST))
         .addSubOption(new Option( 3, 'Delete', 'trash-alt', ActionEnum.DELETE))
     );
     if (empty) {

@@ -81,7 +81,9 @@ export class LineComponent implements AfterViewInit {
     this.context.stroke();
 
 
-    /*const vectY = y2 - y1;
+
+
+    const vectY = y2 - y1;
     const vectX = x2 - x1;
 
     const modY = Math.pow(vectY, 2);
@@ -92,6 +94,45 @@ export class LineComponent implements AfterViewInit {
     const vecUniY = vectY / module;
     const vecUniX = vectX / module;
 
+    const vectranspX = vecUniX * Math.cos(0.45) - vecUniY * Math.sin(0.45);
+    const vectranspY = vecUniX * Math.sin(0.45) + vecUniY * Math.cos(0.45);
+
+    const modtranspY = Math.pow(vectranspY, 2);
+    const modtranspX = Math.pow(vectranspX, 2);
+
+    const moduletransp = Math.sqrt(modtranspX + modtranspY);
+
+    console.log('module: ' + moduletransp);
+
+    const middlePointX = x2 - (vecUniX * 0.9 * module / 2);
+    const middlePointY = y2 - (vecUniY * 0.9 * module / 2) + this.distance;
+
+    const diff1X = middlePointX - (vectranspX * 25);
+    const diff1Y = middlePointY - (vectranspY * 25);
+
+    this.context.beginPath();
+    this.context.strokeStyle = color;
+    this.context.moveTo(middlePointX, middlePointY);
+    this.context.lineTo(diff1X, diff1Y);
+    this.context.stroke();
+
+    const vectransp2X = vecUniX * Math.cos(-0.45) - vecUniY * Math.sin(-0.45);
+    const vectransp2Y = vecUniX * Math.sin(-0.45) + vecUniY * Math.cos(-0.45);
+    const diff2X = middlePointX - (vectransp2X * 25);
+    const diff2Y = middlePointY - (vectransp2Y * 25);
+    this.context.beginPath();
+    this.context.strokeStyle = color;
+    this.context.moveTo(middlePointX, middlePointY);
+    this.context.lineTo(diff2X, diff2Y);
+    this.context.stroke();
+
+/*
+    this.context.beginPath();
+    this.context.strokeStyle = 'red';
+    this.context.moveTo(x2 - (vecUniX * 40), y2 - (vecUniY * 40) + this.distance);
+    this.context.lineTo(x2 + (vecUniX * 60), y2 + (vecUniY * 60) + this.distance);
+    this.context.stroke();*/
+/*
     this.context.beginPath();
     this.context.strokeStyle = 'red';
     this.context.moveTo(x2 - (vecUniX * 40), y2 - (vecUniY * 40));
