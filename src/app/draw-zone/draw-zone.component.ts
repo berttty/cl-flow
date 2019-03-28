@@ -723,7 +723,7 @@ export class DrawZoneComponent implements OnInit {
     if ( this.script !== undefined) {
       this.rheemPlan.setScript(this.script);
     } else {
-      this.rheemPlan.setScript('kmeans');
+      this.rheemPlan.setScript('null');
     }
 
     this.plan = this.rheemPlan.toString();

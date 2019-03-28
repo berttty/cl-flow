@@ -28,6 +28,8 @@ library.add(faPlay, faFolderOpen, faSave, faCogs);
 export class ActionButtonComponent implements OnInit {
 
   private indexRequest: number;
+  private inuse = false;
+  private mydialogRef;
 
   constructor(
         private rheemService: RheemService,
@@ -58,23 +60,32 @@ export class ActionButtonComponent implements OnInit {
 
   preExecute(): void {
     // this.openMessage('Generating Plan');
+    this.inuse = true;
     this.rheemPlanService.generateRequest(  '' + this.indexRequest++ );
+    const obj = {attr: 'true'};
+    this.mydialogRef = this.dialog.open(ModalExecResponseComponent, {width: '800px', data: obj});
+
   }
 
   doExecute(plan: RheemPlan): void {
     // this.openMessage('Starting Execution');
-    let response: object;
+    let response: string;
     if (plan.getScript() === undefined) {
       console.log('Normal: ' + plan.getName());
-      response = this.rheemService.execute2('kmeans');
+      response = this.rheemService.execute2('null');
     } else {
       console.log('Hand: ' + plan.getScript());
       this.rheemService.execute2(plan.getScript()).subscribe(res => {
         console.log('respuesta');
-        console.log(res);
-        const dialogRef = this.dialog.open(ModalExecResponseComponent, {width: '400px', data: res });
+        const re = /##/gi;
+        response = res.message.replace(re, '\n');
+        console.log(response);
+        this.mydialogRef.close();
+        const obj =  {attr: false, content: response};
+        const dialogRef = this.dialog.open(ModalExecResponseComponent, {width: '800px', data: obj });
         dialogRef.afterClosed().subscribe( result => {
         });
+        this.inuse = false;
       });
     }
 
