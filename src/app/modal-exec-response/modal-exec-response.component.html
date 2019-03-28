@@ -1,0 +1,9 @@
+<!-- TODO agregar la opcion de poder modificar el titulo dependiendo del nombre o del tipo de operador que se tenga-->
+<h1 mat-dialog-title>Execution results</h1>
+<div mat-dialog-content>
+  <p>{{data.message}}</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="accent" (click)="onNoClick()">Close</button>
+  <!--<button mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>Ok</button>-->
+</div>

@@ -34,6 +34,7 @@ export class DrawZoneComponent implements OnInit {
   onMoveRelatedNodes = [];
   onMoveBroadcastNodes = [];
   onDrag: boolean;
+  script: string;
 
   // TODO eliminar es para test
   private rheemPlan: RheemPlan;
@@ -47,6 +48,7 @@ export class DrawZoneComponent implements OnInit {
       private rheemPlanService: RheemPlanService,
       private menuDrawService: MenuDrawService
   ) {
+    this.script = undefined;
     rheemPlanService.requestQueue$.subscribe(
       id => {
         console.log('DrawZone consuming request');
@@ -74,6 +76,7 @@ export class DrawZoneComponent implements OnInit {
     rheemPlanService.requestDrawQueue$.subscribe(
       (plan: RheemPlan) => {
         console.log('DrawZone consuming requestDraw');
+        console.log(plan);
         this.drawPlan(plan);
         rheemPlanService.generateAnswerDraw('generated');
       }
@@ -700,6 +703,29 @@ export class DrawZoneComponent implements OnInit {
         first.setMetaInformation(meta);
       }
     });
+
+    /*console.log('this.rheemPlan');
+    console.log(this.rheemPlan);
+
+
+    if (this.rheemPlan.getName() !== undefined) {
+      const index = this.rheemPlan.getName().indexOf('_');
+
+      console.log(this.rheemPlan.getName() + ' , index: ' + index);
+      if (index !== -1) {
+        const script = this.rheemPlan.getName().substring(index);
+        console.log('script name: ' + script);
+        this.rheemPlan.setScript(script);
+      }
+    } else {
+      console.log('undefined rheemplan name');
+    }*/
+    if ( this.script !== undefined) {
+      this.rheemPlan.setScript(this.script);
+    } else {
+      this.rheemPlan.setScript('kmeans');
+    }
+
     this.plan = this.rheemPlan.toString();
     console.log(this.plan);
     return this.rheemPlan;
@@ -709,6 +735,7 @@ export class DrawZoneComponent implements OnInit {
     console.log('drawing the plan');
     console.log(plan);
     if (plan === null) {return; }
+    this.script = plan.name;
     plan.listOperator.forEach(
       (ope: any) => {
         const operator: Operator = OperatorFactory.buildOperator(ope.metaInformation.conf);

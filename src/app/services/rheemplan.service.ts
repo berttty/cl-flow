@@ -63,6 +63,7 @@ export class RheemPlanService {
 
   generateRequestDraw(plan: any): void {
     console.log('generating request');
+    console.log(plan);
     this.requestDraw.next(plan);
   }
 

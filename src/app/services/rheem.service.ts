@@ -10,8 +10,13 @@ import {Operator} from '../rheem-class/Operator';
 })
 export class RheemService {
 
-  uri = 'http://192.168.50.29:8089/rheem';
-  uriDB = 'http://192.168.50.35:50051/rheemDB';
+  // uri = 'http://192.168.50.29:8089/rheem';
+  uri = 'http://0.0.0.0:8089/rheem';
+  // urihand = 'http://192.168.50.29:8080/rheem';
+  urihand = 'http://10.4.4.32:8080';
+  // uriDB = 'http://192.168.50.35:50051/rheemDB';
+  uriDB = 'http://10.4.4.49:50051/rheemDB';
+
 
   constructor(private http: HttpClient) {
   }
@@ -25,11 +30,20 @@ export class RheemService {
   }
 
   execute(json: string): boolean {
+    console.log('normal: ' + json);
     this.http.post( `${this.uri}/plan_executions`, RheemService.generateContent(json), {headers: {'Content-Type': 'application/json',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
         'Access-Control-Allow-Origin': '*'}} )
       .subscribe(res => console.log('Done'));
     return true;
+  }
+
+  execute2(json: string): any {
+    console.log('hand: ' + json);
+    // let response: object;
+    return this.http.post( `${this.urihand}/script`, '{"name": "' + json + '" }', {headers: {'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+        'Access-Control-Allow-Origin': '*'}} );
   }
 
   savePlan(json: any | string): boolean {

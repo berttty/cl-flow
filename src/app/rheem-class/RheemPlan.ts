@@ -9,6 +9,7 @@ export class RheemPlan {
   private broadcasts: Conexion[];
   private sources: Operator[];
   private sinks: Operator[];
+  private script: string;
 
   constructor(json?: any) {
     if (json !== undefined) {
@@ -48,6 +49,14 @@ export class RheemPlan {
       this.sources.push(op);
     }
     this.listOperator.push(op);
+  }
+
+  setScript(script: string) {
+    this.script = script;
+  }
+
+  getScript(): string {
+    return this.script;
   }
 
   public addConexion(opNameStart: string | Operator, indexStart: number, opNameEnd: string | Operator, indexEnd: number ) {

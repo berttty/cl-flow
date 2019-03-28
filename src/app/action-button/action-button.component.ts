@@ -12,6 +12,7 @@ import {ActionButtonModalComponent} from '../action-button-modal/action-button-m
 import {MatDialog} from '@angular/material';
 import {MatSnackBar} from '@angular/material';
 import {ActionButtonModalSaveComponent} from '../action-button-modal-save/action-button-modal-save.component';
+import { ModalExecResponseComponent } from '../modal-exec-response/modal-exec-response.component';
 
 
 library.add(faPlay, faFolderOpen, faSave, faCogs);
@@ -56,13 +57,29 @@ export class ActionButtonComponent implements OnInit {
   }
 
   preExecute(): void {
-    this.openMessage('Generating Plan');
+    // this.openMessage('Generating Plan');
     this.rheemPlanService.generateRequest(  '' + this.indexRequest++ );
   }
 
   doExecute(plan: RheemPlan): void {
-    this.openMessage('Starting Execution');
-    this.rheemService.execute(plan.toString());
+    // this.openMessage('Starting Execution');
+    let response: object;
+    if (plan.getScript() === undefined) {
+      console.log('Normal: ' + plan.getName());
+      response = this.rheemService.execute2('kmeans');
+    } else {
+      console.log('Hand: ' + plan.getScript());
+      this.rheemService.execute2(plan.getScript()).subscribe(res => {
+        console.log('respuesta');
+        console.log(res);
+        const dialogRef = this.dialog.open(ModalExecResponseComponent, {width: '400px', data: res });
+        dialogRef.afterClosed().subscribe( result => {
+        });
+      });
+    }
+
+
+
   }
 
   preSave(): void {
@@ -90,6 +107,8 @@ export class ActionButtonComponent implements OnInit {
         });
         const dialogRef = this.dialog.open(ActionButtonModalComponent, {width: '800px', data: {list: values}});
         dialogRef.afterClosed().subscribe( result => {
+          console.log('result');
+          console.log(result);
           this.rheemService.getPlan(result).subscribe(a => this.plotRheemPlan(a));
         });
         return values;

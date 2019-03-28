@@ -39,6 +39,7 @@ import { ModalBroadcastComponent } from './modal-broadcast/modal-broadcast.compo
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
+import { ModalExecResponseComponent } from './modal-exec-response/modal-exec-response.component';
 
 const routes: Routes = [
   {
@@ -66,7 +67,8 @@ const routes: Routes = [
     NodeModalComponent,
     ActionButtonModalComponent,
     ActionButtonModalSaveComponent,
-    ModalBroadcastComponent
+    ModalBroadcastComponent,
+    ModalExecResponseComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +104,8 @@ const routes: Routes = [
     NodeModalComponent,
     ActionButtonModalComponent,
     ActionButtonModalSaveComponent,
-    ModalBroadcastComponent
+    ModalBroadcastComponent,
+    ModalExecResponseComponent
   ],
   providers: [
     RheemService,
